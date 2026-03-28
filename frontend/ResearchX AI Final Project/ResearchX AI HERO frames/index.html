@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResearchX AI - Autonomous Research Intelligence System</title>
+    <meta name="description"
+        content="ResearchX AI is an autonomous research intelligence system. Explore the futuristic AI research website.">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-content">
+            <a href="#home" class="logo">ResearchX<span>.AI</span></a>
+            <div class="nav-links">
+                <a href="#home" class="nav-item active">Home </a>
+                <a href="#process" class="nav-item">Process</a>
+                <a href="#strategy" class="nav-item">Strategy</a>
+                <a href="#results" class="nav-item">Results</a>
+                <a href="#deep-dive" class="nav-item">Deep Dive</a>
+                <a href="#output" class="nav-item">Output</a>
+                <a href="#memory" class="nav-item">Memory</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- 1. HERO SECTION -->
+        <section id="home" class="hero">
+            <video autoplay loop muted playsinline class="bg-video">
+                <source src="../Video_UI_Removal_kJtw-lLs.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
+
+            <div class="section-content">
+                <div class="hero-content">
+                    <h1 class="hero-title">ResearchX AI</h1>
+                    <p class="subtitle">Autonomous Research Intelligence System</p>
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" placeholder="Initialize research parameters..." class="search-input">
+                        <button class="btn-primary glow-btn">
+                            <span>Initialize</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Futuristic Floating Elements -->
+                <div class="floating-elements">
+                    <div class="floating-orb orb1 glass pulse-shadow"></div>
+                    <div class="floating-orb orb2 glass pulse-shadow"></div>
+                    <div class="floating-orb orb3 glass pulse-shadow"></div>
+                    <div class="data-flow df1">01010101</div>
+                    <div class="data-flow df2">01100001</div>
+                    <div class="data-flow df3">00110011</div>
+                    <div class="data-flow df4">11001100</div>
+                    <div class="holo-projection proj1">
+                        <div class="holo-screen"></div>
+                        <div class="holo-data">NEURAL LINK ACTIVE</div>
+                    </div>
+                    <div class="energy-wave wave1"></div>
+                    <div class="energy-wave wave2"></div>
+                    <div class="quantum-particle particle1"></div>
+                    <div class="quantum-particle particle2"></div>
+                    <div class="quantum-particle particle3"></div>
+                </div>
+
+                <!-- Subtle Status Panel -->
+                <div class="status-panel glass glow-hover">
+                    <div class="status-indicator online"></div>
+                    <span class="status-text">AI Core: Online</span>
+                    <div class="status-metric">Neural Load: 23%</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. PROCESS SECTION -->
+        <section id="process" class="process">
+            <video autoplay loop muted playsinline class="bg-video">
+                <source src="../Video_UI_Removal_In_a_digital-art_style_this_sequence_depicts_a_Bijsq8g7.mp4"
+                    type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
+
+            <div class="section-content">
+                <h2 class="section-title">Agent Process</h2>
+
+                <!-- Process Control Panel -->
+                <div class="process-control-panel glass card-3d">
+                    <div class="control-header">
+                        <h3><span class="control-icon">⚙️</span> Process Control Center</h3>
+                        <div class="control-status">
+                            <div class="status-indicator" id="process-status">
+                                <div class="status-dot"></div>
+                                <span class="status-text">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-metrics">
+                        <div class="metric">
+                            <span class="metric-icon">⚡</span>
+                            <div class="metric-info">
+                                <span class="metric-value" id="cpu-usage">87%</span>
+                                <span class="metric-label">CPU Usage</span>
+                            </div>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-icon">🧠</span>
+                            <div class="metric-info">
+                                <span class="metric-value" id="neural-load">94%</span>
+                                <span class="metric-label">Neural Load</span>
+                            </div>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-icon">📊</span>
+                            <div class="metric-info">
+                                <span class="metric-value" id="data-throughput">2.4GB/s</span>
+                                <span class="metric-label">Throughput</span>
+                            </div>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-icon">⏱️</span>
+                            <div class="metric-info">
+                                <span class="metric-value" id="process-time">00:47:23</span>
+                                <span class="metric-label">Runtime</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enhanced Workflow -->
+                <div class="workflow-container">
+                    <div class="workflow">
+                        <div class="step glass glow-hover card-3d" data-step="1">
+                            <div class="step-header">
+                                <div class="step-number">01</div>
+                            </div>
+                            <div class="step-status" id="step1-status">
+                                <div class="data-stream"></div>
+                            </div>
+                            <div class="icon">🎯</div>
+                            <h3>Objective</h3>
+                            <p>Parameter & scope definition for autonomous execution.</p>
+                            <div class="step-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="step1-progress"></div>
+                                </div>
+                                <span class="progress-text" id="step1-text">100%</span>
+                            </div>
+                            <div class="step-particles">
+                                <div class="particle p1"></div>
+                                <div class="particle p2"></div>
+                            </div>
+                        </div>
+                        <div class="connector" data-connector="1">
+                            <div class="connector-line"></div>
+                            <div class="data-flow">
+                                <div class="data-packet"></div>
+                                <div class="data-packet"></div>
+                                <div class="data-packet"></div>
+                            </div>
+                        </div>
+                        <div class="step glass glow-hover card-3d" data-step="2">
+                            <div class="step-header">
+                                <div class="step-number">02</div>
+                            </div>
+                            <div class="step-status" id="step2-status">
+                                <div class="data-stream"></div>
+                            </div>
+                            <div class="icon">🔍</div>
+                            <h3>Ingestion</h3>
+                            <p>Deep scanning and parsing across multiple node networks.</p>
+                            <div class="step-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="step2-progress"></div>
+                                </div>
+                                <span class="progress-text" id="step2-text">87%</span>
+                            </div>
+                            <div class="step-particles">
+                                <div class="particle p1"></div>
+                                <div class="particle p2"></div>
+                            </div>
+                        </div>
+                        <div class="connector" data-connector="2">
+                            <div class="connector-line"></div>
+                            <div class="data-flow">
+                                <div class="data-packet"></div>
+                                <div class="data-packet"></div>
+                                <div class="data-packet"></div>
+                            </div>
+                        </div>
+                        <div class="step glass glow-hover card-3d" data-step="3">
+                            <div class="step-header">
+                                <div class="step-number">03</div>
+                            </div>
+                            <div class="step-status" id="step3-status">
+                                <div class="data-stream"></div>
+                            </div>
+                            <div class="icon">🧠</div>
+                            <h3>Analysis</h3>
+                            <p>Synthesizing patterns via neural architecture.</p>
+                            <div class="step-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="step3-progress"></div>
+                                </div>
+                                <span class="progress-text" id="step3-text">64%</span>
+                            </div>
+                            <div class="step-particles">
+                                <div class="particle p1"></div>
+                                <div class="particle p2"></div>
+                            </div>
+                        </div>
+                        <div class="connector" data-connector="3">
+                            <div class="connector-line"></div>
+                            <div class="data-flow">
+                                <div class="data-packet"></div>
+                                <div class="data-packet"></div>
+                                <div class="data-packet"></div>
+                            </div>
+                        </div>
+                        <div class="step glass glow-hover card-3d" data-step="4">
+                            <div class="step-header">
+                                <div class="step-number">04</div>
+                            </div>
+                            <div class="step-status" id="step4-status">
+                                <div class="data-stream"></div>
+                            </div>
+                            <div class="icon">💡</div>
+                            <h3>Insights</h3>
+                            <p>Extraction of actionable intelligence and vectors.</p>
+                            <div class="step-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="step4-progress"></div>
+                                </div>
+                                <span class="progress-text" id="step4-text">23%</span>
+                            </div>
+                            <div class="step-particles">
+                                <div class="particle p1"></div>
+                                <div class="particle p2"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Process Visualization -->
+                    <div class="process-visualization">
+                        <div class="viz-header">
+                            <h4>Real-time Process Flow</h4>
+                            <div class="viz-controls">
+                                <button class="viz-btn active" data-view="flow">Flow View</button>
+                                <button class="viz-btn" data-view="metrics">Metrics</button>
+                                <button class="viz-btn" data-view="network">Network</button>
+                            </div>
+                        </div>
+                        <div class="viz-content">
+                            <div class="flow-diagram">
+                                <svg class="flow-svg" viewBox="0 0 800 200">
+                                    <!-- Flow paths will be dynamically generated -->
+                                </svg>
+                                <div class="flow-nodes">
+                                    <div class="flow-node active" data-node="1">
+                                        <div class="node-pulse"></div>
+                                        <span>Objective</span>
+                                    </div>
+                                    <div class="flow-node active" data-node="2">
+                                        <div class="node-pulse"></div>
+                                        <span>Ingestion</span>
+                                    </div>
+                                    <div class="flow-node active" data-node="3">
+                                        <div class="node-pulse"></div>
+                                        <span>Analysis</span>
+                                    </div>
+                                    <div class="flow-node" data-node="4">
+                                        <div class="node-pulse"></div>
+                                        <span>Insights</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. STRATEGY SECTION -->
+        <section id="strategy" class="strategy">
+            <video autoplay loop muted playsinline class="bg-video">
+                <source src="../Video_UI_Removal_cYR4yF6f.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
+
+            <div class="section-content">
+                <h2 class="section-title">Quantum Research Strategy</h2>
+                <p class="strategy-description">Harnessing quantum computing paradigms, our autonomous research framework integrates multi-dimensional data streams with advanced neural architectures to generate predictive insights at unprecedented scale and precision.</p>
+                <div class="neural-net">
+                    <svg class="connection-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <line x1="20" y1="20" x2="50" y2="50" />
+                        <line x1="80" y1="20" x2="50" y2="50" />
+                        <line x1="20" y1="80" x2="50" y2="50" />
+                        <line x1="80" y1="80" x2="50" y2="50" />
+                    </svg>
+                    <div class="node core glass card-3d pulse-shadow float-medium">Quantum Core Engine</div>
+                    <div class="node sub n1 glass card-3d float-slow">Data Fusion Matrix</div>
+                    <div class="node sub n2 glass card-3d float-fast">Contextual Intelligence</div>
+                    <div class="node sub n3 glass card-3d float-slow">Vector Embeddings</div>
+                    <div class="node sub n4 glass card-3d float-medium">Neural Memory Bank</div>
+                </div>
+                <div class="strategy-features">
+                    <div class="feature glass glow-hover card-3d">
+                        <div class="icon">⚛️</div>
+                        <h4>Quantum Processing</h4>
+                        <p>Parallel computation across infinite possibilities</p>
+                    </div>
+                    <div class="feature glass glow-hover card-3d">
+                        <div class="icon">🌐</div>
+                        <h4>Global Data Mesh</h4>
+                        <p>Real-time integration of worldwide knowledge networks</p>
+                    </div>
+                    <div class="feature glass glow-hover card-3d">
+                        <div class="icon">🔮</div>
+                        <h4>Predictive Synthesis</h4>
+                        <p>Anticipating trends before they emerge</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. RESULTS SECTION -->
+        <section id="results" class="results">
+            <video autoplay loop muted playsinline class="bg-video">
+                <source src="../Video_UI_Removal_1CVaLrTI.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
+
+            <div class="section-content">
+                <h2 class="section-title">Results Dashboard</h2>
+                <div class="dashboard-metrics">
+                    <div class="metric-display glass">
+                        <span class="metric-label">Processing Status</span>
+                        <span class="metric-value" id="processing-status">Analyzing...</span>
+                    </div>
+                    <div class="metric-display glass">
+                        <span class="metric-label">Confidence Level</span>
+                        <span class="metric-value" id="confidence-level">98.7%</span>
+                    </div>
+                    <div class="metric-display glass">
+                        <span class="metric-label">Data Points</span>
+                        <span class="metric-value" id="data-points">2.4M</span>
+                    </div>
+                </div>
+                <div class="dashboard-grid">
+                    <div class="card glass glow-hover card-3d float-slow">
+                        <h3>Executive Summary</h3>
+                        <div class="executive-content">
+                            <div class="summary-line">Neural analysis complete</div>
+                            <div class="summary-line">Pattern recognition: <span class="highlight">SUCCESS</span></div>
+                            <div class="summary-line">Confidence threshold: <span class="highlight">EXCEEDED</span></div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 87%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card glass glow-hover card-3d float-medium">
+                        <h3>Key Insights</h3>
+                        <div class="insights-grid">
+                            <div class="insight-item">
+                                <div class="insight-icon">🚀</div>
+                                <div class="insight-text">Quantum Leap Detected</div>
+                                <div class="insight-value">+247%</div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-icon">⚡</div>
+                                <div class="insight-text">Neural Efficiency</div>
+                                <div class="insight-value">94.2%</div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-icon">🎯</div>
+                                <div class="insight-text">Accuracy Score</div>
+                                <div class="insight-value">99.8%</div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-icon">🌐</div>
+                                <div class="insight-text">Global Coverage</div>
+                                <div class="insight-value">100%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card glass glow-hover wide card-3d float-fast">
+                        <h3>Analysis Matrix</h3>
+                        <div class="matrix-container">
+                            <div class="matrix-bars">
+                                <div class="bar-group">
+                                    <div class="bar-label">Alpha</div>
+                                    <div class="bar-container">
+                                        <div class="bar-fill" data-value="85"></div>
+                                    </div>
+                                    <div class="bar-value">85%</div>
+                                </div>
+                                <div class="bar-group">
+                                    <div class="bar-label">Beta</div>
+                                    <div class="bar-container">
+                                        <div class="bar-fill" data-value="72"></div>
+                                    </div>
+                                    <div class="bar-value">72%</div>
+                                </div>
+                                <div class="bar-group">
+                                    <div class="bar-label">Gamma</div>
+                                    <div class="bar-container">
+                                        <div class="bar-fill" data-value="91"></div>
+                                    </div>
+                                    <div class="bar-value">91%</div>
+                                </div>
+                                <div class="bar-group">
+                                    <div class="bar-label">Delta</div>
+                                    <div class="bar-container">
+                                        <div class="bar-fill" data-value="68"></div>
+                                    </div>
+                                    <div class="bar-value">68%</div>
+                                </div>
+                                <div class="bar-group">
+                                    <div class="bar-label">Omega</div>
+                                    <div class="bar-container">
+                                        <div class="bar-fill" data-value="96"></div>
+                                    </div>
+                                    <div class="bar-value">96%</div>
+                                </div>
+                            </div>
+                            <div class="matrix-overlay">
+                                <div class="scan-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dashboard-particles">
+                    <div class="particle p1"></div>
+                    <div class="particle p2"></div>
+                    <div class="particle p3"></div>
+                    <div class="data-flow df1">01010101</div>
+                    <div class="data-flow df2">SYNTHESIS</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. DEEP DIVE SECTION -->
+        <section id="deep-dive" class="deep-dive">
+            <video autoplay loop muted playsinline class="bg-video">
+                <source src="../ResearchX%20AI%20Deep%20Dive%20Frames/Deep%20Dive%20Section.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
+
+            <div class="section-content parallax-layer" data-speed="0.8">
+                <h2 class="section-title parallax-layer" data-speed="1.2">Deep Dive Analysis</h2>
+                <div class="deep-dive-grid">
+                    <div class="side-panel glass float-slow card-3d">
+                        <h3>Data Sources</h3>
+                        <ul class="source-list">
+                            <li><span class="neon-dot"></span> SEC Filings Array</li>
+                            <li><span class="neon-dot"></span> ArXiv Neural Nodes</li>
+                            <li><span class="neon-dot"></span> Sentiment API Feed</li>
+                            <li><span class="neon-dot"></span> Web3 Datasets</li>
+                        </ul>
+                    </div>
+                    <div class="central-panel glass glow-hover float-fast card-3d parallax-layer" data-speed="1.5">
+                        <div class="terminal-header">
+                            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                            <span class="term-title">ai_core >> holographic_render</span>
+                        </div>
+                        <div class="terminal-body">
+                            <p>> [SYS] Initiating deep neural scan...</p>
+                            <p class="glitch-line p-delay-1">> [LOG] Node cross-referencing: <span class="neon-text">SUCCESS</span></p>
+                            <p class="p-delay-2">> [SYS] Synthesizing 4D context graphs...</p>
+                            <p class="pulse-text p-delay-3">> [AI_CORE] Holographic projection active.</p>
+                            <div class="holographic-chart">
+                                <div class="holo-ring r1"></div>
+                                <div class="holo-ring r2"></div>
+                                <div class="holo-ring r3"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="floating-panel glass card-3d float-medium">
+                        <h3>Analysis Metrics</h3>
+                        <div class="metric">
+                            <span class="metric-label">Confidence Level</span>
+                            <span class="metric-value neon-text">98.7%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Data Points</span>
+                            <span class="metric-value neon-text">2.4M</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Processing Time</span>
+                            <span class="metric-value neon-text">14.2s</span>
+                        </div>
+                        <div class="holographic-mini">
+                            <div class="mini-ring"></div>
+                            <div class="mini-ring"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. OUTPUT GENERATOR SECTION -->
+        <section id="output" class="output">
+            <video autoplay loop muted playsinline class="bg-video">
+                <source src="../ResearchX%20AI%20Output%20Frames/Luma%20Output%20page%20video.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
+
+            <div class="section-content parallax-layer" data-speed="1.1">
+                <h2 class="section-title">Output Generator</h2>
+                <div class="output-container glass card-3d float-slow">
+                    <!-- Output Status Dashboard -->
+                    <div class="output-status">
+                        <div class="status-indicator">
+                            <div class="status-ring">
+                                <div class="status-fill" id="generation-progress"></div>
+                            </div>
+                            <div class="status-text">
+                                <span class="status-label">Generation Status</span>
+                                <span class="status-value" id="generation-status">Ready</span>
+                            </div>
+                        </div>
+                        <div class="output-metrics">
+                            <div class="metric-item">
+                                <span class="metric-icon">📊</span>
+                                <span class="metric-value" id="output-quality">98.7%</span>
+                                <span class="metric-label">Quality Score</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-icon">⚡</span>
+                                <span class="metric-value" id="processing-speed">2.4s</span>
+                                <span class="metric-label">Processing Time</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-icon">🔗</span>
+                                <span class="metric-value" id="data-sources">1,247</span>
+                                <span class="metric-label">Data Sources</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Document Viewer -->
+                    <div class="document-viewer">
+                        <div class="doc-header">
+                            <h3><span class="neon-dot"></span> Synthesized Research Intelligence</h3>
+                            <div class="doc-meta">
+                                <span class="doc-timestamp" id="doc-timestamp">2026-03-29 14:23:47</span>
+                                <span class="doc-version">v2.4.7</span>
+                            </div>
+                        </div>
+                        <div class="doc-content">
+                            <p class="doc-text">The overarching analysis dictates a 98.4% probability of market integration within the designated parameter clusters. Advanced neural pathways executed extensive comparative routines utilizing multi-temporal historical data vectors to arrive at this highly confident paradigm mapping.</p>
+                            <div class="doc-insights">
+                                <div class="insight-item">
+                                    <span class="insight-icon">🎯</span>
+                                    <span class="insight-text">High-confidence market prediction identified</span>
+                                </div>
+                                <div class="insight-item">
+                                    <span class="insight-icon">📈</span>
+                                    <span class="insight-text">98.4% integration probability calculated</span>
+                                </div>
+                                <div class="insight-item">
+                                    <span class="insight-icon">🔬</span>
+                                    <span class="insight-text">Multi-temporal data analysis completed</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="doc-shimmer"></div>
+                        <div class="doc-particles">
+                            <div class="particle p1"></div>
+                            <div class="particle p2"></div>
+                            <div class="particle p3"></div>
+                        </div>
+                    </div>
+
+                    <!-- Output Formats Grid -->
+                    <div class="output-formats">
+                        <h4>Export Formats</h4>
+                        <div class="format-grid">
+                            <div class="format-card glass glow-hover" data-format="pdf">
+                                <div class="format-icon">📄</div>
+                                <div class="format-name">PDF Report</div>
+                                <div class="format-desc">Complete analysis with charts</div>
+                            </div>
+                            <div class="format-card glass glow-hover" data-format="json">
+                                <div class="format-icon">📊</div>
+                                <div class="format-name">JSON Data</div>
+                                <div class="format-desc">Raw data & insights</div>
+                            </div>
+                            <div class="format-card glass glow-hover" data-format="api">
+                                <div class="format-icon">🔗</div>
+                                <div class="format-name">API Stream</div>
+                                <div class="format-desc">Real-time data feed</div>
+                            </div>
+                            <div class="format-card glass glow-hover" data-format="viz">
+                                <div class="format-icon">📈</div>
+                                <div class="format-name">Interactive</div>
+                                <div class="format-desc">Dynamic visualizations</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button class="btn-primary glow-btn pulse-shadow parallax-layer" data-speed="1.4" id="pdf-download-btn">
+                            <span>⚡ Download Intel (.PDF)</span>
+                            <div class="btn-glow"></div>
+                        </button>
+                        <button class="btn-secondary glow-hover" id="export-schema-btn">
+                            <span>📊 Export Schema</span>
+                        </button>
+                        <button class="btn-secondary glow-hover" id="data-api-btn">
+                            <span>🔗 Data API Stream</span>
+                        </button>
+                        <button class="btn-secondary glow-hover" id="share-btn">
+                            <span>📤 Share Results</span>
+                        </button>
+                    </div>
+
+                    <!-- Processing Animation -->
+                    <div class="processing-overlay" id="processing-overlay">
+                        <div class="processing-ring">
+                            <div class="processing-dot"></div>
+                        </div>
+                        <div class="processing-text">Generating Intelligence...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. MEMORY SYSTEM SECTION -->
+        <section id="memory" class="memory">
+            <video autoplay loop muted playsinline class="bg-video">
+                <source src="../ResearchX%20AI%20Memory%20Frames/Memory%20Section.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
+
+            <div class="section-content parallax-layer" data-speed="0.9">
+                <h2 class="section-title">Neural Memory Matrix</h2>
+
+                <!-- Memory Stats Dashboard -->
+                <div class="memory-stats">
+                    <div class="stat-card glass">
+                        <div class="stat-icon">💾</div>
+                        <div class="stat-value" id="total-memory">47.2 TB</div>
+                        <div class="stat-label">Total Storage</div>
+                    </div>
+                    <div class="stat-card glass">
+                        <div class="stat-icon">⚡</div>
+                        <div class="stat-value" id="active-sessions">1,247</div>
+                        <div class="stat-label">Active Sessions</div>
+                    </div>
+                    <div class="stat-card glass">
+                        <div class="stat-icon">🔄</div>
+                        <div class="stat-value" id="sync-rate">99.7%</div>
+                        <div class="stat-label">Sync Rate</div>
+                    </div>
+                    <div class="stat-card glass">
+                        <div class="stat-icon">🧠</div>
+                        <div class="stat-value" id="neural-links">8,942</div>
+                        <div class="stat-label">Neural Links</div>
+                    </div>
+                </div>
+
+                <div class="memory-matrix">
+                    <!-- Neural Network Visualization -->
+                    <div class="neural-web">
+                        <svg class="memory-connections" viewBox="0 0 100 100" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="memoryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:rgba(0,243,255,0.3)" />
+                                    <stop offset="50%" style="stop-color:rgba(157,0,255,0.5)" />
+                                    <stop offset="100%" style="stop-color:rgba(0,243,255,0.3)" />
+                                </linearGradient>
+                                <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:var(--neon-cyan)" />
+                                    <stop offset="100%" style="stop-color:var(--neon-purple)" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M20,20 Q50,10 80,20" stroke="url(#memoryGradient)" stroke-width="2" fill="none" class="neural-path" />
+                            <path d="M20,50 Q50,40 80,50" stroke="url(#memoryGradient)" stroke-width="2" fill="none" class="neural-path" />
+                            <path d="M20,80 Q50,70 80,80" stroke="url(#memoryGradient)" stroke-width="2" fill="none" class="neural-path" />
+                            <circle cx="20" cy="20" r="3" fill="rgba(0,243,255,0.8)" class="neural-node" />
+                            <circle cx="50" cy="10" r="2" fill="rgba(157,0,255,0.6)" class="neural-node" />
+                            <circle cx="80" cy="20" r="3" fill="rgba(0,243,255,0.8)" class="neural-node" />
+                            <circle cx="20" cy="50" r="2" fill="rgba(157,0,255,0.6)" class="neural-node" />
+                            <circle cx="50" cy="40" r="3" fill="rgba(0,243,255,0.8)" class="neural-node" />
+                            <circle cx="80" cy="50" r="2" fill="rgba(157,0,255,0.6)" class="neural-node" />
+                            <circle cx="20" cy="80" r="3" fill="rgba(0,243,255,0.8)" class="neural-node" />
+                            <circle cx="50" cy="70" r="2" fill="rgba(157,0,255,0.6)" class="neural-node" />
+                            <circle cx="80" cy="80" r="3" fill="rgba(0,243,255,0.8)" class="neural-node" />
+                        </svg>
+                    </div>
+
+                    <!-- Memory Nodes Grid -->
+                    <div class="memory-nodes-grid">
+                        <div class="memory-node enhanced">
+                            <div class="node-core pulse-shadow">
+                                <div class="node-icon">🧠</div>
+                                <div class="node-pulse"></div>
+                            </div>
+                            <div class="memory-card glass card-3d glow-hover">
+                                <div class="card-header">
+                                    <h4>Session: VEC-0X9A</h4>
+                                    <div class="card-status active"></div>
+                                </div>
+                                <p>Global logistics pathway visualization with quantum-accelerated routing algorithms.</p>
+                                <div class="card-metrics">
+                                    <span class="metric">2.4 TB</span>
+                                    <span class="metric">14h ago</span>
+                                    <span class="metric">98.2% integrity</span>
+                                </div>
+                                <div class="progress-ring">
+                                    <svg class="progress-circle" viewBox="0 0 36 36">
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="url(#progressGradient)" stroke-width="2" stroke-dasharray="75, 100" class="progress-path"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="memory-node enhanced" style="margin-top: 80px; margin-left: auto;">
+                            <div class="node-core pulse-shadow">
+                                <div class="node-icon">🎭</div>
+                                <div class="node-pulse"></div>
+                            </div>
+                            <div class="memory-card glass card-3d glow-hover">
+                                <div class="card-header">
+                                    <h4>Session: SYS-0K42</h4>
+                                    <div class="card-status processing"></div>
+                                </div>
+                                <p>Deep-fake synthetic audio networks with blockchain-verified authenticity layers.</p>
+                                <div class="card-metrics">
+                                    <span class="metric">940 GB</span>
+                                    <span class="metric">2d ago</span>
+                                    <span class="metric">87.5% integrity</span>
+                                </div>
+                                <div class="progress-ring">
+                                    <svg class="progress-circle" viewBox="0 0 36 36">
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="url(#progressGradient)" stroke-width="2" stroke-dasharray="65, 100" class="progress-path"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="memory-node enhanced" style="margin-top: -60px;">
+                            <div class="node-core pulse-shadow">
+                                <div class="node-icon">⚠️</div>
+                                <div class="node-pulse"></div>
+                            </div>
+                            <div class="memory-card glass card-3d glow-hover">
+                                <div class="card-header">
+                                    <h4>Session: NET-XT01</h4>
+                                    <div class="card-status archived"></div>
+                                </div>
+                                <p>Algorithmic risk factor mitigation with predictive neural forecasting models.</p>
+                                <div class="card-metrics">
+                                    <span class="metric">1.2 TB</span>
+                                    <span class="metric">5d ago</span>
+                                    <span class="metric">95.8% integrity</span>
+                                </div>
+                                <div class="progress-ring">
+                                    <svg class="progress-circle" viewBox="0 0 36 36">
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="url(#progressGradient)" stroke-width="2" stroke-dasharray="90, 100" class="progress-path"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Additional Memory Nodes -->
+                        <div class="memory-node enhanced" style="margin-top: 120px; margin-left: 200px;">
+                            <div class="node-core pulse-shadow">
+                                <div class="node-icon">🌐</div>
+                                <div class="node-pulse"></div>
+                            </div>
+                            <div class="memory-card glass card-3d glow-hover">
+                                <div class="card-header">
+                                    <h4>Session: GLO-7F19</h4>
+                                    <div class="card-status active"></div>
+                                </div>
+                                <p>Global market sentiment analysis with real-time quantum data processing.</p>
+                                <div class="card-metrics">
+                                    <span class="metric">3.1 TB</span>
+                                    <span class="metric">8h ago</span>
+                                    <span class="metric">99.1% integrity</span>
+                                </div>
+                                <div class="progress-ring">
+                                    <svg class="progress-circle" viewBox="0 0 36 36">
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="url(#progressGradient)" stroke-width="2" stroke-dasharray="95, 100" class="progress-path"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Memory Particles -->
+                <div class="memory-particles">
+                    <div class="memory-particle p1"></div>
+                    <div class="memory-particle p2"></div>
+                    <div class="memory-particle p3"></div>
+                    <div class="memory-particle p4"></div>
+                    <div class="memory-stream s1">01010101 01100001</div>
+                    <div class="memory-stream s2">NEURAL_SYNC_ACTIVE</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span class="logo-text">ResearchX<span>.AI</span></span>
+            </div>
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#process">Process</a>
+                <a href="#strategy">Strategy</a>
+                <a href="#results">Results</a>
+                <a href="#deep-dive">Deep Dive</a>
+                <a href="#output">Output</a>
+                <a href="#memory">Memory</a>
+            </div>
+            <div class="footer-copyright">
+                <p>&copy; 2026 ResearchX AI. All rights reserved. | Autonomous Research Intelligence System</p>
+                <p class="footer-tagline">Pioneering the future of AI-driven research and analysis.</p>
+            </div>
+        </div>
+    </footer>
+
+    <canvas id="particles-canvas"></canvas>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
