@@ -8,6 +8,6 @@ httpx
 openai
 langchain
 langchain-openai
-google-genai
+ollama
 reportlab
 psutil

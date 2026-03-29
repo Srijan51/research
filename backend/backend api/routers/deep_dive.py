@@ -27,6 +27,6 @@ async def get_deep_dive(task_id: str, topic_id: str):
 
 @router.post("/explore", response_model=StandardResponse[Dict[str, Any]], summary="Follow-up Q&A")
 async def explore_followup(request: DeepDiveExploreRequest):
-    """Ask follow-up questions answered by Gemini using the research context."""
+    """Ask follow-up questions answered by Ollama using the research context."""
     answer = await answer_followup(request.task_id, request.question)
     return StandardResponse(success=True, data={"response": answer})

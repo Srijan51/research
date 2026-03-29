@@ -7,7 +7,9 @@ class Settings(BaseSettings):
     
     # AI Providers
     OPENAI_API_KEY: str = ""
-    GEMINI_API_KEY: str = ""
+    OLLAMA_BASE_URL: str = "http://localhost:11434"
+    OLLAMA_MODEL: str = "llama3.1:8b"
+    OLLAMA_API_KEY: str = ""
 
     # Environment
     ENVIRONMENT: str = "development"

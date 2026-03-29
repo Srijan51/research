@@ -109,28 +109,28 @@
                         <div class="metric">
                             <span class="metric-icon">⚡</span>
                             <div class="metric-info">
-                                <span class="metric-value" id="cpu-usage">87%</span>
+                                <span class="metric-value" id="cpu-usage">0%</span>
                                 <span class="metric-label">CPU Usage</span>
                             </div>
                         </div>
                         <div class="metric">
                             <span class="metric-icon">🧠</span>
                             <div class="metric-info">
-                                <span class="metric-value" id="neural-load">94%</span>
+                                <span class="metric-value" id="neural-load">0%</span>
                                 <span class="metric-label">Neural Load</span>
                             </div>
                         </div>
                         <div class="metric">
                             <span class="metric-icon">📊</span>
                             <div class="metric-info">
-                                <span class="metric-value" id="data-throughput">2.4GB/s</span>
+                                <span class="metric-value" id="data-throughput">0.0GB/s</span>
                                 <span class="metric-label">Throughput</span>
                             </div>
                         </div>
                         <div class="metric">
                             <span class="metric-icon">⏱️</span>
                             <div class="metric-info">
-                                <span class="metric-value" id="process-time">00:47:23</span>
+                                <span class="metric-value" id="process-time">00:00:00</span>
                                 <span class="metric-label">Runtime</span>
                             </div>
                         </div>
@@ -152,9 +152,9 @@
                             <p>Parameter & scope definition for autonomous execution.</p>
                             <div class="step-progress">
                                 <div class="progress-bar">
-                                    <div class="progress-fill" id="step1-progress"></div>
+                                    <div class="progress-fill" id="step1-progress" style="width: 0%;"></div>
                                 </div>
-                                <span class="progress-text" id="step1-text">100%</span>
+                                <span class="progress-text" id="step1-text">0%</span>
                             </div>
                             <div class="step-particles">
                                 <div class="particle p1"></div>
@@ -181,9 +181,9 @@
                             <p>Deep scanning and parsing across multiple node networks.</p>
                             <div class="step-progress">
                                 <div class="progress-bar">
-                                    <div class="progress-fill" id="step2-progress"></div>
+                                    <div class="progress-fill" id="step2-progress" style="width: 0%;"></div>
                                 </div>
-                                <span class="progress-text" id="step2-text">87%</span>
+                                <span class="progress-text" id="step2-text">0%</span>
                             </div>
                             <div class="step-particles">
                                 <div class="particle p1"></div>
@@ -210,9 +210,9 @@
                             <p>Synthesizing patterns via neural architecture.</p>
                             <div class="step-progress">
                                 <div class="progress-bar">
-                                    <div class="progress-fill" id="step3-progress"></div>
+                                    <div class="progress-fill" id="step3-progress" style="width: 0%;"></div>
                                 </div>
-                                <span class="progress-text" id="step3-text">64%</span>
+                                <span class="progress-text" id="step3-text">0%</span>
                             </div>
                             <div class="step-particles">
                                 <div class="particle p1"></div>
@@ -239,9 +239,9 @@
                             <p>Extraction of actionable intelligence and vectors.</p>
                             <div class="step-progress">
                                 <div class="progress-bar">
-                                    <div class="progress-fill" id="step4-progress"></div>
+                                    <div class="progress-fill" id="step4-progress" style="width: 0%;"></div>
                                 </div>
-                                <span class="progress-text" id="step4-text">23%</span>
+                                <span class="progress-text" id="step4-text">0%</span>
                             </div>
                             <div class="step-particles">
                                 <div class="particle p1"></div>
@@ -347,15 +347,15 @@
                 <div class="dashboard-metrics">
                     <div class="metric-display glass">
                         <span class="metric-label">Processing Status</span>
-                        <span class="metric-value" id="processing-status">Analyzing...</span>
+                        <span class="metric-value" id="processing-status">Waiting for Initialization...</span>
                     </div>
                     <div class="metric-display glass">
                         <span class="metric-label">Confidence Level</span>
-                        <span class="metric-value" id="confidence-level">98.7%</span>
+                        <span class="metric-value" id="confidence-level">--%</span>
                     </div>
                     <div class="metric-display glass">
                         <span class="metric-label">Data Points</span>
-                        <span class="metric-value" id="data-points">2.4M</span>
+                        <span class="metric-value" id="data-points">0</span>
                     </div>
                 </div>
                 <div class="dashboard-grid">
@@ -375,24 +375,8 @@
                         <h3>Key Insights</h3>
                         <div class="insights-grid">
                             <div class="insight-item">
-                                <div class="insight-icon">🚀</div>
-                                <div class="insight-text">Quantum Leap Detected</div>
-                                <div class="insight-value">+247%</div>
-                            </div>
-                            <div class="insight-item">
-                                <div class="insight-icon">⚡</div>
-                                <div class="insight-text">Neural Efficiency</div>
-                                <div class="insight-value">94.2%</div>
-                            </div>
-                            <div class="insight-item">
-                                <div class="insight-icon">🎯</div>
-                                <div class="insight-text">Accuracy Score</div>
-                                <div class="insight-value">99.8%</div>
-                            </div>
-                            <div class="insight-item">
-                                <div class="insight-icon">🌐</div>
-                                <div class="insight-text">Global Coverage</div>
-                                <div class="insight-value">100%</div>
+                                <div class="insight-icon">✔️</div>
+                                <div class="insight-text" style="font-size: 0.9em; flex: 1;">Waiting for data...</div>
                             </div>
                         </div>
                     </div>
@@ -493,15 +477,15 @@
                         <h3>Analysis Metrics</h3>
                         <div class="metric">
                             <span class="metric-label">Confidence Level</span>
-                            <span class="metric-value neon-text">98.7%</span>
+                            <span class="metric-value neon-text" id="deep-dive-confidence">--%</span>
                         </div>
                         <div class="metric">
                             <span class="metric-label">Data Points</span>
-                            <span class="metric-value neon-text">2.4M</span>
+                            <span class="metric-value neon-text" id="deep-dive-data-points">0</span>
                         </div>
                         <div class="metric">
                             <span class="metric-label">Processing Time</span>
-                            <span class="metric-value neon-text">14.2s</span>
+                            <span class="metric-value neon-text" id="deep-dive-processing-time">0s</span>
                         </div>
                         <div class="holographic-mini">
                             <div class="mini-ring"></div>
@@ -514,14 +498,12 @@
                 <div class="deep-dive-qa glass card-3d" style="margin-top: 40px; padding: 25px; border-radius: 16px;">
                     <h3 style="color: var(--neon-cyan); margin-bottom: 15px;">🧠 Ask a Follow-Up Question</h3>
                     <div style="display: flex; gap: 12px;">
-                        <input type="text" id="deep-dive-question" 
-                               placeholder="Ask the AI about your research..."
-                               style="flex: 1; background: rgba(0,0,0,0.4); border: 1px solid rgba(0,243,255,0.3); 
+                        <input type="text" id="deep-dive-question" placeholder="Ask the AI about your research..."
+                            style="flex: 1; background: rgba(0,0,0,0.4); border: 1px solid rgba(0,243,255,0.3); 
                                       color: var(--text-main); padding: 14px 18px; border-radius: 12px; 
                                       font-size: 0.95rem; font-family: inherit; outline: none;
                                       transition: border-color 0.3s ease;">
-                        <button id="deep-dive-ask-btn" 
-                                style="background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+                        <button id="deep-dive-ask-btn" style="background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
                                        border: none; color: #000; font-weight: 700; padding: 14px 28px;
                                        border-radius: 12px; cursor: pointer; font-size: 0.95rem;
                                        transition: transform 0.2s ease, box-shadow 0.3s ease;">
@@ -561,17 +543,17 @@
                         <div class="output-metrics">
                             <div class="metric-item">
                                 <span class="metric-icon">📊</span>
-                                <span class="metric-value" id="output-quality">98.7%</span>
+                                <span class="metric-value" id="output-quality">0%</span>
                                 <span class="metric-label">Quality Score</span>
                             </div>
                             <div class="metric-item">
                                 <span class="metric-icon">⚡</span>
-                                <span class="metric-value" id="processing-speed">2.4s</span>
+                                <span class="metric-value" id="processing-speed">0s</span>
                                 <span class="metric-label">Processing Time</span>
                             </div>
                             <div class="metric-item">
                                 <span class="metric-icon">🔗</span>
-                                <span class="metric-value" id="data-sources">1,247</span>
+                                <span class="metric-value" id="data-sources">0</span>
                                 <span class="metric-label">Data Sources</span>
                             </div>
                         </div>
@@ -684,22 +666,22 @@
                 <div class="memory-stats">
                     <div class="stat-card glass">
                         <div class="stat-icon">💾</div>
-                        <div class="stat-value" id="total-memory">47.2 TB</div>
+                        <div class="stat-value" id="total-memory">0 TB</div>
                         <div class="stat-label">Total Storage</div>
                     </div>
                     <div class="stat-card glass">
                         <div class="stat-icon">⚡</div>
-                        <div class="stat-value" id="active-sessions">1,247</div>
+                        <div class="stat-value" id="active-sessions">0</div>
                         <div class="stat-label">Active Sessions</div>
                     </div>
                     <div class="stat-card glass">
                         <div class="stat-icon">🔄</div>
-                        <div class="stat-value" id="sync-rate">99.7%</div>
+                        <div class="stat-value" id="sync-rate">0%</div>
                         <div class="stat-label">Sync Rate</div>
                     </div>
                     <div class="stat-card glass">
                         <div class="stat-icon">🧠</div>
-                        <div class="stat-value" id="neural-links">8,942</div>
+                        <div class="stat-value" id="neural-links">0</div>
                         <div class="stat-label">Neural Links</div>
                     </div>
                 </div>

@@ -1,33 +1,36 @@
 import asyncio
 import logging
-from google import genai
+import httpx
 from core.config import settings
 from services.state import create_task, get_task, update_task
 
 logger = logging.getLogger(__name__)
 
-# Initialize Gemini client
-gemini_client = None
-if settings.GEMINI_API_KEY:
+async def call_ollama(prompt: str) -> str:
+    """Call the Ollama API. Falls back to a simple response if unavailable."""
     try:
-        gemini_client = genai.Client(api_key=settings.GEMINI_API_KEY)
-        logger.info("Gemini AI client initialized successfully.")
-    except Exception as e:
-        logger.error(f"Failed to initialize Gemini client: {e}")
+        payload = {
+            "model": settings.OLLAMA_MODEL,
+            "prompt": prompt,
+            "stream": False,
+        }
 
-async def call_gemini(prompt: str) -> str:
-    """Call the Gemini API. Falls back to a simple response if unavailable."""
-    if not gemini_client:
-        return None
-    try:
-        response = await asyncio.to_thread(
-            gemini_client.models.generate_content,
-            model='gemini-2.0-flash',
-            contents=prompt
-        )
-        return response.text
+        headers = {"Content-Type": "application/json"}
+        if settings.OLLAMA_API_KEY:
+            headers["Authorization"] = f"Bearer {settings.OLLAMA_API_KEY}"
+
+        async with httpx.AsyncClient(timeout=60.0) as client:
+            response = await client.post(
+                f"{settings.OLLAMA_BASE_URL.rstrip('/')}/api/generate",
+                json=payload,
+                headers=headers,
+            )
+            response.raise_for_status()
+
+        data = response.json()
+        return data.get("response")
     except Exception as e:
-        logger.error(f"Gemini API call failed: {e}")
+        logger.error(f"Ollama API call failed: {e}")
         return None
 
 async def run_agent(query: str, task_id: str) -> dict:
@@ -46,7 +49,7 @@ async def run_agent(query: str, task_id: str) -> dict:
     }
 
 async def _ai_processing(task_id: str, query: str):
-    """Background task that calls Gemini to generate strategy, results, and deep-dive content."""
+    """Background task that calls Ollama to generate strategy, results, and deep-dive content."""
     
     # --- 1. STRATEGY ---
     strategy_prompt = f"""You are a research strategist AI. For the research query: "{query}"
@@ -54,7 +57,7 @@ Generate exactly 3 strategic research steps. Return ONLY a JSON array like:
 [{{"id": 1, "action": "Step Title", "description": "One sentence description."}}, ...]
 No markdown, no explanation, just the JSON array."""
     
-    strategy_text = await call_gemini(strategy_prompt)
+    strategy_text = await call_ollama(strategy_prompt)
     strategy = _parse_json_safe(strategy_text, fallback=[
         {"id": 1, "action": "Semantic Parsing", "description": f"Breaking down intent for '{query}'."},
         {"id": 2, "action": "Data Retrieval", "description": "Fetching relevant sources."},
@@ -68,7 +71,7 @@ Generate a research summary. Return ONLY a JSON object like:
 {{"title": "Short findings title", "summary": "A detailed paragraph of findings.", "key_findings": ["Finding 1", "Finding 2", "Finding 3"]}}
 No markdown, no explanation, just the JSON object."""
     
-    results_text = await call_gemini(results_prompt)
+    results_text = await call_ollama(results_prompt)
     results = _parse_json_safe(results_text, fallback={
         "title": "Analysis Complete",
         "summary": f"Research on '{query}' has been completed with high confidence.",
@@ -82,7 +85,7 @@ Generate an in-depth analysis paragraph and 3 citations. Return ONLY a JSON obje
 {{"content": "Detailed paragraph of deep analysis...", "citations": ["[1] Source name or URL", "[2] Source name", "[3] Source name"]}}
 No markdown, no explanation, just the JSON object."""
     
-    deep_dive_text = await call_gemini(deep_dive_prompt)
+    deep_dive_text = await call_ollama(deep_dive_prompt)
     deep_dive = _parse_json_safe(deep_dive_text, fallback={
         "content": f"Deep analysis of '{query}' reveals extensive interdisciplinary connections.",
         "citations": ["[1] Global Research Database", f"[2] ArXiv papers on {query}", "[3] IEEE Digital Library"]
@@ -109,11 +112,11 @@ async def answer_followup(task_id: str, question: str) -> str:
 
 Answer this follow-up question concisely in 2-3 sentences: "{question}" """
     
-    answer = await call_gemini(prompt)
+    answer = await call_ollama(prompt)
     return answer or f"I processed your question about '{question}' but couldn't generate a detailed answer at this time."
 
 def _parse_json_safe(text: str, fallback):
-    """Parse JSON from Gemini response, handling markdown code fences."""
+    """Parse JSON from model response, handling markdown code fences."""
     if not text:
         return fallback
     try:
