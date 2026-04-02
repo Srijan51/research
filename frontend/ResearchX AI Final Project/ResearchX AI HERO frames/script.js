@@ -1,49 +1,72 @@
 document.addEventListener('DOMContentLoaded', () => {
+
     // Global State for Backend Integration
     window.API_BASE_URL = "http://localhost:8000";
     window.currentTaskId = null;
+    window.MOCK_MODE = true; // Set to true for frontend-only demonstration
 
     // Search Box Implementation
-    const initBtn = document.querySelector('.search-box .btn-primary');
-    const searchInput = document.querySelector('.search-box .search-input');
+    const searchInput = document.querySelector('.search-input');
+    const startResearchBtn = document.querySelector('.start-research-btn');
 
-    if (initBtn && searchInput) {
-        initBtn.addEventListener('click', async () => {
-            const query = searchInput.value.trim();
-            if (!query) return;
-
-            initBtn.innerHTML = '<span>Initializing...</span>';
-            initBtn.style.opacity = '0.7';
-
-            try {
-                const res = await fetch(`${window.API_BASE_URL}/api/hero/start-research`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ query: query })
-                });
-                
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.success && data.data && data.data.task_id) {
-                        window.currentTaskId = data.data.task_id;
-                        // Scroll to Process
-                        const processSect = document.querySelector('#process');
-                        if (processSect) processSect.scrollIntoView({ behavior: 'smooth' });
-                    }
-                } else {
-                    console.error("Initiation failed. Status:", res.status);
-                }
-            } catch (err) {
-                console.error("Initiation failed:", err);
-            } finally {
-                initBtn.innerHTML = '<span>Initialize</span>';
-                initBtn.style.opacity = '1';
-                setTimeout(() => { if (!window.currentTaskId && searchInput.value) initBtn.innerHTML = '<span>Error!</span>'; }, 100);
-                setTimeout(() => initBtn.innerHTML = '<span>Initialize</span>', 2000);
-            }
+    // Update search box glow position
+    const searchBox = document.querySelector('.search-box');
+    if (searchBox) {
+        searchBox.addEventListener('mousemove', (e) => {
+            const rect = searchBox.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            searchBox.style.setProperty('--x', `${x}px`);
+            searchBox.style.setProperty('--y', `${y}px`);
         });
     }
 
+    const handleResearchInitialization = async (btn, input) => {
+        const query = input.value.trim();
+        if (!query) return;
+
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<span>Initializing...</span>';
+        btn.style.opacity = '0.7';
+
+        if (window.MOCK_MODE) {
+            setTimeout(() => {
+                window.currentTaskId = "MOCK-" + Math.random().toString(36).substr(2, 9).toUpperCase();
+                btn.innerHTML = originalText;
+                btn.style.opacity = '1';
+                const processSect = document.querySelector('#process');
+                if (processSect) processSect.scrollIntoView({ behavior: 'smooth' });
+                startMockResearch();
+            }, 1500);
+            return;
+        }
+
+        try {
+            const res = await fetch(`${window.API_BASE_URL}/api/hero/start-research`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query: query })
+            });
+            
+            if (res.ok) {
+                const data = await res.json();
+                if (data.success && data.data && data.data.task_id) {
+                    window.currentTaskId = data.data.task_id;
+                    const processSect = document.querySelector('#process');
+                    if (processSect) processSect.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        } catch (err) {
+            console.error("Initiation failed:", err);
+        } finally {
+            btn.innerHTML = originalText;
+            btn.style.opacity = '1';
+        }
+    };
+
+    if (startResearchBtn && searchInput) {
+        startResearchBtn.addEventListener('click', () => handleResearchInitialization(startResearchBtn, searchInput));
+    }
     // Smooth scrolling for navigation links
     const navLinks = document.querySelectorAll('.nav-links a');
     
@@ -69,8 +92,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const observerOptions = {
         root: null,
-        rootMargin: '-40% 0px -60% 0px', // Adjusted to trigger earlier
+        rootMargin: '-50% 0px -50% 0px', // Precise center-line detection
         threshold: 0
+    };
+
+    const navLinksContainer = document.querySelector('.nav-links');
+    const navIndicator = document.querySelector('.nav-indicator');
+
+    const moveNavIndicator = (activeItem) => {
+        if (!activeItem || !navIndicator) return;
+        
+        const width = activeItem.offsetWidth;
+        const left = activeItem.offsetLeft;
+        
+        navIndicator.style.width = `${width}px`;
+        navIndicator.style.transform = `translateX(${left}px)`;
+        navIndicator.classList.add('active');
     };
 
     const observerCallback = (entries) => {
@@ -78,24 +115,37 @@ document.addEventListener('DOMContentLoaded', () => {
             if (entry.isIntersecting) {
                 const id = entry.target.getAttribute('id');
                 
-                // Update active class on nav items
                 navItems.forEach(item => {
                     item.classList.remove('active');
                     if (item.getAttribute('href') === `#${id}`) {
                         item.classList.add('active');
+                        moveNavIndicator(item);
                     }
                 });
             }
         });
     };
 
+    // Initialize indicator position
+    const activeItem = document.querySelector('.nav-item.active');
+    if (activeItem) {
+        // Delay slightly to ensure fonts and layout are ready
+        setTimeout(() => moveNavIndicator(activeItem), 500);
+    }
+
+    // Update on resize
+    window.addEventListener('resize', () => {
+        const currentActive = document.querySelector('.nav-item.active');
+        if (currentActive) moveNavIndicator(currentActive);
+    });
+
     const observer = new IntersectionObserver(observerCallback, observerOptions);
 
     // Observer for cinematic fade-in/out animations
     const revealOptions = {
         root: null,
-        rootMargin: '0px',
-        threshold: 0.15
+        rootMargin: '-5% 0px', /* Slight margin to trigger fade earlier */
+        threshold: 0.05 /* Start transition as soon as 5% comes in */
     };
     
     const revealCallback = (entries) => {
@@ -120,21 +170,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // Navbar scroll effect
     const navbar = document.querySelector('.navbar');
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.style.padding = '16px 0';
-            navbar.style.background = 'rgba(5, 5, 12, 0.8)';
-            navbar.style.backdropFilter = 'blur(20px)';
-            navbar.style.WebkitBackdropFilter = 'blur(20px)';
-            navbar.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.4)';
-            navbar.style.borderBottom = '1px solid rgba(255, 255, 255, 0.05)';
+        if (window.scrollY > 20) {
+            navbar.classList.add('scrolled');
         } else {
-            navbar.style.padding = '24px 0';
-            navbar.style.background = 'rgba(5, 5, 12, 0.6)';
-            navbar.style.backdropFilter = 'blur(20px)';
-            navbar.style.WebkitBackdropFilter = 'blur(20px)';
-            navbar.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.4)';
-            navbar.style.borderBottom = '1px solid rgba(255, 255, 255, 0.05)';
+            navbar.classList.remove('scrolled');
         }
+    });
+
+    // Parallax effect for floating elements
+    const heroFloatingItems = document.querySelectorAll('.floating-item');
+    window.addEventListener('mousemove', (e) => {
+        const x = e.clientX / window.innerWidth;
+        const y = e.clientY / window.innerHeight;
+
+        heroFloatingItems.forEach(item => {
+            const speed = item.getAttribute('data-parallax') || 0.1;
+            const xOffset = (x - 0.5) * speed * 100;
+            const yOffset = (y - 0.5) * speed * 100;
+            item.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+        });
     });
     
     // Add subtle hover animations to strategy nodes
@@ -156,11 +210,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Particles animation
     const canvas = document.getElementById('particles-canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-    let particles = [];
+        let particles = [];
 
     class Particle {
         constructor() {
@@ -206,32 +261,22 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(animateParticles);
     }
 
-    initParticles();
-    animateParticles();
-
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
         initParticles();
-    });
+        animateParticles();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        });
+    }
 
     // Dynamic Neural Load Updater
-    async function updateNeuralLoad() {
+    function updateNeuralLoad() {
         const loadElement = document.querySelector('.status-metric');
         if (loadElement) {
-            if (window.currentTaskId) {
-                try {
-                    const res = await fetch(`${window.API_BASE_URL}/api/agent/${window.currentTaskId}/status`);
-                    if (res.ok) {
-                        const data = await res.json();
-                        if (data.success && data.data) {
-                            loadElement.textContent = `Neural Load: ${Math.round(data.data.ram_usage)}%`;
-                        }
-                    }
-                } catch(e) {}
-            } else {
-                loadElement.textContent = `Neural Load: Standby`;
-            }
+            const load = Math.floor(Math.random() * 71) + 15; // Random between 15-85
+            loadElement.textContent = `Neural Load: ${load}%`;
         }
     }
 
@@ -251,35 +296,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Update dashboard metrics dynamically
-    async function updateDashboardMetrics() {
+    function updateDashboardMetrics() {
         const processingStatus = document.getElementById('processing-status');
         const confidenceLevel = document.getElementById('confidence-level');
         const dataPoints = document.getElementById('data-points');
 
-        if (window.currentTaskId) {
-            try {
-                const res = await fetch(`${window.API_BASE_URL}/api/results/${window.currentTaskId}/metrics`);
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.success && data.data) {
-                        if (processingStatus) processingStatus.textContent = data.data.status || 'Processing...';
-                        if (confidenceLevel) {
-                            let conf = data.data.confidence_score || 0;
-                            if (conf <= 1) conf = Math.round(conf * 100);
-                            confidenceLevel.textContent = `${conf}%`;
-                        }
-                    }
-                }
-            } catch (e) {
-                console.error("Failed to fetch dashboard metrics", e);
-            }
-        } else {
-            if (processingStatus) processingStatus.textContent = 'Waiting for Initialization...';
-            if (confidenceLevel) confidenceLevel.textContent = `--%`;
+        if (processingStatus) {
+            const statuses = ['Analyzing...', 'Processing...', 'Synthesizing...', 'Complete'];
+            processingStatus.textContent = statuses[Math.floor(Math.random() * statuses.length)];
+        }
+
+        if (confidenceLevel) {
+            const confidence = (Math.random() * 10 + 90).toFixed(1);
+            confidenceLevel.textContent = `${confidence}%`;
         }
 
         if (dataPoints) {
-            dataPoints.textContent = window.currentTaskId ? `2.4M` : `0`;
+            const points = Math.floor(Math.random() * 1000000) + 2000000;
+            dataPoints.textContent = `${(points / 1000000).toFixed(1)}M`;
         }
     }
 
@@ -287,8 +321,8 @@ document.addEventListener('DOMContentLoaded', () => {
     animateBars();
     updateDashboardMetrics();
 
-    // Update metrics every 5 seconds
-    setInterval(updateDashboardMetrics, 5000);
+    // Update metrics every 4-6 seconds
+    setInterval(updateDashboardMetrics, Math.random() * 2000 + 4000);
 
     // Dynamic Memory Stats Updater
     function updateMemoryStats() {
@@ -297,12 +331,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const syncRate = document.getElementById('sync-rate');
         const neuralLinks = document.getElementById('neural-links');
 
-        if (totalMemory) totalMemory.textContent = window.currentTaskId ? `42.5 TB` : `0 TB`;
-        if (activeSessions) activeSessions.textContent = window.currentTaskId ? `1,247` : `0`;
-        if (syncRate) syncRate.textContent = window.currentTaskId ? `98%` : `0%`;
-        if (neuralLinks) neuralLinks.textContent = window.currentTaskId ? `10,482` : `0`;
-    }
+        if (totalMemory) {
+            const memory = (40 + Math.random() * 20).toFixed(1);
+            totalMemory.textContent = `${memory} TB`;
+        }
 
+        if (activeSessions) {
+            const sessions = Math.floor(1000 + Math.random() * 1000);
+            activeSessions.textContent = sessions.toLocaleString();
+        }
+
+        if (syncRate) {
+            const rate = (95 + Math.random() * 5).toFixed(1);
+            syncRate.textContent = `${rate}%`;
+        }
+
+        if (neuralLinks) {
+            const links = Math.floor(8000 + Math.random() * 2000);
+            neuralLinks.textContent = links.toLocaleString();
+        }
+    }
 
     // Update memory stats every 5-8 seconds
     setInterval(updateMemoryStats, Math.random() * 3000 + 5000);
@@ -318,28 +366,41 @@ document.addEventListener('DOMContentLoaded', () => {
         const generationStatus = document.getElementById('generation-status');
         const outputQuality = document.getElementById('output-quality');
         const processingSpeed = document.getElementById('processing-speed');
-        
+        const dataSources = document.getElementById('data-sources');
+        const docTimestamp = document.getElementById('doc-timestamp');
+
+        // Update generation progress (animated ring)
         if (generationProgress) {
-            const progress = window.currentTaskId ? 100 : 0;
+            const progress = Math.floor(Math.random() * 40) + 60; // 60-100%
             generationProgress.style.background = `conic-gradient(var(--neon-cyan) ${progress * 3.6}deg, transparent 0deg)`;
             generationProgress.textContent = `${progress}%`;
         }
 
+        // Update generation status
         if (generationStatus) {
-            generationStatus.textContent = window.currentTaskId ? 'Complete' : 'Ready';
+            const statuses = ['Ready', 'Analyzing', 'Processing', 'Synthesizing', 'Optimizing', 'Complete'];
+            generationStatus.textContent = statuses[Math.floor(Math.random() * statuses.length)];
         }
 
-        if (outputQuality) outputQuality.textContent = window.currentTaskId ? `99.2%` : `0%`;
-        if (processingSpeed) processingSpeed.textContent = window.currentTaskId ? `1.4s` : `0s`;
+        // Update output quality
+        if (outputQuality) {
+            const quality = (95 + Math.random() * 5).toFixed(1);
+            outputQuality.textContent = `${quality}%`;
+        }
+
+        // Update processing speed
+        if (processingSpeed) {
+            const speed = (1.5 + Math.random() * 2).toFixed(1);
+            processingSpeed.textContent = `${speed}s`;
+        }
 
         // Update data sources
-        const dataSources = document.getElementById('data-sources');
         if (dataSources) {
-            dataSources.textContent = window.currentTaskId ? '1,247' : '0';
+            const sources = Math.floor(1000 + Math.random() * 1000);
+            dataSources.textContent = sources.toLocaleString();
         }
 
         // Update document timestamp
-        const docTimestamp = document.getElementById('doc-timestamp');
         if (docTimestamp) {
             const now = new Date();
             const timestamp = now.toISOString().replace('T', ' ').substring(0, 19);
@@ -574,12 +635,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===== ENHANCED PROCESS SECTION FUNCTIONALITY =====
 
     // Process Control Panel Updates
+
+
+        // Process Control Panel Updates
     async function updateProcessMetrics() {
         const cpuUsage = document.getElementById('cpu-usage');
         const neuralLoad = document.getElementById('neural-load');
         const dataThroughput = document.getElementById('data-throughput');
         const processTime = document.getElementById('process-time');
         const processStatus = document.getElementById('process-status');
+
+        if (window.MOCK_MODE) return; // Managed by startMockResearch in mock mode
 
         if (window.currentTaskId) {
             try {
@@ -613,11 +679,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         // Update process time (incrementing timer)
-        if (processTime && window.currentTaskId) {
+        if (processTime) {
             const currentTime = processTime.textContent.split(':');
-            let hours = parseInt(currentTime[0]) || 0;
-            let minutes = parseInt(currentTime[1]) || 0;
-            let seconds = parseInt(currentTime[2]) || 0;
+            let hours = parseInt(currentTime[0]);
+            let minutes = parseInt(currentTime[1]);
+            let seconds = parseInt(currentTime[2]);
 
             seconds++;
             if (seconds >= 60) {
@@ -631,11 +697,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
             processTime.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         }
+
+        // Update process status
+        if (processStatus) {
+            const statuses = ['Active', 'Processing', 'Optimizing', 'Analyzing'];
+            const statusText = processStatus.querySelector('.status-text');
+            if (statusText) {
+                statusText.textContent = statuses[Math.floor(Math.random() * statuses.length)];
+            }
+        }
     }
 
     // Initialize process metrics updates
     updateProcessMetrics();
-    setInterval(updateProcessMetrics, 5000); // 5 seconds
+    setInterval(updateProcessMetrics, Math.random() * 2000 + 3000); // 3-5 seconds
 
     // Step Progress Updates
     function updateStepProgress() {
@@ -742,15 +817,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Interactive Step Cards
     const stepCards = document.querySelectorAll('.step');
     stepCards.forEach((card, index) => {
-        card.addEventListener('click', function() {
+        card.addEventListener('click', function(e) {
             // Add click effect
             this.style.transform = 'scale(0.98)';
             setTimeout(() => {
                 this.style.transform = '';
             }, 150);
 
-            // Show step details (could expand this)
-            showStepDetails(index + 1);
+            // Show step details
+            showStepDetails(index + 1, e);
         });
 
         // Add hover sound effect simulation
@@ -760,7 +835,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    function showStepDetails(stepNumber) {
+    function showStepDetails(stepNumber, e) {
         const stepDetails = [
             'Objective: Defining research parameters and scope for autonomous execution',
             'Ingestion: Scanning and parsing data across multiple network nodes',
@@ -781,7 +856,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.appendChild(tooltip);
 
         // Position tooltip
-        const rect = event.target.getBoundingClientRect();
+        const rect = (e.target || e.currentTarget).getBoundingClientRect();
         tooltip.style.left = `${rect.left + rect.width / 2}px`;
         tooltip.style.top = `${rect.top - 10}px`;
 
@@ -894,6 +969,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     document.head.appendChild(tooltipStyle);
 
+
     // --- DYNAMIC DATA INJECTION ---
 
     // 1. STRATEGY
@@ -1005,7 +1081,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if(!memoryContainer) {
                         memoryContainer = document.createElement('div');
                         memoryContainer.id = 'dynamic-memory-history';
-                        memoryContainer.innerHTML = '<h3 style="margin-top:40px; color:var(--text-main); font-size: 1.5rem; text-align: center;">Recent Memory Matrix</h3><div class="memory-grid" id="history-grid" style="margin-top:20px;"></div>';
+                        memoryContainer.innerHTML = '<h3 style="margin-top:20px; color:var(--text-main); font-size: 1.5rem; text-align: center;">Recent Memory Matrix</h3><div class="memory-grid" id="history-grid" style="margin-top:10px;"></div>';
                         const memSect = document.querySelector('.memory .section-content');
                         if(memSect) memSect.appendChild(memoryContainer);
                     }
@@ -1013,9 +1089,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     if(histGrid) {
                         histGrid.innerHTML = '';
                         data.data.forEach(item => {
-                            histGrid.innerHTML += `<div class="memory-card glass glow-hover">
-                                <h4>Task: ${item.task_id}</h4>
-                                <p style="color:var(--text-muted); font-size:12px; margin-top:5px;">${item.query} <br/> <span style="color:var(--neon-purple);">${item.date}</span></p>
+                            histGrid.innerHTML += `<div class="memory-node enhanced">
+                                <div class="memory-card glass glow-hover">
+                                    <h4>Task: ${item.task_id}</h4>
+                                    <p style="color:var(--text-muted); font-size:12px; margin-top:5px;">${item.query} <br/> <span style="color:var(--neon-purple);">${item.date}</span></p>
+                                </div>
+                                <div class="blinking-oval-glow"></div>
                             </div>`;
                         });
                     }
@@ -1092,35 +1171,186 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- LOADING SKELETON CSS ---
-    const skeletonStyle = document.createElement('style');
-    skeletonStyle.textContent = `
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
+    // --- MOCK RESEARCH FLOW ---
+    // --- Mock Interaction Hooks ---
+    async function fetchStrategy() {
+        const url = `${window.API_BASE_URL}/api/strategy/${window.currentTaskId}`;
+        try {
+            const res = await fetch(url);
+            if (res.ok) {
+                const data = await res.json();
+                updateStrategyDisplay(data.data);
+            }
+        } catch (e) { console.warn("Fetch strategy failed", e); }
+    }
+
+    async function fetchResultsInsights() {
+        const url = `${window.API_BASE_URL}/api/results/${window.currentTaskId}`;
+        try {
+            const res = await fetch(url);
+            if (res.ok) {
+                const data = await res.json();
+                updateResultsDisplay(data.data);
+            }
+        } catch (e) { console.warn("Fetch results failed", e); }
+    }
+
+    function updateStrategyDisplay(data) {
+        const nodes = document.querySelectorAll('.node.sub');
+        if (nodes.length > 0 && Array.isArray(data)) {
+            data.forEach((item, i) => {
+                if (nodes[i]) {
+                    const h4 = nodes[i].querySelector('h4');
+                    const p = nodes[i].querySelector('p');
+                    if (h4) h4.textContent = item.action;
+                    if (p) p.textContent = item.description;
+                    nodes[i].classList.add('active');
+                }
+            });
         }
-        .skeleton-loading {
-            background: linear-gradient(90deg, 
-                rgba(0,243,255,0.05) 25%, 
-                rgba(157,0,255,0.1) 50%, 
-                rgba(0,243,255,0.05) 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s ease-in-out infinite;
-            border-radius: 8px;
-            color: transparent !important;
+    }
+
+    function updateResultsDisplay(data) {
+        const title = document.querySelector('.results-content h2');
+        const list = document.querySelector('.findings-list');
+        if (title && data.title) title.textContent = data.title;
+        if (list && Array.isArray(data.key_findings)) {
+            list.innerHTML = data.key_findings.map(f => `<li><span class="finding-icon">✓</span> ${f}</li>`).join('');
         }
-        .skeleton-loading * {
-            color: transparent !important;
+    }
+
+    // Existing StartMockResearch
+    function startMockResearch() {
+        console.log("Starting cinematic mock research flow...");
+        
+        // 1. Process Section Initialization
+        const cpuUsage = document.getElementById('cpu-usage');
+        const neuralLoad = document.getElementById('neural-load');
+        const dataThroughput = document.getElementById('data-throughput');
+        const processStatus = document.getElementById('process-status');
+        
+        if (cpuUsage) cpuUsage.textContent = '87%';
+        if (neuralLoad) neuralLoad.textContent = '94%';
+        if (dataThroughput) dataThroughput.textContent = '2.4GB/s';
+        if (processStatus) {
+            const statusText = processStatus.querySelector('.status-text');
+            if (statusText) statusText.textContent = 'Active: Neural Core Sync';
         }
-        #deep-dive-question:focus {
-            border-color: var(--neon-cyan);
-            box-shadow: 0 0 15px rgba(0,243,255,0.2);
+
+        // Staggered Step Completion
+        const steps = [
+            { id: 'step1', delay: 1000, progress: 100 },
+            { id: 'step2', delay: 3000, progress: 100 },
+            { id: 'step3', delay: 6000, progress: 85 },
+            { id: 'step4', delay: 9000, progress: 45 }
+        ];
+
+        steps.forEach(step => {
+            setTimeout(() => {
+                const progressFill = document.getElementById(`${step.id}-progress`);
+                const progressText = document.getElementById(`${step.id}-text`);
+                if (progressFill) progressFill.style.width = `${step.progress}%`;
+                if (progressText) progressText.textContent = `${step.progress}%`;
+                
+                // Trigger Strategy/Results updates as steps complete
+                if (step.id === 'step1') fetchStrategy();
+                if (step.id === 'step2') fetchResultsInsights();
+            }, step.delay);
+        });
+
+        // Update Output page state
+        setTimeout(() => {
+            const docText = document.querySelector('.doc-text');
+            if (docText) {
+                docText.textContent = "Autonomous research synthesis complete. Market integration probability mapped at 98.4% across all temporal vectors. Neural pathways have identified a high-confidence entry point in the decentralized liquidity mesh.";
+                docText.classList.add('fade-in');
+            }
+            const generationStatus = document.getElementById('generation-status');
+            if (generationStatus) generationStatus.textContent = 'Complete';
+        }, 12000);
+    }
+
+    // Wrap fetches for Mock Mode
+    const originalFetch = window.fetch;
+    window.fetch = async function(...args) {
+        if (window.MOCK_MODE) {
+            const url = args[0];
+            if (url.includes('/api/strategy/')) {
+                return {
+                    ok: true,
+                    json: async () => ({
+                        success: true,
+                        data: [
+                            { action: "Quantum Data Ingestion", description: "Parsing non-linear datasets via 5th-gen neural nodes." },
+                            { action: "Vector Mapping", description: "Mapping 4D semantic vectors to market liquidity clusters." },
+                            { action: "Predictive Synthesis", description: "Generating high-confidence predictive models." }
+                        ]
+                    })
+                };
+            }
+            if (url.includes('/api/results/')) {
+                return {
+                    ok: true,
+                    json: async () => ({
+                        success: true,
+                        data: {
+                            title: "OPTIMAL PARAMETERS FOUND",
+                            key_findings: [
+                                "Neural sync exceeded 98.7% threshold",
+                                "Liquidity gap identified in sector 7-G",
+                                "Real-time vector alignment: SUCCESS"
+                            ]
+                        }
+                    })
+                };
+            }
+            if (url.includes('/api/deep-dive/')) {
+                return {
+                    ok: true,
+                    json: async () => ({
+                        success: true,
+                        data: {
+                            citations: ["ArXiv:24-NEURAL", "SEC-X9-FEED", "SENTIMENT-V3"],
+                            content: "Deep neural analysis has identified a convergence of liquidity vectors across three major network protocols. The confidence interval is currently mapping at 98.4%."
+                        }
+                    })
+                };
+            }
+            if (url.includes('/api/memory/')) {
+                return {
+                    ok: true,
+                    json: async () => ({
+                        success: true,
+                        data: [
+                            { task_id: "VEC-0X9A", query: "Logistic Pathway Optimization", date: "2026-03-29" },
+                            { task_id: "SYS-0K42", query: "Blockchain Entropy Analysis", date: "2026-03-28" }
+                        ]
+                    })
+                };
+            }
         }
-        #deep-dive-ask-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(0,243,255,0.4);
-        }
-    `;
-    document.head.appendChild(skeletonStyle);
+    };
+    
+    // Real-time Latency HUD Simulation
+    const latencyEl = document.getElementById('hero-latency-value');
+    if (latencyEl) {
+        setInterval(() => {
+            const base = 12;
+            const variance = Math.random() * 6;
+            const latency = (base + variance).toFixed(0);
+            latencyEl.textContent = `${latency}ms`;
+        }, 2200);
+    }
+
+    // Tactical Node Identification (Login Page)
+    const nodeEl = document.getElementById('node-identifier');
+    if (nodeEl) {
+        const nodes = ["QUANTUM-AX7", "NEURAL-V9", "SYNT-X0", "CORE-PRO2", "VEC-ALFA"];
+        setInterval(() => {
+            const randomNode = nodes[Math.floor(Math.random() * nodes.length)];
+            nodeEl.textContent = `Node: ${randomNode}`;
+        }, 4000);
+    }
 
 });
+

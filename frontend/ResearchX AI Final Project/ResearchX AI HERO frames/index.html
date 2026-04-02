@@ -13,18 +13,25 @@
 </head>
 
 <body>
+    <div class="scanline-effect"></div>
 
     <nav class="navbar" id="navbar">
         <div class="nav-content">
             <a href="#home" class="logo">ResearchX<span>.AI</span></a>
             <div class="nav-links">
-                <a href="#home" class="nav-item active">Home </a>
+                <a href="#home" class="nav-item active">Home</a>
                 <a href="#process" class="nav-item">Process</a>
                 <a href="#strategy" class="nav-item">Strategy</a>
                 <a href="#results" class="nav-item">Results</a>
                 <a href="#deep-dive" class="nav-item">Deep Dive</a>
                 <a href="#output" class="nav-item">Output</a>
                 <a href="#memory" class="nav-item">Memory</a>
+                <div class="nav-indicator"></div>
+            </div>
+            <div class="nav-actions">
+                <a href="login.html" class="nav-init-btn" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">
+                    <span>Login</span>
+                </a>
             </div>
         </div>
     </nav>
@@ -33,52 +40,73 @@
         <!-- 1. HERO SECTION -->
         <section id="home" class="hero">
             <video autoplay loop muted playsinline class="bg-video">
-                <source src="../Video_UI_Removal_kJtw-lLs.mp4" type="video/mp4">
+                <source src="assets/videos/Video_UI_Removal_kJtw-lLs.mp4" type="video/mp4">
             </video>
-            <div class="video-overlay"></div>
-
+            <div class="hero-bg-overlay"></div>
+            <div class="hero-glow-spot"></div>
+            <div class="hero-grid"></div>
+            
             <div class="section-content">
                 <div class="hero-content">
-                    <h1 class="hero-title">ResearchX AI</h1>
-                    <p class="subtitle">Autonomous Research Intelligence System</p>
-                    <div class="search-box">
-                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        </svg>
-                        <input type="text" placeholder="Initialize research parameters..." class="search-input">
-                        <button class="btn-primary glow-btn">
-                            <span>Initialize</span>
+                    <div class="hero-badge fade-in">AI-Powered Research Intelligence</div>
+                    <h1 class="hero-title fade-in">Autonomous AI<br>Research Engine</h1>
+                    <p class="subtitle fade-in">From raw questions to structured intelligence — instantly.</p>
+                    
+                    <div class="hero-search-wrapper fade-in">
+                        <div class="search-box premium-glass">
+                            <div class="hud-bracket top-left"></div>
+                            <div class="hud-bracket top-right"></div>
+                            <div class="hud-bracket bottom-left"></div>
+                            <div class="hud-bracket bottom-right"></div>
+                            
+                            <div class="search-icon-wrapper">
+                                <div class="scanning-ring"></div>
+                                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                            </div>
+                            <input type="text" placeholder="Enter your research topic..." class="search-input">
+                            <div class="search-glow"></div>
+                        </div>
+                    </div>
+
+                    <div class="hero-actions fade-in">
+                        <button class="btn-primary start-research-btn">
+                            <span>Start Research</span>
+                            <div class="btn-glow"></div>
+                        </button>
+                        <button class="btn-secondary view-demo-btn">
+                            <span>View Demo</span>
                         </button>
                     </div>
                 </div>
 
                 <!-- Futuristic Floating Elements -->
-                <div class="floating-elements">
-                    <div class="floating-orb orb1 glass pulse-shadow"></div>
-                    <div class="floating-orb orb2 glass pulse-shadow"></div>
-                    <div class="floating-orb orb3 glass pulse-shadow"></div>
-                    <div class="data-flow df1">01010101</div>
-                    <div class="data-flow df2">01100001</div>
-                    <div class="data-flow df3">00110011</div>
-                    <div class="data-flow df4">11001100</div>
-                    <div class="holo-projection proj1">
-                        <div class="holo-screen"></div>
-                        <div class="holo-data">NEURAL LINK ACTIVE</div>
+                <div class="floating-elements-container">
+                    <div class="floating-item glass-card card-lg layer-1" data-parallax="0.2">
+                        <div class="card-content">NEURAL_NET_ACTIVE</div>
                     </div>
-                    <div class="energy-wave wave1"></div>
-                    <div class="energy-wave wave2"></div>
-                    <div class="quantum-particle particle1"></div>
-                    <div class="quantum-particle particle2"></div>
-                    <div class="quantum-particle particle3"></div>
+                    <div class="floating-item glass-card card-sm layer-2" data-parallax="0.4">
+                        <div class="card-content">SCANNING_NODES...</div>
+                    </div>
+                    <div class="floating-item orb orb-cyan layer-1" data-parallax="0.1"></div>
+                    <div class="floating-item orb orb-purple layer-3" data-parallax="0.6"></div>
+                    <div class="floating-item particle-cluster layer-2"></div>
                 </div>
 
-                <!-- Subtle Status Panel -->
-                <div class="status-panel glass glow-hover">
+                <!-- Mini Status Pill -->
+                <div class="hero-status-pill fade-in">
                     <div class="status-indicator online"></div>
-                    <span class="status-text">AI Core: Online</span>
-                    <div class="status-metric">Neural Load: 23%</div>
+                    <span class="status-value" id="hero-latency-value">14ms</span>
+                </div>
+                
+                <div class="dashboard-particles">
+                    <div class="particle p1"></div>
+                    <div class="particle p2"></div>
+                    <div class="particle p3"></div>
+                    <div class="data-flow df1">0011010</div>
+                    <div class="data-flow df2">INITIALIZING</div>
                 </div>
             </div>
         </section>
@@ -86,7 +114,7 @@
         <!-- 2. PROCESS SECTION -->
         <section id="process" class="process">
             <video autoplay loop muted playsinline class="bg-video">
-                <source src="../Video_UI_Removal_In_a_digital-art_style_this_sequence_depicts_a_Bijsq8g7.mp4"
+                <source src="assets/videos/Video_UI_Removal_In_a_digital-art_style_this_sequence_depicts_a_Bijsq8g7.mp4"
                     type="video/mp4">
             </video>
             <div class="video-overlay"></div>
@@ -290,46 +318,161 @@
             </div>
         </section>
 
-        <!-- 3. STRATEGY SECTION -->
-        <section id="strategy" class="strategy">
+        <section id="strategy" class="quantum-core-section">
             <video autoplay loop muted playsinline class="bg-video">
-                <source src="../Video_UI_Removal_cYR4yF6f.mp4" type="video/mp4">
+                <source src="assets/videos/Video_UI_Removal_cYR4yF6f.mp4" type="video/mp4">
             </video>
             <div class="video-overlay"></div>
-
+            <div class="quantum-bg-gradient"></div>
+            <div class="quantum-particles"></div>
+            
             <div class="section-content">
-                <h2 class="section-title">Quantum Research Strategy</h2>
-                <p class="strategy-description">Harnessing quantum computing paradigms, our autonomous research
-                    framework integrates multi-dimensional data streams with advanced neural architectures to generate
-                    predictive insights at unprecedented scale and precision.</p>
-                <div class="neural-net">
-                    <svg class="connection-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
-                        <line x1="20" y1="20" x2="50" y2="50" />
-                        <line x1="80" y1="20" x2="50" y2="50" />
-                        <line x1="20" y1="80" x2="50" y2="50" />
-                        <line x1="80" y1="80" x2="50" y2="50" />
+                <h2 class="section-title">Quantum Core Strategy</h2>
+                <div class="quantum-system-wrapper">
+                    <!-- Volumetric Rays -->
+                    <div class="volumetric-rays"></div>
+
+                    <!-- Organic Neural SVG -->
+                    <svg class="organic-neural-net" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid meet">
+                        <defs>
+                            <linearGradient id="neuron-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="var(--neon-cyan)" stop-opacity="0.8" />
+                                <stop offset="100%" stop-color="var(--neon-purple)" stop-opacity="0.2" />
+                            </linearGradient>
+                            <linearGradient id="neuron-grad-2" x1="100%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="var(--neon-cyan)" stop-opacity="0.8" />
+                                <stop offset="100%" stop-color="var(--neon-purple)" stop-opacity="0.2" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- Depth: blurred far neurons -->
+                        <path class="neuron-path far" d="M 400 300 C 200 100, 100 400, -50 250" />
+                        <path class="neuron-path far" d="M 400 300 C 600 500, 700 200, 850 450" />
+                        <path class="neuron-path far" d="M 400 300 C 300 500, 100 600, 0 500" />
+                        <path class="neuron-path far" d="M 400 300 C 500 100, 700 0, 800 100" />
+                        
+                        <!-- Depth: sharp near neurons -->
+                        <path class="neuron-path near p1" d="M 400 300 C 250 200, 150 150, 50 100" />
+                        <path class="neuron-path near p2" d="M 400 300 C 550 200, 650 150, 750 100" />
+                        <path class="neuron-path near p3" d="M 400 300 C 250 400, 200 500, 100 550" />
+                        <path class="neuron-path near p4" d="M 400 300 C 550 400, 650 500, 700 550" />
+                        
+                        <!-- Sub Neural Links -->
+                        <path class="neuron-path near sub-p1" d="M 250 200 C 180 220, 120 230, 50 280" />
+                        <path class="neuron-path near sub-p2" d="M 550 200 C 620 220, 680 230, 750 280" />
+                        <path class="neuron-path near sub-p3" d="M 250 400 C 180 380, 120 370, 50 320" />
+                        <path class="neuron-path near sub-p4" d="M 550 400 C 620 380, 680 370, 750 320" />
+                        <path class="neuron-path near sub-p5" d="M 400 300 C 400 150, 300 50, 200 0" />
+                        <path class="neuron-path near sub-p6" d="M 400 300 C 400 450, 500 550, 600 600" />
+                        
+                        <!-- Synapse Nodes (Glowing Intersections) -->
+                        <circle cx="250" cy="200" r="4" class="synapse" />
+                        <circle cx="550" cy="200" r="4" class="synapse" />
+                        <circle cx="250" cy="400" r="4" class="synapse" />
+                        <circle cx="550" cy="400" r="4" class="synapse" />
+                        <circle cx="150" cy="150" r="3" class="synapse" />
+                        <circle cx="650" cy="150" r="3" class="synapse" />
+                        <circle cx="200" cy="500" r="3" class="synapse" />
+                        <circle cx="650" cy="500" r="3" class="synapse" />
+                        <!-- Sub Nodes -->
+                        <circle cx="50" cy="280" r="3" class="synapse" />
+                        <circle cx="750" cy="280" r="3" class="synapse" />
+                        <circle cx="50" cy="320" r="3" class="synapse" />
+                        <circle cx="750" cy="320" r="3" class="synapse" />
+                        <circle cx="200" cy="0" r="3" class="synapse" />
+                        <circle cx="600" cy="600" r="3" class="synapse" />
+                        
+                        <!-- Light Pulses -->
+                        <circle cx="0" cy="0" r="3" class="light-pulse pulse-1">
+                            <animateMotion dur="3s" repeatCount="indefinite" path="M 400 300 C 250 200, 150 150, 50 100" />
+                        </circle>
+                        <circle cx="0" cy="0" r="3" class="light-pulse pulse-2">
+                            <animateMotion dur="4s" repeatCount="indefinite" path="M 400 300 C 550 200, 650 150, 750 100" />
+                        </circle>
+                        <circle cx="0" cy="0" r="3" class="light-pulse pulse-3">
+                            <animateMotion dur="3.5s" repeatCount="indefinite" path="M 400 300 C 250 400, 200 500, 100 550" />
+                        </circle>
+                        <circle cx="0" cy="0" r="3" class="light-pulse pulse-4">
+                            <animateMotion dur="4.2s" repeatCount="indefinite" path="M 400 300 C 550 400, 650 500, 700 550" />
+                        </circle>
+                        <!-- Sub Pulses -->
+                        <circle cx="0" cy="0" r="2" class="light-pulse pulse-5">
+                            <animateMotion dur="2.5s" repeatCount="indefinite" path="M 250 200 C 180 220, 120 230, 50 280" />
+                        </circle>
+                        <circle cx="0" cy="0" r="2" class="light-pulse pulse-6">
+                            <animateMotion dur="3.2s" repeatCount="indefinite" path="M 550 400 C 620 380, 680 370, 750 320" />
+                        </circle>
+                        <circle cx="0" cy="0" r="2" class="light-pulse pulse-7">
+                            <animateMotion dur="2.8s" repeatCount="indefinite" path="M 400 300 C 400 450, 500 550, 600 600" />
+                        </circle>
                     </svg>
-                    <div class="node core glass card-3d pulse-shadow float-medium">Quantum Core Engine</div>
-                    <div class="node sub n1 glass card-3d float-slow">Data Fusion Matrix</div>
-                    <div class="node sub n2 glass card-3d float-fast">Contextual Intelligence</div>
-                    <div class="node sub n3 glass card-3d float-slow">Vector Embeddings</div>
-                    <div class="node sub n4 glass card-3d float-medium">Neural Memory Bank</div>
+
+                    <!-- Center Quantum Core -->
+                    <div class="quantum-core">
+                        <div class="core-haze"></div>
+                        <div class="core-waves"></div>
+                        <div class="core-ring"></div>
+                        <div class="core-scan-line"></div>
+                        <div class="core-orb"></div>
+                        <div class="core-label">Quantum Core</div>
+                    </div>
+
+                    <!-- Advanced UI HUD Panels -->
+                    <div class="advanced-hud panel-tl">
+                        <div class="hud-top">
+                            <span class="hud-dot blink-fast"></span>
+                            <span class="hud-title">Signal Processing</span>
+                        </div>
+                        <div class="hud-metrics">
+                            <div class="hud-bar"><div class="hud-fill" style="width: 88%"></div></div>
+                            <span class="hud-val">88%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="advanced-hud panel-tr">
+                        <div class="hud-top">
+                            <span class="hud-dot"></span>
+                            <span class="hud-title">Pattern Recognition</span>
+                        </div>
+                        <div class="hud-metrics">
+                            <div class="hud-bar"><div class="hud-fill" style="width: 94%"></div></div>
+                            <span class="hud-val">94%</span>
+                        </div>
+                    </div>
+
+                    <div class="advanced-hud panel-bl">
+                        <div class="hud-top">
+                            <span class="hud-dot blink-slow"></span>
+                            <span class="hud-title">Knowledge Mapping</span>
+                        </div>
+                        <div class="hud-status">SYNCING...</div>
+                    </div>
+
+                    <div class="advanced-hud panel-br">
+                        <div class="hud-top">
+                            <span class="hud-dot active"></span>
+                            <span class="hud-title">Insight Generation</span>
+                        </div>
+                        <div class="hud-status success">OPTIMAL</div>
+                    </div>
                 </div>
-                <div class="strategy-features">
-                    <div class="feature glass glow-hover card-3d">
-                        <div class="icon">⚛️</div>
+
+                <!-- Futuristic Glass Features -->
+                <div class="quantum-features">
+                    <div class="quantum-feature-card">
+                        <div class="quantum-feature-icon">⚛️</div>
                         <h4>Quantum Processing</h4>
-                        <p>Parallel computation across infinite possibilities</p>
+                        <p>Executing parallel computation grids across infinite possibilities</p>
                     </div>
-                    <div class="feature glass glow-hover card-3d">
-                        <div class="icon">🌐</div>
+                    <div class="quantum-feature-card">
+                        <div class="quantum-feature-icon">🌐</div>
                         <h4>Global Data Mesh</h4>
-                        <p>Real-time integration of worldwide knowledge networks</p>
+                        <p>Real-time integration of decentralized worldwide knowledge networks</p>
                     </div>
-                    <div class="feature glass glow-hover card-3d">
-                        <div class="icon">🔮</div>
+                    <div class="quantum-feature-card">
+                        <div class="quantum-feature-icon">🔮</div>
                         <h4>Predictive Synthesis</h4>
-                        <p>Anticipating trends before they emerge</p>
+                        <p>Anticipating neural trends and patterns before they fully emerge</p>
                     </div>
                 </div>
             </div>
@@ -338,7 +481,7 @@
         <!-- 4. RESULTS SECTION -->
         <section id="results" class="results">
             <video autoplay loop muted playsinline class="bg-video">
-                <source src="../Video_UI_Removal_1CVaLrTI.mp4" type="video/mp4">
+                <source src="assets/videos/Video_UI_Removal_1CVaLrTI.mp4" type="video/mp4">
             </video>
             <div class="video-overlay"></div>
 
@@ -364,8 +507,7 @@
                         <div class="executive-content">
                             <div class="summary-line">Neural analysis complete</div>
                             <div class="summary-line">Pattern recognition: <span class="highlight">SUCCESS</span></div>
-                            <div class="summary-line">Confidence threshold: <span class="highlight">EXCEEDED</span>
-                            </div>
+                            <div class="summary-line">Confidence threshold: <span class="highlight">EXCEEDED</span></div>
                             <div class="progress-bar">
                                 <div class="progress-fill" style="width: 87%"></div>
                             </div>
@@ -375,8 +517,55 @@
                         <h3>Key Insights</h3>
                         <div class="insights-grid">
                             <div class="insight-item">
+<<<<<<< HEAD
                                 <div class="insight-icon">✔️</div>
                                 <div class="insight-text" style="font-size: 0.9em; flex: 1;">Waiting for data...</div>
+=======
+                                <div class="insight-icon hud-svg">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="svg-rocket">
+                                        <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
+                                        <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+                                        <path d="M9 12H4s.5-1 1-4c1.5 0 3 .5 3 .5L12 9"/>
+                                        <path d="M15 12v5c0 3-1 4-4 5.5-.5-1.5-1.5-3-1.5-3L12 15"/>
+                                    </svg>
+                                </div>
+                                <div class="insight-text">Quantum Leap Detected</div>
+                                <div class="insight-value">+247%</div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-icon hud-svg">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="svg-bolt">
+                                        <path d="M13 2 L3 14 L12 14 L11 22 L21 10 L12 10 L13 2 Z"/>
+                                    </svg>
+                                </div>
+                                <div class="insight-text">Neural Efficiency</div>
+                                <div class="insight-value">94.2%</div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-icon hud-svg">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="svg-target">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <circle cx="12" cy="12" r="6"></circle>
+                                        <circle cx="12" cy="12" r="2"></circle>
+                                        <line x1="12" y1="2" x2="12" y2="22"></line>
+                                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                                    </svg>
+                                </div>
+                                <div class="insight-text">Accuracy Score</div>
+                                <div class="insight-value">99.8%</div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-icon hud-svg">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="svg-globe">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <path d="M2.13 10.35 A10 10 0 0 1 21.87 13.65"/>
+                                        <path d="M12 2 a15.3 15.3 0 0 1 4 10 a15.3 15.3 0 0 1-4 10 a15.3 15.3 0 0 1-4-10 a15.3 15.3 0 0 1 4-10 z"/>
+                                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                                    </svg>
+                                </div>
+                                <div class="insight-text">Global Coverage</div>
+                                <div class="insight-value">100%</div>
+>>>>>>> 56aa207 (changes in files)
                             </div>
                         </div>
                     </div>
@@ -439,7 +628,7 @@
         <!-- 5. DEEP DIVE SECTION -->
         <section id="deep-dive" class="deep-dive">
             <video autoplay loop muted playsinline class="bg-video">
-                <source src="../ResearchX%20AI%20Deep%20Dive%20Frames/Deep%20Dive%20Section.mp4" type="video/mp4">
+                <source src="assets/videos/Deep_Dive_Section.mp4" type="video/mp4">
             </video>
             <div class="video-overlay"></div>
 
@@ -462,8 +651,7 @@
                         </div>
                         <div class="terminal-body">
                             <p>> [SYS] Initiating deep neural scan...</p>
-                            <p class="glitch-line p-delay-1">> [LOG] Node cross-referencing: <span
-                                    class="neon-text">SUCCESS</span></p>
+                            <p class="glitch-line p-delay-1">> [LOG] Node cross-referencing: <span class="neon-text">SUCCESS</span></p>
                             <p class="p-delay-2">> [SYS] Synthesizing 4D context graphs...</p>
                             <p class="pulse-text p-delay-3">> [AI_CORE] Holographic projection active.</p>
                             <div class="holographic-chart">
@@ -492,8 +680,8 @@
                             <div class="mini-ring"></div>
                         </div>
                     </div>
-                </div>
 
+<<<<<<< HEAD
                 <!-- Deep Dive Follow-Up Q&A -->
                 <div class="deep-dive-qa glass card-3d" style="margin-top: 40px; padding: 25px; border-radius: 16px;">
                     <h3 style="color: var(--neon-cyan); margin-bottom: 15px;">🧠 Ask a Follow-Up Question</h3>
@@ -514,15 +702,49 @@
                          background: rgba(0,243,255,0.05); border-left: 3px solid var(--neon-cyan);
                          border-radius: 0 8px 8px 0; color: var(--text-muted); line-height: 1.6;
                          font-size: 0.9rem;">
+=======
+                    <!-- Neural Follow-Up Query - Relocated for Better Flow -->
+                    <div class="deep-dive-qa glass card-3d">
+                        <div class="terminal-header" style="background: rgba(0,243,255,0.05);">
+                            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                            <span class="term-title">ai_core >> quick_query</span>
+                        </div>
+                        <div class="qa-container" style="padding: 20px;">
+                            <h3 style="color: var(--neon-cyan); margin-bottom: 15px; font-size: 1.1rem;">🧠 Neural Follow-Up Query</h3>
+                            <div style="display: flex; gap: 12px;">
+                                <input type="text" id="deep-dive-question" 
+                                       placeholder="Ask the AI about your research..."
+                                       style="flex: 1; background: rgba(0,0,0,0.4); border: 1px solid rgba(0,243,255,0.3); 
+                                              color: var(--text-main); padding: 14px 18px; border-radius: 12px; 
+                                              font-size: 0.95rem; font-family: inherit; outline: none;
+                                              transition: all 0.3s ease;">
+                                <button id="deep-dive-ask-btn" 
+                                        style="background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+                                               border: none; color: #000; font-weight: 700; padding: 14px 28px;
+                                               border-radius: 12px; cursor: pointer; font-size: 0.95rem;
+                                               transition: transform 0.2s ease, box-shadow 0.3s ease;">
+                                    Ask AI ⚡
+                                </button>
+                            </div>
+                            <div id="deep-dive-answer" style="margin-top: 15px; padding: 15px; display: none;
+                                 background: rgba(0,243,255,0.05); border-left: 3px solid var(--neon-cyan);
+                                 border-radius: 0 8px 8px 0; color: var(--text-muted); line-height: 1.6;
+                                 font-size: 0.9rem;">
+                            </div>
+                        </div>
+>>>>>>> 56aa207 (changes in files)
                     </div>
                 </div>
             </div>
+
+
+
         </section>
 
         <!-- 6. OUTPUT GENERATOR SECTION -->
         <section id="output" class="output">
             <video autoplay loop muted playsinline class="bg-video">
-                <source src="../ResearchX%20AI%20Output%20Frames/Luma%20Output%20page%20video.mp4" type="video/mp4">
+                <source src="assets/videos/Luma_Output_page_video.mp4" type="video/mp4">
             </video>
             <div class="video-overlay"></div>
 
@@ -532,9 +754,7 @@
                     <!-- Output Status Dashboard -->
                     <div class="output-status">
                         <div class="status-indicator">
-                            <div class="status-ring">
-                                <div class="status-fill" id="generation-progress"></div>
-                            </div>
+                            <i class="status-icon neon-text">⚡</i>
                             <div class="status-text">
                                 <span class="status-label">Generation Status</span>
                                 <span class="status-value" id="generation-status">Ready</span>
@@ -569,10 +789,7 @@
                             </div>
                         </div>
                         <div class="doc-content">
-                            <p class="doc-text">The overarching analysis dictates a 98.4% probability of market
-                                integration within the designated parameter clusters. Advanced neural pathways executed
-                                extensive comparative routines utilizing multi-temporal historical data vectors to
-                                arrive at this highly confident paradigm mapping.</p>
+                            <p class="doc-text">The overarching analysis dictates a 98.4% probability of market integration within the designated parameter clusters. Advanced neural pathways executed extensive comparative routines utilizing multi-temporal historical data vectors to arrive at this highly confident paradigm mapping.</p>
                             <div class="doc-insights">
                                 <div class="insight-item">
                                     <span class="insight-icon">🎯</span>
@@ -625,8 +842,7 @@
 
                     <!-- Action Buttons -->
                     <div class="action-buttons">
-                        <button class="btn-primary glow-btn pulse-shadow parallax-layer" data-speed="1.4"
-                            id="pdf-download-btn">
+                        <button class="btn-primary glow-btn pulse-shadow parallax-layer" data-speed="1.4" id="pdf-download-btn">
                             <span>⚡ Download Intel (.PDF)</span>
                             <div class="btn-glow"></div>
                         </button>
@@ -655,7 +871,7 @@
         <!-- 7. MEMORY SYSTEM SECTION -->
         <section id="memory" class="memory">
             <video autoplay loop muted playsinline class="bg-video">
-                <source src="../ResearchX%20AI%20Memory%20Frames/Memory%20Section.mp4" type="video/mp4">
+                <source src="assets/videos/Memory_Section.mp4" type="video/mp4">
             </video>
             <div class="video-overlay"></div>
 
@@ -701,25 +917,19 @@
                                     <stop offset="100%" style="stop-color:var(--neon-purple)" />
                                 </linearGradient>
                             </defs>
-                            <path d="M20,20 Q50,10 80,20" stroke="url(#memoryGradient)" stroke-width="2" fill="none"
-                                class="neural-path" />
-                            <path d="M20,50 Q50,40 80,50" stroke="url(#memoryGradient)" stroke-width="2" fill="none"
-                                class="neural-path" />
-                            <path d="M20,80 Q50,70 80,80" stroke="url(#memoryGradient)" stroke-width="2" fill="none"
-                                class="neural-path" />
+                            <path d="M20,20 Q50,10 80,20" stroke="url(#memoryGradient)" stroke-width="2" fill="none" class="neural-path" />
+                            <path d="M20,50 Q50,40 80,50" stroke="url(#memoryGradient)" stroke-width="2" fill="none" class="neural-path" />
+                            <path d="M20,80 Q50,70 80,80" stroke="url(#memoryGradient)" stroke-width="2" fill="none" class="neural-path" />
                             <circle cx="20" cy="20" r="3" fill="rgba(0,243,255,0.8)" class="neural-node" />
                             <circle cx="50" cy="10" r="2" fill="rgba(157,0,255,0.6)" class="neural-node" />
                             <circle cx="80" cy="20" r="3" fill="rgba(0,243,255,0.8)" class="neural-node" />
                             <circle cx="20" cy="50" r="2" fill="rgba(157,0,255,0.6)" class="neural-node" />
                             <circle cx="50" cy="40" r="3" fill="rgba(0,243,255,0.8)" class="neural-node" />
-                            <circle cx="80" cy="50" r="2" fill="rgba(157,0,255,0.6)" class="neural-node" />
-                            <circle cx="20" cy="80" r="3" fill="rgba(0,243,255,0.8)" class="neural-node" />
-                            <circle cx="50" cy="70" r="2" fill="rgba(157,0,255,0.6)" class="neural-node" />
                             <circle cx="80" cy="80" r="3" fill="rgba(0,243,255,0.8)" class="neural-node" />
+                             <circle cx="20" cy="80" r="2" fill="rgba(0,243,255,0.8)" class="neural-node blinking-oval-node" />
                         </svg>
                     </div>
-
-                    <!-- Memory Nodes Grid -->
+                    <!-- Memory Nodes Grid - Refactored for Stability -->
                     <div class="memory-nodes-grid">
                         <div class="memory-node enhanced">
                             <div class="node-core pulse-shadow">
@@ -731,8 +941,7 @@
                                     <h4>Session: VEC-0X9A</h4>
                                     <div class="card-status active"></div>
                                 </div>
-                                <p>Global logistics pathway visualization with quantum-accelerated routing algorithms.
-                                </p>
+                                <p>Global logistics pathway visualization with quantum-accelerated routing algorithms.</p>
                                 <div class="card-metrics">
                                     <span class="metric">2.4 TB</span>
                                     <span class="metric">14h ago</span>
@@ -740,51 +949,24 @@
                                 </div>
                                 <div class="progress-ring">
                                     <svg class="progress-circle" viewBox="0 0 36 36">
-                                        <path
-                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                                             fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2" />
-                                        <path
-                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                                             fill="none" stroke="url(#progressGradient)" stroke-width="2"
-                                            stroke-dasharray="75, 100" class="progress-path" />
+                                            stroke-dasharray="85, 100" class="progress-path" />
                                     </svg>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="memory-node enhanced" style="margin-top: 80px; margin-left: auto;">
-                            <div class="node-core pulse-shadow">
-                                <div class="node-icon">🎭</div>
+                            <div class="node-core pulse-shadow" style="margin-top: 20px;">
+                                <div class="node-icon">🧬</div>
                                 <div class="node-pulse"></div>
                             </div>
-                            <div class="memory-card glass card-3d glow-hover">
-                                <div class="card-header">
-                                    <h4>Session: SYS-0K42</h4>
-                                    <div class="card-status processing"></div>
-                                </div>
-                                <p>Deep-fake synthetic audio networks with blockchain-verified authenticity layers.</p>
-                                <div class="card-metrics">
-                                    <span class="metric">940 GB</span>
-                                    <span class="metric">2d ago</span>
-                                    <span class="metric">87.5% integrity</span>
-                                </div>
-                                <div class="progress-ring">
-                                    <svg class="progress-circle" viewBox="0 0 36 36">
-                                        <path
-                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                                            fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2" />
-                                        <path
-                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                                            fill="none" stroke="url(#progressGradient)" stroke-width="2"
-                                            stroke-dasharray="65, 100" class="progress-path" />
-                                    </svg>
-                                </div>
-                            </div>
+                            <div class="blinking-oval-glow"></div>
                         </div>
 
-                        <div class="memory-node enhanced" style="margin-top: -60px;">
+                        <div class="memory-node enhanced staggered">
                             <div class="node-core pulse-shadow">
-                                <div class="node-icon">⚠️</div>
+                                <div class="node-icon">📊</div>
                                 <div class="node-pulse"></div>
                             </div>
                             <div class="memory-card glass card-3d glow-hover">
@@ -800,11 +982,9 @@
                                 </div>
                                 <div class="progress-ring">
                                     <svg class="progress-circle" viewBox="0 0 36 36">
-                                        <path
-                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                                             fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2" />
-                                        <path
-                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                                             fill="none" stroke="url(#progressGradient)" stroke-width="2"
                                             stroke-dasharray="90, 100" class="progress-path" />
                                     </svg>
@@ -812,8 +992,7 @@
                             </div>
                         </div>
 
-                        <!-- Additional Memory Nodes -->
-                        <div class="memory-node enhanced" style="margin-top: 120px; margin-left: 200px;">
+                        <div class="memory-node enhanced">
                             <div class="node-core pulse-shadow">
                                 <div class="node-icon">🌐</div>
                                 <div class="node-pulse"></div>
@@ -830,17 +1009,20 @@
                                     <span class="metric">99.1% integrity</span>
                                 </div>
                                 <div class="progress-ring">
-                                    <svg class="progress-circle" viewBox="0 0 36 36">
-                                        <path
-                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                     <svg class="progress-circle" viewBox="0 0 36 36">
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                                             fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2" />
-                                        <path
-                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                                             fill="none" stroke="url(#progressGradient)" stroke-width="2"
                                             stroke-dasharray="95, 100" class="progress-path" />
                                     </svg>
                                 </div>
                             </div>
+                            <div class="node-core pulse-shadow" style="margin-top: 20px;">
+                                <div class="node-icon">🛰️</div>
+                                <div class="node-pulse"></div>
+                            </div>
+                            <div class="blinking-oval-glow"></div>
                         </div>
                     </div>
                 </div>

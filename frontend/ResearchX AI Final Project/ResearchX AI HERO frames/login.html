@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ResearchX AI</title>
+    <meta name="description" content="Secure login for ResearchX AI Autonomous Research Intelligence System.">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-content">
+            <a href="index.html#home" class="logo">ResearchX<span>.AI</span></a>
+            <div class="nav-links">
+                <a href="index.html#home" class="nav-item">Home</a>
+                <a href="index.html#process" class="nav-item">Process</a>
+                <a href="index.html#strategy" class="nav-item">Strategy</a>
+                <a href="index.html#results" class="nav-item">Results</a>
+                <a href="index.html#deep-dive" class="nav-item">Deep Dive</a>
+                <a href="index.html#output" class="nav-item">Output</a>
+                <a href="index.html#memory" class="nav-item">Memory</a>
+                <div class="nav-indicator"></div>
+            </div>
+            <div class="nav-actions">
+                <a href="index.html#home" class="btn-secondary nav-login-btn">
+                    <span>Return to Nexus</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="login-section">
+            <!-- MODERN NEURAL ANIMATED BACKGROUND -->
+            <div class="login-animated-bg">
+                <div class="cyber-grid"></div>
+                <div class="glow-orb orb-primary"></div>
+                <div class="glow-orb orb-secondary"></div>
+                <div class="glow-orb orb-tertiary"></div>
+                <canvas id="neural-canvas"></canvas>
+                
+                <!-- Holographic HUD Elements (RESTORED PARALLAX) -->
+                <div class="hud-decoration hud-tl">
+                    <div class="hud-circle ring-1"></div>
+                    <div class="hud-circle ring-2"></div>
+                </div>
+                <div class="hud-decoration hud-br">
+                    <div class="hud-circle ring-3"></div>
+                    <div class="hud-data">AUTH_READY</div>
+                </div>
+            </div>
+
+            <!-- Futuristic Floating Elements (Reusing home styles) -->
+            <div class="floating-elements">
+                <div class="floating-orb orb1 glass pulse-shadow"></div>
+                <div class="floating-orb orb2 glass pulse-shadow"></div>
+                <div class="data-flow df1">CORE_LINK_ESTABLISHED</div>
+                <div class="data-flow df2">ENCRYPTION_LAYER_7</div>
+            </div>
+
+            <!-- Tactical Status Panel (STABILIZED) -->
+            <div class="status-panel glass glow-hover login-status">
+                <span class="status-text" id="tactical-status">Initializing Neural Link...</span>
+                <div class="status-metric" id="node-identifier">Node: QUANTUM-AX7</div>
+            </div>
+
+            <div class="card-tilt-container">
+                <div class="login-card quantum-card">
+                    <!-- HUD Brackets -->
+                    <div class="hud-bracket top-left"></div>
+                    <div class="hud-bracket top-right"></div>
+                    <div class="hud-bracket bottom-left"></div>
+                    <div class="hud-bracket bottom-right"></div>
+                    
+                    <!-- Scanning Overlay -->
+                    <div class="scanner-container">
+                        <div class="scan-bar"></div>
+                    </div>
+
+                    <div class="login-header">
+                        <div class="header-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                        </div>
+                        <h2 class="glitch-title">Initialize Session</h2>
+                        <p class="crypto-text">Provide neural authorization credentials</p>
+                    </div>
+
+                    <form class="login-form">
+                        <div class="form-group cyber-group">
+                            <label for="identifier">Researcher Identifier</label>
+                            <div class="input-wrapper">
+                                <div class="input-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                                    </svg>
+                                </div>
+                                <input type="text" id="identifier" class="form-input" placeholder="User-X9427..." required>
+                                <div class="input-glow"></div>
+                                <div class="input-border-glow"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group cyber-group">
+                            <label for="password">Neural Encryption Key</label>
+                            <div class="input-wrapper">
+                                <div class="input-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                    </svg>
+                                </div>
+                                <input type="password" id="password" class="form-input" placeholder="••••••••" required>
+                                <div class="input-glow"></div>
+                                <div class="input-border-glow"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="remember-me futuristic-check">
+                                <input type="checkbox" class="check-input">
+                                <span class="check-label">Stay Synchronized</span>
+                            </label>
+                            <a href="#" class="forgot-pass">Recover Key</a>
+                        </div>
+
+                        <button type="submit" class="btn-primary login-btn glow-btn pulse-shadow">
+                            <span>Authenticate Neural Link</span>
+                        </button>
+
+                        <div class="form-footer">
+                            New Researcher? <a href="#" class="neon-link">Request Authorization</a>
+                        </div>
+                    </form>
+
+                    <!-- Corner Accents -->
+                    <div class="card-accent top-left"></div>
+                    <div class="card-accent top-right"></div>
+                    <div class="card-accent bottom-left"></div>
+                    <div class="card-accent bottom-right"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+    <script src="login.js"></script>
+</body>
+
+</html>
