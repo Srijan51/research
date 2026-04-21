@@ -74,7 +74,7 @@
                     </div>
 
                     <div class="hero-actions fade-in">
-                        <button class="btn-primary start-research-btn">
+                        <button class="btn-primary start-research-btn" id="start-research-btn">
                             <span>Start Research</span>
                             <div class="btn-glow"></div>
                         </button>
@@ -960,6 +960,25 @@
     <canvas id="particles-canvas"></canvas>
 
     <script src="script.js"></script>
+    <script>
+        // ── Hero → Research Session redirect ──────────────────────────────
+        (function () {
+            var btn   = document.getElementById('start-research-btn');
+            var input = document.querySelector('.search-input');
+
+            function launchResearch() {
+                var topic = input ? input.value.trim() : '';
+                var url   = 'research-session.html';
+                if (topic) url += '?topic=' + encodeURIComponent(topic);
+                window.location.href = url;
+            }
+
+            if (btn)   btn.addEventListener('click', launchResearch);
+            if (input) input.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') launchResearch();
+            });
+        })();
+    </script>
 </body>
 
 </html>
