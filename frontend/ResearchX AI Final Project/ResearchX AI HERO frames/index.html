@@ -78,7 +78,7 @@
                             <span>Start Research</span>
                             <div class="btn-glow"></div>
                         </button>
-                        <button class="btn-secondary view-demo-btn">
+                        <button class="btn-secondary view-demo-btn" onclick="window.location.href='demo.html'">
                             <span>View Demo</span>
                         </button>
                     </div>
@@ -615,7 +615,6 @@
                     <div class="particle p2"></div>
                     <div class="particle p3"></div>
                     <div class="data-flow df1">01010101</div>
-                    <div class="data-flow df2">SYNTHESIS</div>
                 </div>
             </div>
         </section>
@@ -708,141 +707,174 @@
                     </div>
                 </div>
             </div>
-
-
-
         </section>
 
-        <!-- 6. OUTPUT GENERATOR SECTION -->
-        <section id="output" class="output">
+        <!-- 6. OUTPUT GENERATOR SECTION (REMASTED) -->
+        <section id="output" class="oc-section">
             <video autoplay loop muted playsinline class="bg-video">
                 <source src="assets/videos/Luma_Output_page_video.mp4" type="video/mp4">
             </video>
             <div class="video-overlay"></div>
 
-            <div class="section-content parallax-layer" data-speed="1.1">
+            <div class="section-content">
                 <h2 class="section-title">Output Generator</h2>
-                <div class="output-container glass card-3d float-slow">
-                    <!-- Output Status Dashboard -->
-                    <div class="output-status">
-                        <div class="status-indicator">
-                            <i class="status-icon neon-text">⚡</i>
-                            <div class="status-text">
-                                <span class="status-label">Generation Status</span>
-                                <span class="status-value" id="generation-status">Ready</span>
-                            </div>
-                        </div>
-                        <div class="output-metrics">
-                            <div class="metric-item">
-                                <span class="metric-icon">📊</span>
-                                <span class="metric-value" id="output-quality">98.7%</span>
-                                <span class="metric-label">Quality Score</span>
-                            </div>
-                            <div class="metric-item">
-                                <span class="metric-icon">⚡</span>
-                                <span class="metric-value" id="processing-speed">2.4s</span>
-                                <span class="metric-label">Processing Time</span>
-                            </div>
-                            <div class="metric-item">
-                                <span class="metric-icon">🔗</span>
-                                <span class="metric-value" id="data-sources">1,247</span>
-                                <span class="metric-label">Data Sources</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Enhanced Document Viewer -->
-                    <div class="document-viewer">
-                        <div class="doc-header">
-                            <h3><span class="neon-dot"></span> Synthesized Research Intelligence</h3>
-                            <div class="doc-meta">
-                                <span class="doc-timestamp" id="doc-timestamp">2026-03-29 14:23:47</span>
-                                <span class="doc-version">v2.4.7</span>
-                            </div>
-                        </div>
-                        <div class="doc-content">
-                            <p class="doc-text">The overarching analysis dictates a 98.4% probability of market
-                                integration within the designated parameter clusters. Advanced neural pathways executed
-                                extensive comparative routines utilizing multi-temporal historical data vectors to
-                                arrive at this highly confident paradigm mapping.</p>
-                            <div class="doc-insights">
-                                <div class="insight-item">
-                                    <span class="insight-icon">🎯</span>
-                                    <span class="insight-text">High-confidence market prediction identified</span>
-                                </div>
-                                <div class="insight-item">
-                                    <span class="insight-icon">📈</span>
-                                    <span class="insight-text">98.4% integration probability calculated</span>
-                                </div>
-                                <div class="insight-item">
-                                    <span class="insight-icon">🔬</span>
-                                    <span class="insight-text">Multi-temporal data analysis completed</span>
+                
+                <div class="oc-dashboard-container">
+                    <!-- Left Side: Process Metrics -->
+                    <aside class="oc-side-panel left">
+                        <div class="panel-tag">PROCESS_METRICS</div>
+                        <div class="oc-metrics-stack">
+                            <div class="oc-metric-item">
+                                <div class="label">QUALITY_SCORE</div>
+                                <div class="oc-ring-wrap">
+                                    <svg viewBox="0 0 100 100">
+                                        <circle cx="50" cy="50" r="45" class="ring-bg"></circle>
+                                        <circle cx="50" cy="50" r="45" class="ring-fill" id="oc-q-ring"></circle>
+                                    </svg>
+                                    <span class="val" id="oc-q-val">98.7%</span>
                                 </div>
                             </div>
+                            <div class="oc-metric-item">
+                                <div class="label">PROCESSING_TIME</div>
+                                <div class="oc-bar-wrap">
+                                    <div class="fill" id="oc-t-bar" style="width: 85%"></div>
+                                </div>
+                                <span class="val">2.4s</span>
+                            </div>
+                            <div class="oc-metric-item">
+                                <div class="label">DATA_SOURCES</div>
+                                <span class="val" id="oc-s-val">1,247</span>
+                            </div>
+                            <div class="oc-metric-item">
+                                <div class="label">CONFIDENCE</div>
+                                <div class="oc-gauge">
+                                    <div class="gauge-pin" style="transform: rotate(70deg)"></div>
+                                </div>
+                                <span class="val">98.4%</span>
+                            </div>
                         </div>
-                        <div class="doc-shimmer"></div>
-                        <div class="doc-particles">
-                            <div class="particle p1"></div>
-                            <div class="particle p2"></div>
-                            <div class="particle p3"></div>
+                    </aside>
+
+                    <!-- Center: AI Output Core -->
+                    <div class="oc-main-core">
+                        <div class="oc-core-panel premium-glass">
+                            <div class="core-header">
+                                <div class="core-badge">SYNTHESIZED INTELLIGENCE READY</div>
+                                <div class="core-meta">v2.4.7 // SYNC_STABLE</div>
+                            </div>
+                            
+                            <div class="oc-output-viewport">
+                                <div class="oc-typing-reveal" id="oc-output-text">
+                                    The overarching analysis dictates a 98.4% probability of market integration within the designated parameter clusters. Advanced neural pathways executed extensive comparative routines utilizing multi-temporal historical data vectors to arrive at this highly confident paradigm mapping.
+                                </div>
+                            </div>
+
+                            <div class="oc-insights-grid">
+                                <div class="oc-insight-box">
+                                    <span class="icon">🎯</span>
+                                    <div class="txt">
+                                        <span class="l">PREDICTION</span>
+                                        <span class="v">High-confidence market identified</span>
+                                    </div>
+                                </div>
+                                <div class="oc-insight-box">
+                                    <span class="icon">📈</span>
+                                    <div class="txt">
+                                        <span class="l">PROBABILITY</span>
+                                        <span class="v">98.4% integration calculated</span>
+                                    </div>
+                                </div>
+                                <div class="oc-insight-box">
+                                    <span class="icon">🔬</span>
+                                    <div class="txt">
+                                        <span class="l">ANALYSIS</span>
+                                        <span class="v">Multi-temporal data completed</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Output Deployment System -->
+                        <div class="oc-deployment-system">
+                            <div class="deploy-header">OUTPUT DEPLOYMENT SYSTEM</div>
+                            <div class="deploy-grid">
+                                <div class="deploy-mod">
+                                    <div class="m-icon">📄</div>
+                                    <div class="m-txt">
+                                        <span class="n">PDF EXPORT</span>
+                                        <span class="s">HOLOGRAPHIC_GEN</span>
+                                    </div>
+                                </div>
+                                <div class="deploy-mod">
+                                    <div class="m-icon">📦</div>
+                                    <div class="m-txt">
+                                        <span class="n">JSON DATA</span>
+                                        <span class="s">STRUCTURED_ARRAY</span>
+                                    </div>
+                                </div>
+                                <div class="deploy-mod">
+                                    <div class="m-icon">📡</div>
+                                    <div class="m-txt">
+                                        <span class="n">API STREAM</span>
+                                        <span class="s">REAL_TIME_NODE</span>
+                                    </div>
+                                </div>
+                                <div class="deploy-mod">
+                                    <div class="m-icon">✨</div>
+                                    <div class="m-txt">
+                                        <span class="n">INTERACTIVE</span>
+                                        <span class="s">UI_HOLOGRAPH</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Output Formats Grid -->
-                    <div class="output-formats">
-                        <h4>Export Formats</h4>
-                        <div class="format-grid">
-                            <div class="format-card glass glow-hover" data-format="pdf">
-                                <div class="format-icon">📄</div>
-                                <div class="format-name">PDF Report</div>
-                                <div class="format-desc">Complete analysis with charts</div>
+                    <!-- Right Side: System Analysis -->
+                    <aside class="oc-side-panel right">
+                        <div class="panel-tag">SYSTEM_ANALYSIS</div>
+                        <div class="oc-status-stack">
+                            <div class="oc-status-card">
+                                <div class="l">SYSTEM STATUS</div>
+                                <div class="v"><span class="dot pulse"></span> ACTIVE</div>
                             </div>
-                            <div class="format-card glass glow-hover" data-format="json">
-                                <div class="format-icon">📊</div>
-                                <div class="format-name">JSON Data</div>
-                                <div class="format-desc">Raw data & insights</div>
+                            <div class="oc-status-card">
+                                <div class="l">NEURAL LOAD</div>
+                                <div class="oc-load-bar">
+                                    <div class="fill" style="width: 64%"></div>
+                                </div>
+                                <div class="v">64%</div>
                             </div>
-                            <div class="format-card glass glow-hover" data-format="api">
-                                <div class="format-icon">🔗</div>
-                                <div class="format-name">API Stream</div>
-                                <div class="format-desc">Real-time data feed</div>
-                            </div>
-                            <div class="format-card glass glow-hover" data-format="viz">
-                                <div class="format-icon">📈</div>
-                                <div class="format-name">Interactive</div>
-                                <div class="format-desc">Dynamic visualizations</div>
+                            <div class="oc-status-card">
+                                <div class="l">DATA SYNC</div>
+                                <div class="oc-sync-anim">
+                                    <span></span><span></span><span></span>
+                                </div>
+                                <div class="v">100%</div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Action Buttons -->
-                    <div class="action-buttons">
-                        <button class="btn-primary glow-btn pulse-shadow parallax-layer" data-speed="1.4"
-                            id="pdf-download-btn">
-                            <span>⚡ Download Intel (.PDF)</span>
-                            <div class="btn-glow"></div>
-                        </button>
-                        <button class="btn-secondary glow-hover" id="export-schema-btn">
-                            <span>📊 Export Schema</span>
-                        </button>
-                        <button class="btn-secondary glow-hover" id="data-api-btn">
-                            <span>🔗 Data API Stream</span>
-                        </button>
-                        <button class="btn-secondary glow-hover" id="share-btn">
-                            <span>📤 Share Results</span>
-                        </button>
-                    </div>
-
-                    <!-- Processing Animation -->
-                    <div class="processing-overlay" id="processing-overlay">
-                        <div class="processing-ring">
-                            <div class="processing-dot"></div>
+                        <div class="oc-radar-wrap">
+                            <div class="oc-radar">
+                                <div class="sweep"></div>
+                                <div class="blip" style="top: 30%; left: 60%"></div>
+                            </div>
+                            <div class="l">ACTIVE_SCAN_ZONE</div>
                         </div>
-                        <div class="processing-text">Generating Intelligence...</div>
-                    </div>
+                    </aside>
+                </div>
+
+                <!-- Control Bar -->
+                <div class="oc-control-bar">
+                    <button class="oc-btn">Download Intelligence</button>
+                    <button class="oc-btn">Export Schema</button>
+                    <button class="oc-btn">API Stream</button>
+                    <button class="oc-btn secondary">Share Output</button>
                 </div>
             </div>
         </section>
+
+
 
         <!-- 7. MEMORY SYSTEM SECTION — Ultra-Modern 3D Knowledge Universe -->
         <section id="memory" class="memory memory-universe">

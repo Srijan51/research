@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Reconstruction — JARVIS Prime</title>
+    <meta name="description" content="AI Memory Reconstruction System. High-fidelity neural data retrieval and visualization.">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="memory-detail.css">
+    <!-- Three.js & GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+
+<body class="rs-memory-system">
+
+    <!-- ── Cinematic Background System ── -->
+    <div class="rs-vault-bg">
+        <canvas id="rs-grid-canvas"></canvas>
+        <div class="rs-space-gradient"></div>
+        <div class="rs-energy-waves"></div>
+        <div class="rs-floating-particles" id="rs-particles"></div>
+    </div>
+
+    <!-- ── Main Interface ── -->
+    <div class="rs-interface-shell">
+        
+        <!-- Top Section -->
+        <header class="rs-top-hud">
+            <div class="rs-header-left">
+                <div class="rs-system-tag">NEURAL_STORAGE_VAULT</div>
+                <div class="rs-id-wrap">ID: <span id="rs-session-id">MEM-0000</span></div>
+            </div>
+            <div class="rs-header-center">
+                <div class="rs-title-wrap">
+                    <h1 id="rs-memory-title">Reconstructing Memory...</h1>
+                    <div class="rs-scan-line"></div>
+                </div>
+                <div class="rs-status-pulse">
+                    <div class="dot"></div>
+                    <span id="rs-status-text">SYSTEM_LINK_ACTIVE</span>
+                </div>
+            </div>
+            <div class="rs-header-right">
+                <div class="rs-sync-badge">
+                    <span class="label">GLOBAL_SYNC</span>
+                    <span class="val">99.9%</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Command Viewport -->
+        <main class="rs-main-viewport">
+            
+            <!-- LEFT: Memory Data Stream -->
+            <aside class="rs-data-stream-aside">
+                <div class="rs-panel-label">INTELLIGENCE_STREAM</div>
+                <div class="rs-stream-container" id="rs-memory-stream">
+                    <!-- Dynamic horizontal strips injected here -->
+                </div>
+            </aside>
+
+            <!-- CENTER: 3D Memory Core -->
+            <section class="rs-core-focus">
+                <div class="rs-3d-core-container" id="rs-core-canvas">
+                    <!-- Three.js Core System -->
+                </div>
+                <!-- Orbiting HUD -->
+                <div class="rs-core-hud">
+                    <div class="rs-hud-ring ring-1"></div>
+                    <div class="rs-hud-ring ring-2"></div>
+                    <div class="rs-hud-ring ring-3"></div>
+                </div>
+            </section>
+
+            <!-- RIGHT: Deep Analysis Panel -->
+            <aside class="rs-analysis-aside">
+                <div class="rs-analysis-panel premium-glass" id="rs-analysis-hub">
+                    <div class="rs-panel-header">
+                        <span class="rs-label">DEEP_NEURAL_ANALYSIS</span>
+                    </div>
+                    
+                    <div class="rs-analysis-body" id="rs-analysis-content">
+                        <div class="rs-data-section" id="rs-section-query">
+                            <label>USER_QUERY</label>
+                            <p class="rs-text-reveal" id="rs-display-query">...</p>
+                        </div>
+                        
+                        <div class="rs-data-section" id="rs-section-response">
+                            <label>AI_RESPONSE_SYNTHESIS</label>
+                            <p class="rs-text-reveal" id="rs-display-response">...</p>
+                        </div>
+
+                        <div class="rs-data-section" id="rs-section-insights">
+                            <label>KEY_INSIGHT_VECTORS</label>
+                            <ul class="rs-insight-list" id="rs-display-insights">
+                                <!-- Insights -->
+                            </ul>
+                        </div>
+
+                        <div class="rs-data-section" id="rs-section-tags">
+                            <label>SEMANTIC_CLASSIFICATION</label>
+                            <div class="rs-tags-grid" id="rs-display-tags">
+                                <!-- Tags -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rs-panel-footer">
+                        <button class="rs-action-btn secondary" onclick="window.history.back()">TERMINATE_VAULT</button>
+                        <button class="rs-action-btn primary" id="rs-btn-sync">SYNC_NEURAL_LINK</button>
+                    </div>
+                </div>
+            </aside>
+
+        </main>
+
+    </div>
+
+    <!-- Error Fallback -->
+    <div id="rs-error-overlay" class="rs-error-hidden">
+        <div class="rs-error-content">
+            <h2>MEMORY_NOT_FOUND</h2>
+            <p>The requested neural ID does not exist in the vault.</p>
+            <button onclick="window.history.back()">RETURN_TO_MATRIX</button>
+        </div>
+    </div>
+
+    <script src="memory-detail.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI System Demonstration | ResearchX</title>
+    <meta name="description" content="Experience the ResearchX AI system live — a cinematic walkthrough of autonomous research intelligence.">
+    <!-- Platform Font — matches all other pages -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="demo.css">
+</head>
+<body>
+
+    <!-- ================================================================ -->
+    <!-- CINEMATIC INTRO SEQUENCE                                          -->
+    <!-- ================================================================ -->
+    <div id="demo-intro">
+        <div class="intro-grid-overlay"></div>
+        <div class="intro-core">
+            <div class="intro-rings">
+                <div class="i-ring r1"></div>
+                <div class="i-ring r2"></div>
+                <div class="i-ring r3"></div>
+                <div class="i-orb"></div>
+            </div>
+            <div class="intro-text-block">
+                <div class="intro-badge">RESEARCHX.AI</div>
+                <div class="intro-title">INITIALIZING<br>DEMO SEQUENCE</div>
+                <div class="intro-bar-wrap">
+                    <div class="intro-bar"><div class="intro-bar-fill" id="introBarFill"></div></div>
+                    <div class="intro-pct" id="introPct">0%</div>
+                </div>
+                <div class="intro-log" id="introLog">BOOTSTRAPPING NEURAL CORE...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- AMBIENT BACKGROUND ENVIRONMENT                                    -->
+    <!-- ================================================================ -->
+    <div id="ambient-bg">
+        <canvas id="bgCanvas"></canvas>
+        <div class="holo-grid"></div>
+        <div class="nebula-layer n1"></div>
+        <div class="nebula-layer n2"></div>
+        <div class="nebula-layer n3"></div>
+        <div class="scan-stripe"></div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- NAVBAR                                                           -->
+    <!-- ================================================================ -->
+    <nav class="demo-nav" id="demoNav">
+        <a href="index.html" class="demo-nav-logo">ResearchX<span>.AI</span></a>
+        <div class="demo-nav-center">
+            <span class="nav-pill active">DEMO</span>
+            <span class="nav-pipe">|</span>
+            <span class="nav-system-tag" id="liveTime">LIVE SYSTEM</span>
+        </div>
+        <a href="index.html" class="demo-back-btn">← BACK TO HOME</a>
+    </nav>
+
+    <!-- ================================================================ -->
+    <!-- MAIN DEMO CONTENT                                                 -->
+    <!-- ================================================================ -->
+    <main class="demo-main">
+
+        <!-- ── SECTION 1: HERO HEADER ── -->
+        <section class="demo-hero reveal-up" id="s-hero">
+            <div class="hero-badge-row">
+                <div class="hbr-dot"></div>
+                <span>SYSTEM ACTIVE — REAL-TIME DEMONSTRATION</span>
+                <div class="hbr-dot"></div>
+            </div>
+            <h1 class="demo-hero-title">
+                <span class="line-reveal" data-text="AI SYSTEM">AI SYSTEM</span>
+                <span class="line-reveal delay-1" data-text="DEMONSTRATION">DEMONSTRATION</span>
+            </h1>
+            <p class="demo-hero-sub reveal-up delay-2">
+                Understand how intelligence is generated — step-by-step, in real time.
+            </p>
+            <!-- Animated divider -->
+            <div class="hero-divider">
+                <div class="hd-line"></div>
+                <div class="hd-scanner"></div>
+                <div class="hd-icon">◈</div>
+                <div class="hd-line"></div>
+            </div>
+            <!-- HUD Stats Row -->
+            <div class="hero-stats-row reveal-up delay-3">
+                <div class="hstat">
+                    <div class="hstat-val" id="stat-latency">14ms</div>
+                    <div class="hstat-label">SYSTEM LATENCY</div>
+                </div>
+                <div class="hstat-sep"></div>
+                <div class="hstat">
+                    <div class="hstat-val">98.7%</div>
+                    <div class="hstat-label">ACCURACY SCORE</div>
+                </div>
+                <div class="hstat-sep"></div>
+                <div class="hstat">
+                    <div class="hstat-val">2.4M</div>
+                    <div class="hstat-label">DATA NODES ACTIVE</div>
+                </div>
+                <div class="hstat-sep"></div>
+                <div class="hstat">
+                    <div class="hstat-val" id="stat-sessions">1,247</div>
+                    <div class="hstat-label">LIVE SESSIONS</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── SECTION 2: VIDEO SHOWCASE ── -->
+        <section class="demo-video-section reveal-up delay-1">
+
+            <!-- Left Capability Panel -->
+            <aside class="side-panel panel-left holo-card">
+                <div class="sp-header">
+                    <div class="sp-accent l"></div>
+                    <span>Key Capabilities</span>
+                </div>
+                <ul class="sp-list">
+                    <li class="sp-item">
+                        <div class="sp-icon">⚡</div>
+                        <div class="sp-text">
+                            <strong>AI Research Automation</strong>
+                            <span>Zero-latency query routing</span>
+                        </div>
+                        <div class="sp-bar"><div style="width:92%"></div></div>
+                    </li>
+                    <li class="sp-item">
+                        <div class="sp-icon">🔬</div>
+                        <div class="sp-text">
+                            <strong>Deep Data Analysis</strong>
+                            <span>Multi-source data fusion</span>
+                        </div>
+                        <div class="sp-bar"><div style="width:87%"></div></div>
+                    </li>
+                    <li class="sp-item">
+                        <div class="sp-icon">🔄</div>
+                        <div class="sp-text">
+                            <strong>Real-time Processing</strong>
+                            <span>14ms average pipeline</span>
+                        </div>
+                        <div class="sp-bar"><div style="width:96%"></div></div>
+                    </li>
+                    <li class="sp-item">
+                        <div class="sp-icon">🧠</div>
+                        <div class="sp-text">
+                            <strong>Intelligent Output</strong>
+                            <span>Structured intelligence gen</span>
+                        </div>
+                        <div class="sp-bar"><div style="width:89%"></div></div>
+                    </li>
+                </ul>
+                <div class="sp-footer">
+                    <div class="sp-status-dot"></div>
+                    <span>SYSTEM OPERATIONAL</span>
+                </div>
+            </aside>
+
+            <!-- Main Video Frame -->
+            <div class="video-hub">
+                <!-- Corner HUD decorations -->
+                <div class="vhub-corner tl"></div>
+                <div class="vhub-corner tr"></div>
+                <div class="vhub-corner bl"></div>
+                <div class="vhub-corner br"></div>
+                <!-- Scanning beam -->
+                <div class="vhub-scan-beam"></div>
+                <!-- Glow rings -->
+                <div class="vhub-ring r1"></div>
+                <div class="vhub-ring r2"></div>
+
+                <div class="video-container holo-card">
+                    <div class="vc-inner-glow"></div>
+                    <!-- EMPTY VIDEO — user will add source later -->
+                    <video autoplay loop muted playsinline controls class="demo-video-el" id="demoVideo">
+                        <source src="assets/videos/Memory_Section.mp4" type="video/mp4">
+                    </video>
+
+                    <!-- Custom play overlay (shown when no src) -->
+                    <div class="video-play-state" id="videoPlayState">
+                        <div class="vps-pulse-rings">
+                            <div class="vps-ring r1"></div>
+                            <div class="vps-ring r2"></div>
+                            <div class="vps-ring r3"></div>
+                        </div>
+                        <div class="vps-btn" id="vpsBtn">
+                            <div class="vps-icon"></div>
+                        </div>
+                        <div class="vps-label">CLICK TO INITIALIZE<br>DEMO PLAYBACK</div>
+                    </div>
+
+                    <!-- Video HUD overlay (always visible) -->
+                    <div class="video-hud-overlay">
+                        <div class="vho-tl">
+                            <span class="vho-tag">RES<span>EARCH</span>X.AI</span>
+                            <span class="vho-live"><div class="vho-dot"></div>DEMO MODE</span>
+                        </div>
+                        <div class="vho-tr">
+                            <span class="vho-ts" id="vhTimestamp">00:00:00</span>
+                        </div>
+                        <div class="vho-bl">
+                            <div class="vho-data-row">
+                                <span>FPS: 60</span>
+                                <span>|</span>
+                                <span>QUALITY: 4K</span>
+                                <span>|</span>
+                                <span id="vhStatus">STANDBY</span>
+                            </div>
+                        </div>
+                        <div class="vho-br">
+                            <span>◈ NEURAL ACTIVE</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Below video: mini controls bar -->
+                <div class="video-meta-bar">
+                    <div class="vmb-item">
+                        <div class="vmb-dot pulse-green"></div>
+                        <span>PIPELINE ACTIVE</span>
+                    </div>
+                    <div class="vmb-item">
+                        <span>STREAM ID: RX-DEMO-2026</span>
+                    </div>
+                    <div class="vmb-item">
+                        <span>SECURED BY RESEARCHX CORE</span>
+                        <div class="vmb-dot pulse-cyan"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Highlights Panel -->
+            <aside class="side-panel panel-right holo-card">
+                <div class="sp-header">
+                    <div class="sp-accent r"></div>
+                    <span>System Highlights</span>
+                </div>
+                <ul class="sp-list">
+                    <li class="sp-item">
+                        <div class="sp-icon purple">🌐</div>
+                        <div class="sp-text">
+                            <strong>Neural Intelligence Core</strong>
+                            <span>Deep pattern recognition</span>
+                        </div>
+                        <div class="sp-bar purple"><div style="width:94%"></div></div>
+                    </li>
+                    <li class="sp-item">
+                        <div class="sp-icon purple">📊</div>
+                        <div class="sp-text">
+                            <strong>Multi-layer Processing</strong>
+                            <span>Parallel computation grids</span>
+                        </div>
+                        <div class="sp-bar purple"><div style="width:88%"></div></div>
+                    </li>
+                    <li class="sp-item">
+                        <div class="sp-icon purple">💾</div>
+                        <div class="sp-text">
+                            <strong>Dynamic Memory System</strong>
+                            <span>Cross-temporal indexing</span>
+                        </div>
+                        <div class="sp-bar purple"><div style="width:91%"></div></div>
+                    </li>
+                    <li class="sp-item">
+                        <div class="sp-icon purple">📡</div>
+                        <div class="sp-text">
+                            <strong>Advanced Visual Engine</strong>
+                            <span>Holographic data display</span>
+                        </div>
+                        <div class="sp-bar purple"><div style="width:85%"></div></div>
+                    </li>
+                </ul>
+                <div class="sp-footer right">
+                    <div class="sp-status-dot purple"></div>
+                    <span>NEURAL CORE ONLINE</span>
+                </div>
+            </aside>
+
+        </section>
+
+        <!-- ── SECTION 3: WORKFLOW PIPELINE ── -->
+        <section class="demo-pipeline-section reveal-up">
+            <div class="section-label">INTELLIGENCE WORKFLOW</div>
+            <h2 class="section-title">How the System Operates</h2>
+
+            <div class="pipeline-track holo-card">
+                <!-- SVG energy stream -->
+                <svg class="pipeline-svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <defs>
+                        <linearGradient id="pipeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#00F3FF" stop-opacity="0"/>
+                            <stop offset="30%" stop-color="#00F3FF" stop-opacity="0.8"/>
+                            <stop offset="70%" stop-color="#9D00FF" stop-opacity="0.8"/>
+                            <stop offset="100%" stop-color="#9D00FF" stop-opacity="0"/>
+                        </linearGradient>
+                    </defs>
+                    <line x1="120" y1="60" x2="1080" y2="60" stroke="rgba(0,243,255,0.15)" stroke-width="2"/>
+                    <line x1="120" y1="60" x2="1080" y2="60" stroke="url(#pipeGrad)" stroke-width="2" class="pipeline-energy-line"/>
+                </svg>
+
+                <div class="pipeline-steps">
+                    <div class="pipeline-step" data-step="1">
+                        <div class="ps-node">
+                            <div class="ps-ring"></div>
+                            <div class="ps-core">01</div>
+                        </div>
+                        <div class="ps-label">Input Query</div>
+                        <div class="ps-desc">User defines<br>research scope</div>
+                    </div>
+                    <div class="pipeline-step" data-step="2">
+                        <div class="ps-node">
+                            <div class="ps-ring"></div>
+                            <div class="ps-core">02</div>
+                        </div>
+                        <div class="ps-label">AI Processing</div>
+                        <div class="ps-desc">Neural pathways<br>activated</div>
+                    </div>
+                    <div class="pipeline-step" data-step="3">
+                        <div class="ps-node">
+                            <div class="ps-ring"></div>
+                            <div class="ps-core">03</div>
+                        </div>
+                        <div class="ps-label">Research Strategy</div>
+                        <div class="ps-desc">Intelligent source<br>mapping begins</div>
+                    </div>
+                    <div class="pipeline-step" data-step="4">
+                        <div class="ps-node">
+                            <div class="ps-ring"></div>
+                            <div class="ps-core">04</div>
+                        </div>
+                        <div class="ps-label">Data Analysis</div>
+                        <div class="ps-desc">Deep multi-layer<br>synthesis active</div>
+                    </div>
+                    <div class="pipeline-step final" data-step="5">
+                        <div class="ps-node">
+                            <div class="ps-ring"></div>
+                            <div class="ps-core gold">05</div>
+                        </div>
+                        <div class="ps-label gold">Final Output</div>
+                        <div class="ps-desc">Structured intelligence<br>delivered</div>
+                    </div>
+                </div>
+
+                <!-- Animated energy pulse (JS controlled) -->
+                <div class="pipeline-pulse-dot" id="pipelinePulse"></div>
+            </div>
+        </section>
+
+        <!-- ── SECTION 4: INFO CARDS ── -->
+        <section class="demo-info-section">
+            <div class="section-label">PLATFORM INTELLIGENCE</div>
+            <h2 class="section-title">Get the Most From ResearchX</h2>
+
+            <div class="info-grid">
+                <div class="info-card holo-card reveal-up">
+                    <div class="ic-top">
+                        <div class="ic-icon cyan">⚡</div>
+                        <div class="ic-number">01</div>
+                    </div>
+                    <h3>How to Use the Platform</h3>
+                    <p>Initialize queries via the main console. The system automatically routes inputs to the optimal neural pathway, activating relevant data sources for maximum research efficiency.</p>
+                    <div class="ic-footer">
+                        <div class="ic-tag">GETTING STARTED</div>
+                        <div class="ic-arrow">→</div>
+                    </div>
+                </div>
+
+                <div class="info-card holo-card reveal-up delay-1 featured">
+                    <div class="ic-top">
+                        <div class="ic-icon purple">🛡️</div>
+                        <div class="ic-number">02</div>
+                    </div>
+                    <h3>Best Practices</h3>
+                    <p>Provide specific, structured parameters to dramatically enhance data retrieval accuracy. Leverage multi-modal inputs for complex, multi-layered research tasks requiring deep synthesis.</p>
+                    <div class="ic-footer">
+                        <div class="ic-tag">OPTIMIZE</div>
+                        <div class="ic-arrow">→</div>
+                    </div>
+                </div>
+
+                <div class="info-card holo-card reveal-up delay-2">
+                    <div class="ic-top">
+                        <div class="ic-icon cyan">🎯</div>
+                        <div class="ic-number">03</div>
+                    </div>
+                    <h3>Tips for Accurate Research</h3>
+                    <p>Leverage the dynamic memory system to cross-reference historical data matrices. Use temporal anchors and domain filters to ensure the highest precision in your final intelligence output.</p>
+                    <div class="ic-footer">
+                        <div class="ic-tag">PRO TIPS</div>
+                        <div class="ic-arrow">→</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── SECTION 5: CTA FOOTER ── -->
+        <section class="demo-cta reveal-up">
+            <div class="cta-glow-orb"></div>
+            <div class="cta-content holo-card">
+                <div class="section-label">READY TO BEGIN</div>
+                <h2>Experience Full Intelligence</h2>
+                <p>Deploy the ResearchX AI system on your research pipeline and unlock autonomous intelligence generation at scale.</p>
+                <div class="cta-btns">
+                    <a href="index.html" class="cta-btn primary">START RESEARCH ⚡</a>
+                    <a href="login.html" class="cta-btn secondary">ACCESS PLATFORM →</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="demo.js"></script>
+</body>
+</html>

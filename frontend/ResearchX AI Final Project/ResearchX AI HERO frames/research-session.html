@@ -4,896 +4,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research Session — ResearchX AI</title>
-    <meta name="description" content="ResearchX AI autonomous research session. Real-time AI-powered research intelligence.">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        /* ── Reset & Base ────────────────────────────────────────────────── */
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        :root {
-            --neon-cyan:   #00F3FF;
-            --neon-purple: #9D00FF;
-            --neon-mid:    #6B3CE6;
-            --bg-deep:     #030712;
-            --bg-glass:    rgba(255,255,255,0.04);
-            --border-glow: rgba(0,243,255,0.18);
-            --text-main:   #E8F4FF;
-            --text-muted:  rgba(232,244,255,0.55);
-            --font-main:   'Space Grotesk', sans-serif;
-            --font-mono:   'JetBrains Mono', monospace;
-        }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: var(--font-main);
-            background: var(--bg-deep);
-            color: var(--text-main);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* ── Scanline overlay ────────────────────────────────────────────── */
-        .scanline {
-            pointer-events: none;
-            position: fixed; inset: 0; z-index: 9999;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 2px,
-                rgba(0,243,255,0.015) 2px,
-                rgba(0,243,255,0.015) 4px
-            );
-            animation: scanMove 8s linear infinite;
-        }
-        @keyframes scanMove {
-            0%   { background-position: 0 0; }
-            100% { background-position: 0 100vh; }
-        }
-
-        /* ── Page background atmosphere ──────────────────────────────────── */
-        .page-bg {
-            position: fixed; inset: 0; z-index: 0;
-            background:
-                radial-gradient(ellipse 80% 60% at 50% -10%, rgba(0,243,255,0.08) 0%, transparent 70%),
-                radial-gradient(ellipse 60% 50% at 80% 100%, rgba(157,0,255,0.07) 0%, transparent 70%),
-                radial-gradient(ellipse 40% 40% at 10%  80%, rgba(0,243,255,0.05) 0%, transparent 70%),
-                var(--bg-deep);
-        }
-        .grid-overlay {
-            position: fixed; inset: 0; z-index: 0;
-            background-image:
-                linear-gradient(rgba(0,243,255,0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,243,255,0.04) 1px, transparent 1px);
-            background-size: 60px 60px;
-            mask-image: radial-gradient(ellipse 100% 100% at 50% 50%, black 30%, transparent 100%);
-        }
-
-        /* ── Navbar ──────────────────────────────────────────────────────── */
-        .rs-nav {
-            position: sticky; top: 0; z-index: 100;
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0 40px;
-            height: 64px;
-            background: rgba(3,7,18,0.82);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border-glow);
-        }
-        .rs-nav__logo {
-            font-size: 1.2rem; font-weight: 700; letter-spacing: -0.5px;
-            text-decoration: none; color: var(--text-main);
-        }
-        .rs-nav__logo span { color: var(--neon-cyan); }
-        .rs-nav__status {
-            display: flex; align-items: center; gap: 8px;
-            font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);
-        }
-        .rs-nav__dot {
-            width: 8px; height: 8px; border-radius: 50%;
-            background: var(--neon-cyan);
-            box-shadow: 0 0 8px var(--neon-cyan);
-            animation: pulseDot 1.6s ease-in-out infinite;
-        }
-        @keyframes pulseDot {
-            0%,100% { opacity:1; transform:scale(1); }
-            50%      { opacity:0.5; transform:scale(0.7); }
-        }
-        .rs-nav__back {
-            display: flex; align-items: center; gap: 6px;
-            text-decoration: none; color: var(--text-muted);
-            font-size: 0.85rem; transition: color 0.2s;
-        }
-        .rs-nav__back:hover { color: var(--neon-cyan); }
-        .rs-nav__back svg { width: 16px; height:16px; }
-
-        /* ── Page layout ─────────────────────────────────────────────────── */
-        .rs-page {
-            position: relative; z-index: 1;
-            max-width: 1300px; margin: 0 auto;
-            padding: 48px 32px 80px;
-        }
-
-        /* ── Hero input zone ─────────────────────────────────────────────── */
-        .rs-hero {
-            text-align: center;
-            margin-bottom: 56px;
-            animation: fadeUp 0.7s ease both;
-        }
-        @keyframes fadeUp {
-            from { opacity:0; transform:translateY(24px); }
-            to   { opacity:1; transform:translateY(0); }
-        }
-        .rs-hero__badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            background: rgba(0,243,255,0.07);
-            border: 1px solid rgba(0,243,255,0.25);
-            border-radius: 24px; padding: 5px 16px;
-            font-size: 0.72rem; font-family: var(--font-mono);
-            color: var(--neon-cyan); letter-spacing: 1.5px; text-transform: uppercase;
-            margin-bottom: 24px;
-        }
-        .rs-hero__title {
-            font-size: clamp(2rem, 5vw, 3.2rem);
-            font-weight: 700; letter-spacing: -1px; line-height: 1.1;
-            background: linear-gradient(135deg, #fff 0%, var(--neon-cyan) 55%, var(--neon-purple) 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 12px;
-        }
-        .rs-hero__sub {
-            color: var(--text-muted); font-size: 1rem; margin-bottom: 36px;
-        }
-
-        /* ── Main input box ──────────────────────────────────────────────── */
-        .rs-input-wrapper {
-            position: relative; max-width: 760px; margin: 0 auto 20px;
-        }
-        .rs-input-box {
-            display: flex; align-items: center; gap: 0;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(0,243,255,0.28);
-            border-radius: 16px;
-            padding: 6px 6px 6px 20px;
-            transition: border-color 0.3s, box-shadow 0.3s;
-            position: relative; overflow: hidden;
-        }
-        .rs-input-box::before {
-            content: '';
-            position: absolute; inset: 0; border-radius: 16px;
-            background: linear-gradient(135deg, rgba(0,243,255,0.04), rgba(157,0,255,0.04));
-            pointer-events: none;
-        }
-        .rs-input-box:focus-within {
-            border-color: var(--neon-cyan);
-            box-shadow: 0 0 0 1px rgba(0,243,255,0.3), 0 0 32px rgba(0,243,255,0.12), inset 0 0 20px rgba(0,243,255,0.04);
-        }
-        .rs-input-box input {
-            flex: 1; background: transparent; border: none; outline: none;
-            color: var(--text-main); font-family: var(--font-main);
-            font-size: 1.05rem; padding: 12px 0;
-            caret-color: var(--neon-cyan);
-        }
-        .rs-input-box input::placeholder { color: rgba(232,244,255,0.35); }
-        .rs-start-btn {
-            display: flex; align-items: center; gap: 8px;
-            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-mid));
-            border: none; border-radius: 12px;
-            color: #000; font-family: var(--font-main); font-weight: 700;
-            font-size: 0.92rem; padding: 14px 28px;
-            cursor: pointer; white-space: nowrap;
-            transition: transform 0.2s, box-shadow 0.3s;
-            position: relative; overflow: hidden;
-        }
-        .rs-start-btn::after {
-            content:''; position:absolute; inset:0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.25), transparent);
-            border-radius: inherit; opacity:0; transition: opacity 0.2s;
-        }
-        .rs-start-btn:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(0,243,255,0.35); }
-        .rs-start-btn:hover::after { opacity:1; }
-        .rs-start-btn:active { transform:translateY(0); }
-
-        .rs-start-btn .btn-icon { font-size:1.1rem; }
-
-        /* hud corner brackets on input */
-        .hud-c { position:absolute; width:10px; height:10px; border-color:var(--neon-cyan); border-style:solid; opacity:0.5; }
-        .hud-c.tl { top:-1px; left:-1px; border-width:2px 0 0 2px; }
-        .hud-c.tr { top:-1px; right:-1px; border-width:2px 2px 0 0; }
-        .hud-c.bl { bottom:-1px; left:-1px; border-width:0 0 2px 2px; }
-        .hud-c.br { bottom:-1px; right:-1px; border-width:0 2px 2px 0; }
-
-        /* chip suggestions */
-        .rs-chips {
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
-            max-width: 760px; margin: 0 auto;
-        }
-        .rs-chip {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(0,243,255,0.18);
-            border-radius: 20px; padding: 5px 14px;
-            font-size: 0.8rem; color: var(--text-muted);
-            cursor: pointer; transition: all 0.2s;
-            font-family: var(--font-mono);
-        }
-        .rs-chip:hover {
-            background: rgba(0,243,255,0.09);
-            border-color: rgba(0,243,255,0.45);
-            color: var(--neon-cyan);
-            box-shadow: 0 0 12px rgba(0,243,255,0.15);
-        }
-
-        /* ── Session grid ────────────────────────────────────────────────── */
-        .rs-grid {
-            display: grid;
-            grid-template-columns: 1fr 340px;
-            grid-template-rows: auto auto;
-            gap: 20px;
-            animation: fadeUp 0.7s 0.15s ease both;
-        }
-        @media (max-width: 900px) {
-            .rs-grid { grid-template-columns: 1fr; }
-        }
-
-        /* glass card base */
-        .glass-card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(0,243,255,0.14);
-            border-radius: 20px;
-            backdrop-filter: blur(12px);
-            position: relative;
-            overflow: hidden;
-        }
-        .glass-card::before {
-            content: '';
-            position: absolute; top: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(0,243,255,0.35), transparent);
-        }
-
-        /* ── Terminal output card ────────────────────────────────────────── */
-        .rs-terminal {
-            grid-row: 1 / 3;
-        }
-        .rs-terminal__header {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 16px 20px 14px;
-            border-bottom: 1px solid rgba(0,243,255,0.1);
-        }
-        .rs-terminal__title {
-            display: flex; align-items: center; gap: 10px;
-            font-family: var(--font-mono); font-size: 0.8rem; color: var(--neon-cyan);
-        }
-        .rs-terminal__dots { display:flex; gap:6px; }
-        .rs-terminal__dots span {
-            width: 10px; height: 10px; border-radius: 50%;
-        }
-        .rs-terminal__dots .d-r { background:#FF5F57; }
-        .rs-terminal__dots .d-y { background:#FFBD2E; }
-        .rs-terminal__dots .d-g { background:#28C840; }
-        .rs-terminal__badge {
-            font-family: var(--font-mono); font-size: 0.68rem;
-            color: var(--text-muted);
-            background: rgba(0,243,255,0.06);
-            border: 1px solid rgba(0,243,255,0.15);
-            border-radius: 6px; padding: 3px 10px;
-        }
-        .rs-terminal__body {
-            padding: 20px;
-            height: 480px;
-            overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: rgba(0,243,255,0.2) transparent;
-        }
-        .rs-terminal__body::-webkit-scrollbar { width: 4px; }
-        .rs-terminal__body::-webkit-scrollbar-thumb { background: rgba(0,243,255,0.2); border-radius: 2px; }
-
-        /* terminal lines */
-        .t-line {
-            display: flex; gap: 10px; align-items: flex-start;
-            font-family: var(--font-mono); font-size: 0.82rem;
-            line-height: 1.6; margin-bottom: 6px;
-            animation: lineIn 0.3s ease both;
-        }
-        @keyframes lineIn {
-            from { opacity:0; transform:translateX(-6px); }
-            to   { opacity:1; transform:translateX(0); }
-        }
-        .t-line .t-prefix { color: var(--text-muted); min-width: 100px; }
-        .t-line .t-msg    { color: var(--text-main); }
-        .t-line.t-info  .t-prefix { color: var(--neon-cyan); }
-        .t-line.t-ok    .t-prefix { color: #28C840; }
-        .t-line.t-warn  .t-prefix { color: #FFBD2E; }
-        .t-line.t-ai    .t-prefix { color: var(--neon-purple); }
-        .t-line.t-sys   .t-msg    { color: var(--text-muted); font-style:italic; }
-        .t-caret {
-            display: inline-block; width: 8px; height: 14px;
-            background: var(--neon-cyan); margin-left: 2px; vertical-align: middle;
-            animation: blink 1s step-end infinite;
-        }
-        @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
-
-        /* progress bar inside terminal */
-        .t-progress-wrap {
-            margin: 10px 0 14px;
-            background: rgba(0,243,255,0.07);
-            border-radius: 4px; height: 4px; overflow: hidden;
-        }
-        .t-progress-bar {
-            height: 100%; border-radius: 4px;
-            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
-            box-shadow: 0 0 8px rgba(0,243,255,0.5);
-            transition: width 0.5s ease;
-            width: 0%;
-        }
-
-        /* inline highlight */
-        .t-hl-cyan   { color: var(--neon-cyan); font-weight:600; }
-        .t-hl-purple { color: var(--neon-purple); font-weight:600; }
-        .t-hl-green  { color: #28C840; font-weight:600; }
-
-        /* ── Right column cards ──────────────────────────────────────────── */
-        /* Status card */
-        .rs-status-card { }
-        .rs-status-card__header {
-            padding: 16px 20px 12px;
-            border-bottom: 1px solid rgba(0,243,255,0.1);
-            font-size: 0.78rem; font-family: var(--font-mono);
-            color: var(--neon-cyan); letter-spacing: 1px;
-        }
-        .rs-status-card__body { padding: 16px 20px; }
-
-        .rs-phase-list { list-style:none; display:flex; flex-direction:column; gap:10px; }
-        .rs-phase {
-            display: flex; align-items: center; gap: 12px;
-            font-size: 0.85rem; color: var(--text-muted);
-            transition: color 0.3s;
-        }
-        .rs-phase.done    { color: var(--text-main); }
-        .rs-phase.active  { color: var(--neon-cyan); }
-        .rs-phase__icon {
-            width: 28px; height: 28px; border-radius: 50%;
-            display: flex; align-items:center; justify-content:center;
-            font-size: 0.8rem; flex-shrink: 0;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(255,255,255,0.03);
-            transition: all 0.3s;
-        }
-        .rs-phase.done   .rs-phase__icon { background:rgba(40,200,64,0.15); border-color:#28C840; color:#28C840; }
-        .rs-phase.active .rs-phase__icon { background:rgba(0,243,255,0.1); border-color:var(--neon-cyan); box-shadow:0 0 10px rgba(0,243,255,0.3); animation:pulseDot 1.2s ease-in-out infinite; }
-
-        .rs-phase__label { flex:1; }
-        .rs-phase__time  { font-family:var(--font-mono); font-size:0.72rem; color:var(--text-muted); }
-
-        /* ── Metrics card ────────────────────────────────────────────────── */
-        .rs-metrics-card__body { padding: 16px 20px; display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-        .rs-metric {
-            background: rgba(0,243,255,0.04);
-            border: 1px solid rgba(0,243,255,0.1);
-            border-radius: 12px; padding: 12px 14px;
-            position:relative; overflow:hidden;
-        }
-        .rs-metric::after {
-            content:''; position:absolute; inset:0; border-radius:inherit;
-            background: linear-gradient(135deg, rgba(0,243,255,0.04), transparent);
-            pointer-events:none;
-        }
-        .rs-metric__label { font-size:0.7rem; color:var(--text-muted); margin-bottom:6px; font-family:var(--font-mono); }
-        .rs-metric__value { font-size:1.3rem; font-weight:700; color:var(--neon-cyan); }
-        .rs-metric__value.purple { color:var(--neon-purple); }
-        .rs-metric__value.green  { color:#28C840; }
-        .rs-metric__value.gold   { color:#F0B429; }
-
-        /* ── Bottom action bar ───────────────────────────────────────────── */
-        .rs-actions {
-            grid-column: 1 / -1;
-            display: flex; align-items: center; justify-content: space-between; gap: 16px;
-            flex-wrap: wrap;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(0,243,255,0.12);
-            border-radius: 16px; padding: 16px 24px;
-        }
-        .rs-actions__left { display:flex; gap:12px; flex-wrap:wrap; }
-        .rs-actions__right { display:flex; gap:10px; }
-
-        .rs-btn {
-            display: flex; align-items: center; gap: 7px;
-            border-radius: 10px; padding: 10px 20px;
-            font-family: var(--font-main); font-size: 0.85rem; font-weight: 600;
-            cursor: pointer; border: none; transition: all 0.2s;
-        }
-        .rs-btn--primary {
-            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-mid));
-            color: #000;
-        }
-        .rs-btn--primary:hover { box-shadow:0 0 20px rgba(0,243,255,0.35); transform:translateY(-1px); }
-        .rs-btn--ghost {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(0,243,255,0.2);
-            color: var(--text-muted);
-        }
-        .rs-btn--ghost:hover { border-color:var(--neon-cyan); color:var(--neon-cyan); }
-        .rs-btn--danger {
-            background: rgba(255,59,48,0.08);
-            border: 1px solid rgba(255,59,48,0.3);
-            color: #FF3B30;
-        }
-        .rs-btn--danger:hover { background:rgba(255,59,48,0.15); }
-
-        /* ── Animated particles ──────────────────────────────────────────── */
-        .rs-particle { position:fixed; pointer-events:none; border-radius:50%; z-index:0; }
-
-        /* ── Glow orbs ───────────────────────────────────────────────────── */
-        .orb-bg {
-            position: fixed; border-radius: 50%; pointer-events:none; z-index:0;
-            filter: blur(80px);
-        }
-        .orb-bg.cyan   { width:500px; height:500px; top:-150px; left:50%; transform:translateX(-50%); background:rgba(0,243,255,0.06); }
-        .orb-bg.purple { width:400px; height:400px; bottom:-100px; right:-100px; background:rgba(157,0,255,0.06); }
-
-        /* ── Responsive tweak ────────────────────────────────────────────── */
-        @media (max-width:640px) {
-            .rs-nav { padding:0 20px; }
-            .rs-page { padding:28px 16px 60px; }
-            .rs-actions { flex-direction:column; align-items:stretch; }
-            .rs-actions .rs-btn { justify-content:center; }
-        }
-    </style>
+    <title>JARVIS Intelligence — ResearchX</title>
+    <meta name="description" content="Advanced JARVIS-inspired AI research interface. High-precision holographic intelligence system.">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="research.css">
+    <!-- Three.js & GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 
-<body>
-    <!-- Atmosphere -->
-    <div class="scanline"></div>
-    <div class="page-bg"></div>
-    <div class="grid-overlay"></div>
-    <div class="orb-bg cyan"></div>
-    <div class="orb-bg purple"></div>
+<body class="rs-body rs-jarvis-system" id="rs-root">
 
-    <!-- ── Navbar ──────────────────────────────────────────────────────── -->
-    <nav class="rs-nav">
-        <a href="index.html" class="rs-nav__logo">ResearchX<span>.AI</span></a>
-        <div class="rs-nav__status">
-            <div class="rs-nav__dot"></div>
-            <span id="nav-status-text">SESSION ACTIVE</span>
-        </div>
-        <a href="index.html" class="rs-nav__back">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                <polyline points="15 18 9 12 15 6"/>
-            </svg>
-            Back to Home
-        </a>
-    </nav>
-
-    <!-- ── Page content ────────────────────────────────────────────────── -->
-    <div class="rs-page">
-
-        <!-- Hero / Input zone -->
-        <div class="rs-hero">
-            <div class="rs-hero__badge">
-                <span class="rs-nav__dot" style="width:6px;height:6px;"></span>
-                Research Session Initialized
-            </div>
-            <h1 class="rs-hero__title">What do you want to<br>research today?</h1>
-            <p class="rs-hero__sub">Enter your topic — the AI will autonomously analyse, map, and synthesise insights.</p>
-
-            <!-- Main input -->
-            <div class="rs-input-wrapper">
-                <div class="rs-input-box">
-                    <div class="hud-c tl"></div>
-                    <div class="hud-c tr"></div>
-                    <div class="hud-c bl"></div>
-                    <div class="hud-c br"></div>
-                    <input
-                        type="text"
-                        id="rs-topic-input"
-                        placeholder="e.g. Quantum computing breakthroughs in 2025…"
-                        autocomplete="off"
-                    >
-                    <button class="rs-start-btn" id="rs-launch-btn">
-                        <span class="btn-icon">⚡</span>
-                        Start Research
-                    </button>
+    <!-- ── Background Nebula System ──────────────────────────────────── -->
+    <div class="rs-nebula-wrapper">
+        <canvas id="rs-nebula-canvas"></canvas>
+        <div class="rs-map-container" id="rs-map-intel">
+            <div class="rs-map-layer layer-deep"></div>
+            <div class="rs-map-layer layer-base"></div>
+            <div class="rs-map-layer layer-grid"></div>
+            <canvas class="rs-map-layer layer-network" id="rs-map-canvas"></canvas>
+            <div class="rs-map-layer layer-hud">
+                <div class="rs-scan-beam"></div>
+                <div class="rs-arc-scanners">
+                    <div class="rs-arc-scanner arc-1"></div>
+                    <div class="rs-arc-scanner arc-2"></div>
                 </div>
-            </div>
-
-            <!-- Quick-suggest chips -->
-            <div class="rs-chips">
-                <span class="rs-chip" data-topic="Quantum computing trends 2025">Quantum computing</span>
-                <span class="rs-chip" data-topic="Large language model architectures">LLM Architectures</span>
-                <span class="rs-chip" data-topic="CRISPR gene editing advances">CRISPR advances</span>
-                <span class="rs-chip" data-topic="Autonomous vehicle safety systems">Autonomous vehicles</span>
-                <span class="rs-chip" data-topic="Dark matter detection methods">Dark matter</span>
-                <span class="rs-chip" data-topic="Fusion energy commercialisation">Fusion energy</span>
+                <div class="rs-noise-overlay"></div>
             </div>
         </div>
+        <div class="rs-grid-overlay"></div>
+        <div class="rs-vignette"></div>
+    </div>
 
-        <!-- Session grid -->
-        <div class="rs-grid" id="rs-session-grid" style="display:none;">
-
-            <!-- Terminal output (large, left col) -->
-            <div class="glass-card rs-terminal">
-                <div class="rs-terminal__header">
-                    <div class="rs-terminal__dots">
-                        <span class="d-r"></span>
-                        <span class="d-y"></span>
-                        <span class="d-g"></span>
-                    </div>
-                    <div class="rs-terminal__title">
-                        ai_core &gt;&gt; research_session
-                    </div>
-                    <div class="rs-terminal__badge" id="term-topic-badge">QUERY: —</div>
-                </div>
-                <div class="rs-terminal__body" id="rs-terminal-body">
-                    <!-- JS populates lines here -->
-                </div>
+    <!-- ── Loading Environment ────────────────────────────────────────── -->
+    <div class="rs-loading-screen" id="rs-loader">
+        <div class="rs-loader-content">
+            <!-- Advanced Orbital Core -->
+            <div class="rs-orbital-core">
+                <div class="rs-orbit-ring rs-loader-ring-outer"></div>
+                <div class="rs-orbit-ring rs-loader-ring-mid"></div>
+                <div class="rs-orbit-ring rs-loader-ring-inner"></div>
+                <div class="rs-core-pulse"></div>
+            </div>
+            
+            <!-- Data Readouts -->
+            <div class="rs-data-readouts">
+                <div class="rs-readout-left">SYS.OPT.99</div>
+                <div class="rs-readout-right">SEC.ENC.256</div>
             </div>
 
-            <!-- Right col: status phases -->
-            <div class="glass-card rs-status-card">
-                <div class="rs-status-card__header">PIPELINE STATUS</div>
-                <div class="rs-status-card__body">
-                    <ul class="rs-phase-list" id="rs-phase-list">
-                        <li class="rs-phase" id="ph-init" data-label="Initializing session">
-                            <div class="rs-phase__icon">01</div>
-                            <span class="rs-phase__label">Initializing</span>
-                            <span class="rs-phase__time" id="ph-init-t">—</span>
-                        </li>
-                        <li class="rs-phase" id="ph-crawl" data-label="Web crawl & data fetch">
-                            <div class="rs-phase__icon">02</div>
-                            <span class="rs-phase__label">Data Fetch</span>
-                            <span class="rs-phase__time" id="ph-crawl-t">—</span>
-                        </li>
-                        <li class="rs-phase" id="ph-parse" data-label="Parsing & tokenizing">
-                            <div class="rs-phase__icon">03</div>
-                            <span class="rs-phase__label">Parsing</span>
-                            <span class="rs-phase__time" id="ph-parse-t">—</span>
-                        </li>
-                        <li class="rs-phase" id="ph-neural" data-label="Neural analysis">
-                            <div class="rs-phase__icon">04</div>
-                            <span class="rs-phase__label">Neural Analysis</span>
-                            <span class="rs-phase__time" id="ph-neural-t">—</span>
-                        </li>
-                        <li class="rs-phase" id="ph-synth" data-label="Synthesis & mapping">
-                            <div class="rs-phase__icon">05</div>
-                            <span class="rs-phase__label">Synthesis</span>
-                            <span class="rs-phase__time" id="ph-synth-t">—</span>
-                        </li>
-                        <li class="rs-phase" id="ph-out" data-label="Output generation">
-                            <div class="rs-phase__icon">06</div>
-                            <span class="rs-phase__label">Output</span>
-                            <span class="rs-phase__time" id="ph-out-t">—</span>
-                        </li>
-                    </ul>
-                </div>
+            <!-- Loading Text -->
+            <div class="rs-loader-text-wrap">
+                <div class="rs-loader-text" id="rs-loader-text">ESTABLISHING_NEURAL_LINK</div>
+                <div class="rs-loader-subtext">Initializing Quantum Handshake <span class="rs-blink">...</span></div>
             </div>
 
-            <!-- Right col: live metrics -->
-            <div class="glass-card rs-metrics-card">
-                <div class="rs-status-card__header">LIVE METRICS</div>
-                <div class="rs-metrics-card__body">
-                    <div class="rs-metric">
-                        <div class="rs-metric__label">CONFIDENCE</div>
-                        <div class="rs-metric__value green" id="m-confidence">—</div>
+            <!-- Segmented Progress Bar -->
+            <div class="rs-loader-bar-advanced">
+                <div class="rs-loader-progress-glow"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Main Interface Shell ───────────────────────────────────────── -->
+    <div class="rs-shell">
+        
+        <!-- Top Header -->
+        <header class="rs-header">
+            <div class="rs-header-content">
+                <div class="rs-header-left">
+                    <a href="index.html" class="rs-logo">ResearchX<span>.AI</span></a>
+                    <div class="rs-system-time" id="rs-clock">20:53:09</div>
+                </div>
+                <div class="rs-header-center">
+                    <div class="rs-session-title-wrap">
+                        <span class="rs-label">ACTIVE_NEURAL_SESSION</span>
+                        <h1 class="rs-session-title" id="rs-query-text">Quantum Computing 2025</h1>
+                        <div class="rs-scan-sweep"></div>
                     </div>
-                    <div class="rs-metric">
-                        <div class="rs-metric__label">DATA POINTS</div>
-                        <div class="rs-metric__value" id="m-datapts">—</div>
-                    </div>
-                    <div class="rs-metric">
-                        <div class="rs-metric__label">SOURCES</div>
-                        <div class="rs-metric__value purple" id="m-sources">—</div>
-                    </div>
-                    <div class="rs-metric">
-                        <div class="rs-metric__label">LATENCY</div>
-                        <div class="rs-metric__value gold" id="m-latency">—</div>
+                </div>
+                <div class="rs-header-right">
+                    <div class="rs-status-box">
+                        <span class="rs-label">ENCRYPTION</span>
+                        <span class="rs-val">RSA_4096_ACTIVE</span>
                     </div>
                 </div>
             </div>
+        </header>
 
-            <!-- Bottom action bar spans full width -->
-            <div class="rs-actions">
-                <div class="rs-actions__left">
-                    <button class="rs-btn rs-btn--primary" id="rs-export-btn">
-                        <span>⚡</span> Export Report (.PDF)
-                    </button>
-                    <button class="rs-btn rs-btn--ghost" id="rs-copy-btn">
-                        <span>📋</span> Copy Insights
-                    </button>
-                    <button class="rs-btn rs-btn--ghost" id="rs-share-btn">
-                        <span>📤</span> Share Session
-                    </button>
+        <!-- Command Viewport -->
+        <main class="rs-viewport">
+
+            <!-- Top Left: Technical Status -->
+            <div class="rs-hud-labels">
+                <div class="rs-hud-label">CORE_STATUS: <span class="rs-cyan">ACTIVE</span></div>
+                <div class="rs-hud-label">NEURAL_LINK: <span class="rs-cyan">STABLE</span></div>
+                <div class="rs-hud-label">THREAT_LEVEL: <span class="rs-cyan">NULL</span></div>
+                <div class="rs-hud-label">CORE_PWR: <span class="rs-cyan">98.2%</span></div>
+            </div>
+            
+            <!-- LEFT: System Logs -->
+            <aside class="rs-system-logs">
+                <div class="rs-panel-header">
+                    <span class="rs-label">INTELLIGENCE_FEED_LOGS</span>
+                    <div class="rs-flicker-dot"></div>
                 </div>
-                <div class="rs-actions__right">
-                    <button class="rs-btn rs-btn--danger" id="rs-abort-btn">
-                        ✕ Abort
-                    </button>
+                <div class="rs-logs-container" id="rs-papers-feed">
+                    <!-- JARVIS System logs injected here -->
+                </div>
+            </aside>
+
+            <!-- RIGHT: Unified Intelligence Box -->
+            <aside class="rs-analysis-hud rs-unified-box">
+                    <!-- Right Side: 3D Core with Floating Labels -->
+                    <section class="rs-core-stage-mini rs-core-right">
+                        <div class="rs-radar-circles">
+                            <div class="rs-radar-ring"></div>
+                            <div class="rs-radar-ring rs-ring-mid"></div>
+                            <div class="rs-radar-ring rs-ring-outer"></div>
+                        </div>
+                        <div class="rs-core-canvas-wrap" id="rs-core-container">
+                            <!-- Three.js JARVIS Core goes here -->
+                        </div>
+                    </section>
+
+                    <!-- Left Side: Data & Insights -->
+                    <div class="rs-box-left-content">
+                        <div class="rs-box-metrics">
+                            <div class="rs-analysis-metrics">
+                                <div class="rs-metric-box">
+                                    <span class="rs-label">CONFIDENCE_INDEX</span>
+                                    <div class="rs-radial-progress">
+                                        <svg width="80" height="80">
+                                            <circle cx="40" cy="40" r="35" class="bg"></circle>
+                                            <circle cx="40" cy="40" r="35" class="progress" id="rs-confidence-circle"></circle>
+                                        </svg>
+                                        <span class="rs-metric-val">97.4%</span>
+                                    </div>
+                                </div>
+                                <div class="rs-metric-box">
+                                    <span class="rs-label">NEURAL_LOAD</span>
+                                    <div class="rs-load-bars">
+                                        <div class="rs-load-bar active"></div>
+                                        <div class="rs-load-bar active"></div>
+                                        <div class="rs-load-bar active"></div>
+                                        <div class="rs-load-bar"></div>
+                                        <div class="rs-load-bar"></div>
+                                    </div>
+                                    <span class="rs-metric-val">62%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rs-analysis-section">
+                            <h4>KEY_INSIGHTS_HUD</h4>
+                            <div class="rs-insight-container" id="rs-insights-list">
+                                <!-- Insights with typing effect -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </aside>
+
+        </main>
+
+        <!-- BOTTOM: System Timeline -->
+        <footer class="rs-footer-pipeline">
+            <div class="rs-pipeline-wrapper">
+                <div class="rs-pipeline-nodes" id="rs-timeline-nodes">
+                    <div class="rs-node active" data-status="SCAN"><div class="rs-node-pulse"></div><span>SCAN</span></div>
+                    <div class="rs-line"></div>
+                    <div class="rs-node active" data-status="ANALYZE"><div class="rs-node-pulse"></div><span>ANALYZE</span></div>
+                    <div class="rs-line"></div>
+                    <div class="rs-node active" data-status="PROCESS"><div class="rs-node-pulse"></div><span>PROCESS</span></div>
+                    <div class="rs-line"></div>
+                    <div class="rs-node active" data-status="VALIDATE"><div class="rs-node-pulse"></div><span>VALIDATE</span></div>
+                    <div class="rs-line"></div>
+                    <div class="rs-node" data-status="OUTPUT"><div class="rs-node-pulse"></div><span>OUTPUT</span></div>
                 </div>
             </div>
+        </footer>
 
-        </div><!-- /rs-grid -->
-    </div><!-- /rs-page -->
+    </div>
 
-    <script>
-    // ─────────────────────────────────────────────────────────────────────────
-    //  ResearchX AI — Research Session Script
-    // ─────────────────────────────────────────────────────────────────────────
-    (function () {
-        'use strict';
-
-        // ── DOM refs ──────────────────────────────────────────────────────
-        var topicInput   = document.getElementById('rs-topic-input');
-        var launchBtn    = document.getElementById('rs-launch-btn');
-        var grid         = document.getElementById('rs-session-grid');
-        var termBody     = document.getElementById('rs-terminal-body');
-        var termBadge    = document.getElementById('term-topic-badge');
-        var navStatus    = document.getElementById('nav-status-text');
-
-        var chips        = document.querySelectorAll('.rs-chip');
-        var abortBtn     = document.getElementById('rs-abort-btn');
-        var exportBtn    = document.getElementById('rs-export-btn');
-        var copyBtn      = document.getElementById('rs-copy-btn');
-        var shareBtn     = document.getElementById('rs-share-btn');
-
-        // phase elements
-        var phases = {
-            init:   { el: document.getElementById('ph-init'),  t: document.getElementById('ph-init-t')  },
-            crawl:  { el: document.getElementById('ph-crawl'), t: document.getElementById('ph-crawl-t') },
-            parse:  { el: document.getElementById('ph-parse'), t: document.getElementById('ph-parse-t') },
-            neural: { el: document.getElementById('ph-neural'),t: document.getElementById('ph-neural-t')},
-            synth:  { el: document.getElementById('ph-synth'), t: document.getElementById('ph-synth-t') },
-            out:    { el: document.getElementById('ph-out'),   t: document.getElementById('ph-out-t')   }
-        };
-
-        // metrics
-        var mConf    = document.getElementById('m-confidence');
-        var mDatapts = document.getElementById('m-datapts');
-        var mSources = document.getElementById('m-sources');
-        var mLatency = document.getElementById('m-latency');
-
-        var sessionRunning = false;
-        var timeouts = [];
-        var startTime;
-
-        // ── Chip click → fill input ───────────────────────────────────────
-        chips.forEach(function (chip) {
-            chip.addEventListener('click', function () {
-                topicInput.value = chip.dataset.topic || chip.textContent;
-                topicInput.focus();
-            });
-        });
-
-        // ── Pre-fill from URL ?topic= param ──────────────────────────────
-        var urlParam = new URLSearchParams(window.location.search).get('topic');
-        if (urlParam) {
-            topicInput.value = decodeURIComponent(urlParam);
-        }
-
-        // ── Enter key support ─────────────────────────────────────────────
-        topicInput.addEventListener('keydown', function (e) {
-            if (e.key === 'Enter' && !sessionRunning) launchSession();
-        });
-        launchBtn.addEventListener('click', function () {
-            if (!sessionRunning) launchSession();
-        });
-
-        // ── Abort ─────────────────────────────────────────────────────────
-        abortBtn.addEventListener('click', function () {
-            if (!sessionRunning) return;
-            timeouts.forEach(clearTimeout);
-            sessionRunning = false;
-            addLine('sys', '[SYS]', 'Session aborted by user.');
-            navStatus.textContent = 'SESSION ABORTED';
-            abortBtn.disabled = true;
-        });
-
-        // ── Action stubs ──────────────────────────────────────────────────
-        exportBtn.addEventListener('click', function () { alert('Export triggered — PDF generation would start here.'); });
-        copyBtn.addEventListener('click', function () { alert('Insights copied to clipboard.'); });
-        shareBtn.addEventListener('click', function () { alert('Share link generated.'); });
-
-        // ── Helper: schedule ─────────────────────────────────────────────
-        function after(ms, fn) {
-            var id = setTimeout(fn, ms);
-            timeouts.push(id);
-        }
-
-        // ── Helper: add a terminal line ───────────────────────────────────
-        function addLine(type, prefix, msg, delay) {
-            delay = delay || 0;
-            after(delay, function () {
-                var line = document.createElement('div');
-                line.className = 't-line t-' + type;
-                line.innerHTML = '<span class="t-prefix">' + prefix + '</span><span class="t-msg">' + msg + '</span>';
-                // remove old caret
-                var oldCaret = termBody.querySelector('.t-caret');
-                if (oldCaret) oldCaret.remove();
-                termBody.appendChild(line);
-                // add caret
-                var caret = document.createElement('span');
-                caret.className = 't-caret';
-                line.querySelector('.t-msg').appendChild(caret);
-                termBody.scrollTop = termBody.scrollHeight;
-            });
-        }
-
-        // ── Helper: add progress bar ──────────────────────────────────────
-        function addProgress(delay, targetPct) {
-            after(delay, function () {
-                var wrap = document.createElement('div');
-                wrap.className = 't-progress-wrap';
-                var bar = document.createElement('div');
-                bar.className = 't-progress-bar';
-                wrap.appendChild(bar);
-                termBody.appendChild(wrap);
-                termBody.scrollTop = termBody.scrollHeight;
-                // animate to target
-                requestAnimationFrame(function () {
-                    requestAnimationFrame(function () { bar.style.width = targetPct + '%'; });
-                });
-            });
-        }
-
-        // ── Helper: set phase state ───────────────────────────────────────
-        function setPhase(key, state, time) {
-            after(0, function () {
-                var p = phases[key];
-                if (!p) return;
-                p.el.className = 'rs-phase ' + state;
-                if (state === 'done') {
-                    p.el.querySelector('.rs-phase__icon').textContent = '✓';
-                } else if (state === 'active') {
-                    p.el.querySelector('.rs-phase__icon').textContent = '…';
-                }
-                if (time) p.t.textContent = time;
-            });
-        }
-
-        // ── Helper: wrap in scheduled setPhase ───────────────────────────
-        function schedPhase(delay, key, state, time) {
-            after(delay, function () { setPhase(key, state, time); });
-        }
-
-        // ── Helper: update metric ─────────────────────────────────────────
-        function schedMetric(delay, el, val) {
-            after(delay, function () { el.textContent = val; });
-        }
-
-        // ── Launch session ────────────────────────────────────────────────
-        function launchSession() {
-            var topic = topicInput.value.trim();
-            if (!topic) {
-                topicInput.style.borderColor = 'rgba(255,80,80,0.5)';
-                setTimeout(function() { topicInput.style.borderColor = ''; }, 1200);
-                topicInput.placeholder = 'Please enter a research topic first…';
-                return;
-            }
-
-            sessionRunning = true;
-            startTime = Date.now();
-            timeouts = [];
-
-            // show grid
-            grid.style.display = 'grid';
-            // scroll to grid
-            after(100, function() { grid.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
-
-            // clear terminal
-            termBody.innerHTML = '';
-            termBadge.textContent = 'QUERY: ' + topic.substring(0, 30) + (topic.length > 30 ? '…' : '');
-
-            // reset phases
-            Object.keys(phases).forEach(function(k) {
-                phases[k].el.className = 'rs-phase';
-                phases[k].el.querySelector('.rs-phase__icon').textContent = ['01','02','03','04','05','06'][Object.keys(phases).indexOf(k)];
-                phases[k].t.textContent = '—';
-            });
-
-            // reset metrics
-            [mConf, mDatapts, mSources, mLatency].forEach(function(m){ m.textContent = '—'; });
-            navStatus.textContent = 'SESSION ACTIVE';
-            abortBtn.disabled = false;
-
-            // ── Simulate session timeline ─────────────────────────────────
-            var D = 0; // running delay counter (ms)
-
-            // PHASE 1 — INIT
-            schedPhase(D, 'init', 'active', '');
-            addLine('info', '[SYS]',  'Booting ResearchX AI research session...', D);
-            D += 500;
-            addLine('info', '[SYS]',  'Topic registered: <span class="t-hl-cyan">' + topic + '</span>', D);
-            D += 400;
-            addLine('sys',  '[LOG]',  'Allocating neural compute grid...', D);
-            D += 600;
-            addLine('ok',   '[OK]',   'Session context initialised.', D);
-            schedPhase(D, 'init', 'done', '0.6s');
-            addProgress(D, 16);
-
-            // PHASE 2 — CRAWL
-            D += 500;
-            schedPhase(D, 'crawl', 'active');
-            addLine('info', '[NET]',  'Dispatching 127 parallel web crawlers...', D);
-            D += 700;
-            addLine('sys',  '[LOG]',  'Scanning: arxiv.org, scholar.google.com, sec.gov...', D);
-            D += 600;
-            addLine('info', '[NET]',  'Fetched <span class="t-hl-cyan">4,218</span> source documents.', D);
-            schedMetric(D, mSources, '4,218');
-            D += 500;
-            addLine('ok',   '[OK]',   'Data fetch complete. Deduplication applied.', D);
-            schedPhase(D, 'crawl', 'done', '2.3s');
-            addProgress(D, 33);
-            schedMetric(D, mLatency, '18ms');
-
-            // PHASE 3 — PARSE
-            D += 500;
-            schedPhase(D, 'parse', 'active');
-            addLine('ai',   '[AI]',   'Tokenising corpus — 2.1M tokens detected.', D);
-            D += 700;
-            addLine('sys',  '[LOG]',  'Removing noise, duplicates, low-relevance nodes...', D);
-            D += 600;
-            addLine('ai',   '[AI]',   'Semantic chunking complete. 38,400 vectors embedded.', D);
-            schedMetric(D, mDatapts, '38.4K');
-            D += 500;
-            addLine('ok',   '[OK]',   'Parsing & embedding pipeline finished.', D);
-            schedPhase(D, 'parse', 'done', '1.8s');
-            addProgress(D, 50);
-
-            // PHASE 4 — NEURAL
-            D += 600;
-            schedPhase(D, 'neural', 'active');
-            addLine('ai',   '[NEURAL]','Executing cross-attention graph over <span class="t-hl-purple">38.4K</span> vectors...', D);
-            D += 800;
-            addLine('sys',  '[LOG]',  'Identifying key themes, entities, contradictions...', D);
-            D += 700;
-            addLine('ai',   '[NEURAL]','Cluster centroids identified: <span class="t-hl-cyan">14 primary</span>, <span class="t-hl-purple">62 secondary</span>.', D);
-            D += 500;
-            addLine('warn', '[WARN]', 'Conflicting data in 3 sub-clusters — applying confidence weighting.', D);
-            D += 700;
-            addLine('ok',   '[OK]',   'Neural graph analysis complete. Confidence: <span class="t-hl-green">97.4%</span>', D);
-            schedMetric(D, mConf, '97.4%');
-            schedPhase(D, 'neural', 'done', '2.7s');
-            addProgress(D, 70);
-            schedMetric(D, mLatency, '14ms');
-
-            // PHASE 5 — SYNTHESIS
-            D += 600;
-            schedPhase(D, 'synth', 'active');
-            addLine('ai',   '[AI]',   'Synthesising structured knowledge map...', D);
-            D += 700;
-            addLine('sys',  '[LOG]',  'Generating executive summary, sub-reports, citations...', D);
-            D += 800;
-            addLine('ai',   '[AI]',   'Temporal trend analysis complete — <span class="t-hl-cyan">3 inflection points</span> detected.', D);
-            D += 600;
-            addLine('ok',   '[OK]',   'Synthesis pipeline complete.', D);
-            schedPhase(D, 'synth', 'done', '2.1s');
-            addProgress(D, 88);
-
-            // PHASE 6 — OUTPUT
-            D += 500;
-            schedPhase(D, 'out', 'active');
-            addLine('info', '[OUT]',  'Rendering structured output documents...', D);
-            D += 700;
-            addLine('sys',  '[LOG]',  'Compiling PDF report, JSON schema, API payload...', D);
-            D += 600;
-            addLine('ok',   '[OK]',   '✅ Research session complete. Output ready.', D);
-            schedPhase(D, 'out', 'done', '1.2s');
-            addProgress(D, 100);
-            schedMetric(D, mDatapts, '2.4M');
-            schedMetric(D, mSources, '4,218');
-            schedMetric(D, mConf,    '97.4%');
-            schedMetric(D, mLatency, '12ms');
-
-            D += 300;
-            after(D, function () {
-                sessionRunning = false;
-                navStatus.textContent = 'SESSION COMPLETE';
-            });
-        }
-
-        // ── Auto-launch if topic came from URL ────────────────────────────
-        if (urlParam && urlParam.trim()) {
-            after(600, launchSession);
-        }
-    })();
-    </script>
+    <script src="research.js"></script>
 </body>
 
 </html>

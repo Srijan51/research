@@ -167,12 +167,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Safety fallback: if anything is still hidden after 2s, force show
+    setTimeout(() => {
+        sections.forEach(section => {
+            if (!section.classList.contains('in-view')) {
+                section.classList.add('in-view');
+            }
+        });
+    }, 2000);
+
     // Navbar scroll effect
     const navbar = document.querySelector('.navbar');
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 20) {
+        if (navbar && window.scrollY > 20) {
             navbar.classList.add('scrolled');
-        } else {
+        } else if (navbar) {
             navbar.classList.remove('scrolled');
         }
     });
@@ -481,7 +490,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const notification = document.createElement('div');
         notification.className = 'success-notification';
         notification.innerHTML = `
-            <div class="success-icon">âœ…</div>
+            <div class="success-icon">CHK</div>
             <div class="success-text">
                 <div class="success-title">${format.toUpperCase()} Export Complete</div>
                 <div class="success-desc">Your research intelligence has been generated successfully</div>
@@ -554,10 +563,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // Toggle API stream
             this.classList.toggle('active');
             if (this.classList.contains('active')) {
-                this.innerHTML = '<span>ðŸ”„ API Stream Active</span>';
+                this.innerHTML = '<span>API Stream Active</span>';
                 startAPIStream();
             } else {
-                this.innerHTML = '<span>ðŸ”— Data API Stream</span>';
+                this.innerHTML = '<span>Data API Stream</span>';
                 stopAPIStream();
             }
         });
@@ -1011,7 +1020,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         container.innerHTML = ''; // clear mock
                         data.data.forEach(step => {
                             container.innerHTML += `<div class="feature glass glow-hover card-3d">
-                                <div class="icon">âš™ï¸</div>
+                                <div class="icon">SETTINGS</div>
                                 <h4 style="margin-top:10px;">${step.action}</h4>
                                 <p style="font-size: 0.9em; margin-top:5px;">${step.description}</p>
                             </div>`;
@@ -1043,7 +1052,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (data.data.key_findings) {
                             data.data.key_findings.forEach((finding, idx) => {
                                 insightGrid.innerHTML += `<div class="insight-item">
-                                    <div class="insight-icon">âœ”ï¸</div>
+                                    <div class="insight-icon">CHK</div>
                                     <div class="insight-text" style="font-size: 0.9em; flex: 1;">${finding}</div>
                                 </div>`;
                             });
@@ -1107,15 +1116,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     if(!memoryContainer) {
                         memoryContainer = document.createElement('div');
                         memoryContainer.id = 'dynamic-memory-history';
-                        memoryContainer.innerHTML = '<h3 style="margin-top:20px; color:var(--text-main); font-size: 1.5rem; text-align: center;">Recent Memory Matrix</h3><div class="memory-grid" id="history-grid" style="margin-top:10px;"></div>';
+                        memoryContainer.style.pointerEvents = 'auto';
+                        memoryContainer.innerHTML = '<h3 style="margin-top:20px; color:var(--text-main); font-size: 1.5rem; text-align: center;">Recent Memory Matrix</h3><div class="memory-nodes-grid" id="history-grid" style="margin-top:10px;"></div>';
                         const memSect = document.querySelector('.memory .section-content');
                         if(memSect) memSect.appendChild(memoryContainer);
                     }
                     const histGrid = document.getElementById('history-grid');
                     if(histGrid) {
                         histGrid.innerHTML = '';
-                        data.data.forEach(item => {
-                            histGrid.innerHTML += `<div class="memory-node enhanced">
+                        data.data.forEach((item, index) => {
+                            histGrid.innerHTML += `<div class="memory-node enhanced" onclick="window.location.href='memory-detail.html?id=${index % 6}'">
                                 <div class="memory-card glass glow-hover">
                                     <h4>Task: ${item.task_id}</h4>
                                     <p style="color:var(--text-muted); font-size:12px; margin-top:5px;">${item.query} <br/> <span style="color:var(--neon-purple);">${item.date}</span></p>
@@ -1139,6 +1149,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, 5000);
 
+    // Global Modal Access for Memory Matrix
+    window.openMemoryModal = function(taskId, query, date) {
+        const modal = document.getElementById('mu-modal');
+        if (!modal) return;
+        
+        document.getElementById('mu-modal-icon').textContent = 'MEM';
+        document.getElementById('mu-modal-title').textContent = `Task: ${taskId}`;
+        document.getElementById('mu-modal-desc').textContent = `Autonomous Research Query: "${query}". This task involved multi-vector semantic mapping and real-time intelligence synthesis across decentralized nodes.`;
+        document.getElementById('mu-modal-tags').innerHTML = `<span class="mu-modal-tag">${date}</span><span class="mu-modal-tag">Processed</span><span class="mu-modal-tag">Verified</span>`;
+        document.getElementById('mu-modal-bar-fill').style.width = '100%';
+        document.getElementById('mu-modal-meta').textContent = `Status: ARCHIVED | Processing Time: 12.4s | Vector Depth: High`;
+        
+        modal.classList.add('active');
+    };
+
     fetchMemory();
     setInterval(fetchMemory, 15000);
 
@@ -1160,7 +1185,7 @@ document.addEventListener('DOMContentLoaded', () => {
             askBtn.textContent = 'Thinking...';
             askBtn.disabled = true;
             answerDiv.style.display = 'block';
-            answerDiv.innerHTML = '<span style="color:var(--neon-cyan);">â³ AI is analyzing your question...</span>';
+            answerDiv.innerHTML = '<span style="color:var(--neon-cyan);">AI is analyzing your question...</span>';
 
             try {
                 const res = await fetch(`${window.API_BASE_URL}/api/deep-dive/explore`, {
@@ -1175,7 +1200,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (res.ok) {
                     const data = await res.json();
                     if (data.success && data.data && data.data.response) {
-                        answerDiv.innerHTML = `<strong style="color:var(--neon-cyan);">ðŸ§  AI Response:</strong><br/>${data.data.response}`;
+                        answerDiv.innerHTML = `<strong style="color:var(--neon-cyan);">AI Response:</strong><br/>${data.data.response}`;
                     } else {
                         answerDiv.textContent = 'No response received.';
                     }
@@ -1186,7 +1211,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 answerDiv.textContent = 'Error contacting AI.';
                 console.error(e);
             } finally {
-                askBtn.textContent = 'Ask AI âš¡';
+                askBtn.textContent = 'Ask AI';
                 askBtn.disabled = false;
                 questionInput.value = '';
             }
@@ -1241,7 +1266,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const list = document.querySelector('.findings-list');
         if (title && data.title) title.textContent = data.title;
         if (list && Array.isArray(data.key_findings)) {
-            list.innerHTML = data.key_findings.map(f => `<li><span class="finding-icon">âœ“</span> ${f}</li>`).join('');
+            list.innerHTML = data.key_findings.map(f => `<li><span class="finding-icon">*</span> ${f}</li>`).join('');
         }
     }
 
@@ -1349,7 +1374,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         success: true,
                         data: [
                             { task_id: "VEC-0X9A", query: "Logistic Pathway Optimization", date: "2026-03-29" },
-                            { task_id: "SYS-0K42", query: "Blockchain Entropy Analysis", date: "2026-03-28" }
+                            { task_id: "SYS-0K42", query: "Blockchain Entropy Analysis", date: "2026-03-28" },
+                            { task_id: "QTM-7B42", query: "Quantum Analysis Cluster Sync", date: "2026-04-15" },
+                            { task_id: "NET-M92",  query: "Global Neural Mesh Mapping", date: "2026-04-18" }
                         ]
                     })
                 };
@@ -1378,9 +1405,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 4000);
     }
 
-    // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-    //  MEMORY UNIVERSE â€” Optimised 3D Canvas Engine
-    // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+    // =======================================================
+    // -- State --
+    //  MEMORY UNIVERSE - Optimised 3D Canvas Engine
+    // ==========================================================
     (function initMemoryUniverse() {
         const section  = document.getElementById('memory');
         const canvas   = document.getElementById('mu-canvas');
@@ -1392,17 +1420,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const ctx  = canvas.getContext('2d', { alpha: true });
         const sCtx = starsCvs.getContext('2d', { alpha: true });
 
-        // â”€â”€ Disable image smoothing for sharp rendering â”€â”€
+        // -- Disable image smoothing for sharp rendering --
         ctx.imageSmoothingEnabled = false;
 
-        // â”€â”€ Cluster data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        // -- Cluster data -----------------------------------------
         const CLUSTER_DATA = [
-            { label:'Research Hub',    icon:'ðŸ§ ', desc:'Central knowledge repository linking all research threads and semantic associations across the neural fabric.',        tags:['Research','Core','Semantic'],    integrity:98, color:[0,243,255],  r:13 },
-            { label:'Quantum Analysis',icon:'âš›ï¸', desc:'Quantum-accelerated data processing cluster for multi-dimensional probability vector computations.',                  tags:['Quantum','Analysis','Vector'],   integrity:95, color:[157,0,255],  r:10 },
-            { label:'Market Signals',  icon:'ðŸ“ˆ', desc:'Real-time market sentiment aggregation and predictive forecasting with high-frequency data streams.',                 tags:['Market','Sentiment','Forecast'], integrity:92, color:[0,200,255],  r:9  },
-            { label:'Neural Pathways', icon:'ðŸŒ', desc:'Global knowledge mesh connecting distributed research nodes via synaptic cross-referencing algorithms.',              tags:['Neural','Global','Mesh'],        integrity:99, color:[200,0,255],  r:8  },
-            { label:'Insight Engine',  icon:'ðŸ’¡', desc:'Autonomous insight generation system that synthesizes patterns into actionable intelligence outputs.',                tags:['Insights','Synthesis','AI'],     integrity:97, color:[255,210,0],  r:9  },
-            { label:'Deep Archive',    icon:'ðŸ“¦', desc:'Long-term memory archive storing compressed research vectors for future contextual retrieval.',                       tags:['Archive','Memory','Storage'],    integrity:89, color:[0,150,255],  r:7  },
+            { label:'Research Hub',    icon:'CORE', desc:'Central knowledge repository linking all research threads and semantic associations across the neural fabric.',        tags:['Research','Core','Semantic'],    integrity:98, color:[0,243,255],  r:13 },
+            { label:'Quantum Analysis',icon:'QTM', desc:'Quantum-accelerated data processing cluster for multi-dimensional probability vector computations.',                  tags:['Quantum','Analysis','Vector'],   integrity:95, color:[157,0,255],  r:10 },
+            { label:'Market Signals',  icon:'MKT', desc:'Real-time market sentiment aggregation and predictive forecasting with high-frequency data streams.',                 tags:['Market','Sentiment','Forecast'], integrity:92, color:[0,200,255],  r:9  },
+            { label:'Neural Pathways', icon:'NET', desc:'Global knowledge mesh connecting distributed research nodes via synaptic cross-referencing algorithms.',              tags:['Neural','Global','Mesh'],        integrity:99, color:[200,0,255],  r:8  },
+            { label:'Insight Engine',  icon:'IDEA', desc:'Autonomous insight generation system that synthesizes patterns into actionable intelligence outputs.',                tags:['Insights','Synthesis','AI'],     integrity:97, color:[255,210,0],  r:9  },
+            { label:'Deep Archive',    icon:'DB', desc:'Long-term memory archive storing compressed research vectors for future contextual retrieval.',                       tags:['Archive','Memory','Storage'],    integrity:89, color:[0,150,255],  r:7  },
         ];
 
         function makeNodes(count, spread, parentR) {
@@ -1432,7 +1460,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 11 connections
         const CONNS = [[0,1],[0,2],[0,3],[0,4],[0,5],[1,2],[2,3],[3,4],[4,5],[1,5],[2,4]];
 
-        // â”€â”€ State â”€â”€
+        // -- State --
         let W=0, H=0, DPR=1;
         let camX=0, camY=0;
         let mouseX=0.5, mouseY=0.5;
@@ -1442,7 +1470,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let isVisible=false; // IntersectionObserver gate
         let rafId=null;
 
-        // â”€â”€ Size canvas with capped DPR for performance â”€â”€
+        // -- Size canvas with capped DPR for performance --
         function resize() {
             DPR = Math.min(window.devicePixelRatio||1, 1.5); // cap at 1.5x
             const rect = section.getBoundingClientRect();
@@ -1454,7 +1482,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sCtx.setTransform(DPR,0,0,DPR,0,0);
         }
 
-        // â”€â”€ Star field (painted once, twinkled cheaply) â”€â”€
+        // -- Star field (painted once, twinkled cheaply) --
         const STARS = Array.from({length:200}, ()=>({
             x:Math.random(), y:Math.random(),
             r:Math.random()*1.2+0.2,
@@ -1476,7 +1504,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sCtx.globalAlpha = 1;
         }
 
-        // â”€â”€ Projection â”€â”€
+        // -- Projection --
         const FOV = 680;
         function project(x3,y3,z3){
             const cx = W/2 + camX + parallaX;
@@ -1485,7 +1513,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return { sx: cx+x3*d, sy: cy+y3*d, depth:d, z:z3 };
         }
 
-        // â”€â”€ Cluster world position â”€â”€
+        // -- Cluster world position --
         function clusterPos(c){
             const a  = c.angle + t*c.rotSpeed*0.4;
             const fy = 7*Math.sin(c.floatPhase + t*0.28);
@@ -1496,10 +1524,10 @@ document.addEventListener('DOMContentLoaded', () => {
             };
         }
 
-        // â”€â”€ rgba helper â”€â”€
+        // -- rgba helper --
         function rgba(rgb,a){ return `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${a})`; }
 
-        // â”€â”€ Draw curved connection â”€â”€
+        // -- Draw curved connection --
         function drawConn(p1,p2,c1,c2){
             const d = (p1.depth+p2.depth)*0.5;
             const mx = (p1.sx+p2.sx)*0.5 + Math.sin(t*0.45)*25;
@@ -1516,7 +1544,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.stroke();
         }
 
-        // â”€â”€ Draw light pulse travelling on bezier â”€â”€
+        // -- Draw light pulse travelling on bezier --
         const pulseTimes = CONNS.map(()=>Math.random());
         function drawPulse(p1,p2,pt,color,r){
             const tt = pt%1;
@@ -1531,13 +1559,13 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.fill();
         }
 
-        // â”€â”€ Draw one cluster â”€â”€ (NO ctx.filter â€” replaced with alpha-based DoF)
+        // -- Draw one cluster -- (NO ctx.filter - replaced with alpha-based DoF)
         function drawCluster(c, pos){
             const {sx,sy,depth,z} = pos;
             const baseR = c.r * depth;
             const isHov = c.hovered;
 
-            // Alpha-based depth-of-field: far nodes are dimmer (no blur â€” 10x cheaper)
+            // Alpha-based depth-of-field: far nodes are dimmer (no blur - 10x cheaper)
             const alpha  = Math.min(1, 0.45 + depth*0.65);
             const gSize  = isHov ? baseR*4.2 : baseR*2.8;
 
@@ -1551,7 +1579,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.arc(sx,sy,gSize,0,Math.PI*2);
             ctx.fill();
 
-            // Glass orb â€” shadowBlur ONLY on hovered cluster to save GPU
+            // Glass orb - shadowBlur ONLY on hovered cluster to save GPU
             if (isHov) {
                 ctx.shadowBlur  = 22;
                 ctx.shadowColor = rgba(c.color, 0.85);
@@ -1590,7 +1618,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.fill();
             ctx.globalAlpha = 1;
 
-            // Sub-nodes (lighter â€” no gradient, just solid alpha circles)
+            // Sub-nodes (lighter - no gradient, just solid alpha circles)
             c.nodes.forEach(n=>{
                 const na  = n.phaseX + t*n.speed;
                 const nb  = n.phaseY + t*n.speed*0.65;
@@ -1618,7 +1646,7 @@ document.addEventListener('DOMContentLoaded', () => {
             c.sx=sx; c.sy=sy; c.screenR=baseR;
         }
 
-        // â”€â”€ Main render loop â”€â”€
+        // -- Main render loop --
         let lastFrame=0;
         function render(now){
             if (!isVisible) { rafId=requestAnimationFrame(render); return; } // pause when off-screen
@@ -1632,7 +1660,7 @@ document.addEventListener('DOMContentLoaded', () => {
             camX += ((mouseX-0.5)*55 - camX)*0.04 + Math.sin(t*0.065)*0.12;
             camY += ((mouseY-0.5)*38 - camY)*0.04 + Math.cos(t*0.048)*0.09;
 
-            // Stars â€” update every 4th frame for performance
+            // Stars - update every 4th frame for performance
             if (frameCount%4===0) animStars();
 
             ctx.clearRect(0,0,W,H);
@@ -1643,7 +1671,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return project(p.x,p.y,p.z);
             });
 
-            // Painter's algorithm â€” back to front
+            // Painter's algorithm - back to front
             const order = clusters.map((_,i)=>i).sort((a,b)=>positions[b].z-positions[a].z);
 
             // Connections + pulses
@@ -1655,7 +1683,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 drawPulse(pa,pb,(pulseTimes[ci]+0.52)%1, clusters[bi].color, 1.8);
             });
 
-            // Clusters backâ†’front
+            // Clusters back to front
             order.forEach(i=> drawCluster(clusters[i], positions[i]));
 
             // Hover label (cheap text draw)
@@ -1668,14 +1696,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // â”€â”€ IntersectionObserver â€” pause when not in view â”€â”€
+        // -- IntersectionObserver - pause when not in view --
         const io = new IntersectionObserver(entries=>{
             isVisible = entries[0].isIntersecting;
             if (isVisible && !rafId) rafId=requestAnimationFrame(render);
         }, { threshold:0.05 });
         io.observe(section);
 
-        // â”€â”€ Also pause video when off-screen for extra perf â”€â”€
+        // -- Also pause video when off-screen for extra perf --
         const bgVid = section.querySelector('.mu-bg-video');
         const vidIo = new IntersectionObserver(entries=>{
             if (!bgVid) return;
@@ -1683,7 +1711,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { threshold:0.05 });
         if (bgVid) vidIo.observe(section);
 
-        // â”€â”€ Mouse â”€â”€
+        // -- Mouse --
         canvas.addEventListener('mousemove', e=>{
             const rect=canvas.getBoundingClientRect();
             mouseX=(e.clientX-rect.left)/W;
@@ -1705,7 +1733,11 @@ document.addEventListener('DOMContentLoaded', () => {
         canvas.addEventListener('click',e=>{
             const rect=canvas.getBoundingClientRect();
             const mx=e.clientX-rect.left, my=e.clientY-rect.top;
-            clusters.forEach(c=>{ if(Math.hypot(mx-c.sx,my-c.sy)<c.screenR*3) openModal(c); });
+            clusters.forEach((c, index)=>{ 
+                if(Math.hypot(mx-c.sx,my-c.sy) < c.screenR * 4.5) {
+                    openModal(c); // Reverting to modal opening instead of redirect
+                }
+            });
         });
 
         // Scroll parallax
@@ -1716,20 +1748,20 @@ document.addEventListener('DOMContentLoaded', () => {
             parallaY=rel*55;
         },{passive:true});
 
-        // â”€â”€ Modal â”€â”€
+        // -- Modal --
         function openModal(c){
             document.getElementById('mu-modal-icon').textContent  = c.icon;
             document.getElementById('mu-modal-title').textContent = c.label;
             document.getElementById('mu-modal-desc').textContent  = c.desc;
             document.getElementById('mu-modal-tags').innerHTML    = c.tags.map(t=>`<span class="mu-modal-tag">${t}</span>`).join('');
             document.getElementById('mu-modal-bar-fill').style.width = c.integrity+'%';
-            document.getElementById('mu-modal-meta').textContent  = `Integrity: ${c.integrity}%  Â·  Depth: ${Math.abs(Math.round(c.tiltY*100))} units`;
+            document.getElementById('mu-modal-meta').textContent  = `Integrity: ${c.integrity}%  |  Depth: ${Math.abs(Math.round(c.tiltY*100))} units`;
             if(modal) modal.classList.add('active');
         }
         if(mClose) mClose.addEventListener('click',()=>modal.classList.remove('active'));
         if(modal)  modal.addEventListener('click',e=>{ if(e.target===modal) modal.classList.remove('active'); });
 
-        // â”€â”€ HUD counters â”€â”€
+        // -- HUD counters --
         function updateHUD(){
             const nc=document.getElementById('mu-node-count');
             const lc=document.getElementById('mu-link-count');
@@ -1740,11 +1772,54 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         setInterval(updateHUD, 4000);
 
-        // â”€â”€ Boot â”€â”€
+        // -- Boot --
         resize();
         window.addEventListener('resize', resize, {passive:true});
         rafId = requestAnimationFrame(render);
     })();
 
 });
+
+// ── AI OUTPUT COMMAND CENTER LOGIC ──
+function initOutputCommandCenter() {
+    const textEl = document.getElementById('oc-output-text');
+    if (!textEl) return;
+
+    // 1. Typing Reveal
+    const text = textEl.textContent.trim();
+    textEl.textContent = '';
+    let i = 0;
+    function type() {
+        if (i < text.length) {
+            textEl.textContent += text.charAt(i);
+            i++;
+            setTimeout(type, 20);
+        }
+    }
+    
+    // Start typing when section is in view
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+            type();
+            animateRings();
+            observer.disconnect();
+        }
+    }, { threshold: 0.5 });
+    observer.observe(textEl);
+
+    // 2. Animate Rings
+    function animateRings() {
+        const ring = document.getElementById('oc-q-ring');
+        if (ring) {
+            ring.style.strokeDashoffset = '283';
+            setTimeout(() => {
+                ring.style.strokeDashoffset = (283 - (283 * 0.987)).toString();
+            }, 500);
+        }
+    }
+}
+
+// Initialize on load
+document.addEventListener('DOMContentLoaded', initOutputCommandCenter);
+
 
