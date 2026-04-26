@@ -41,8 +41,11 @@
     <!-- AMBIENT BACKGROUND ENVIRONMENT                                    -->
     <!-- ================================================================ -->
     <div id="ambient-bg">
-        <canvas id="bgCanvas"></canvas>
         <div class="holo-grid"></div>
+        <video autoplay loop muted playsinline class="gargantua-video-bg">
+            <source src="blue_blackhole.mp4" type="video/mp4">
+        </video>
+        <canvas id="bgCanvas"></canvas>
         <div class="nebula-layer n1"></div>
         <div class="nebula-layer n2"></div>
         <div class="nebula-layer n3"></div>
@@ -414,5 +417,15 @@
     </main>
 
     <script src="demo.js"></script>
+
+    <!-- Heat Distortion Filter -->
+    <svg style="display: none;">
+        <filter id="distortion">
+            <feTurbulence type="fractalNoise" baseFrequency="0.01 0.05" numOctaves="2" result="noise">
+                <animate attributeName="baseFrequency" dur="10s" values="0.01 0.05; 0.015 0.07; 0.01 0.05" repeatCount="indefinite" />
+            </feTurbulence>
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" />
+        </filter>
+    </svg>
 </body>
 </html>

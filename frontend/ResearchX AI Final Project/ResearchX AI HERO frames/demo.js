@@ -51,78 +51,143 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     }
 
-    // ── 2. BACKGROUND CANVAS ENGINE ──
+    // ── 2. BACKGROUND CANVAS ENGINE (GARGANTUA BLACK HOLE) ──
     const canvas = document.getElementById('bgCanvas');
     const ctx = canvas.getContext('2d');
-    let particles = [];
+    
+    let stars = [];
+    let diskParticles = [];
+    let centerX, centerY;
+    let mouseX = 0, mouseY = 0;
 
     function resize() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+        centerX = canvas.width / 2;
+        centerY = canvas.height / 2;
+        initStars();
+        initDisk();
     }
 
     window.addEventListener('resize', resize);
-    resize();
+    window.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX - centerX) * 0.05;
+        mouseY = (e.clientY - centerY) * 0.05;
+    });
 
-    class Particle {
-        constructor() {
-            this.reset();
-        }
-
+    class Star {
+        constructor() { this.reset(); }
         reset() {
             this.x = Math.random() * canvas.width;
             this.y = Math.random() * canvas.height;
-            this.vx = (Math.random() - 0.5) * 0.5;
-            this.vy = (Math.random() - 0.5) * 0.5;
-            this.radius = Math.random() * 1.5;
-            this.alpha = Math.random() * 0.5;
+            this.size = Math.random() * 1.2;
+            this.alpha = Math.random();
         }
-
-        update() {
-            this.x += this.vx;
-            this.y += this.vy;
-
-            if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
-                this.reset();
-            }
-        }
-
+        update() { this.alpha = 0.3 + Math.random() * 0.7; }
         draw() {
+            ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha * 0.5})`;
             ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(0, 243, 255, ${this.alpha})`;
+            ctx.arc(this.x + mouseX * 0.1, this.y + mouseY * 0.1, this.size, 0, Math.PI * 2);
             ctx.fill();
         }
     }
 
-    for (let i = 0; i < 100; i++) {
-        particles.push(new Particle());
+    class DiskParticle {
+        constructor() { this.reset(); }
+        reset() {
+            this.angle = Math.random() * Math.PI * 2;
+            this.distance = 120 + Math.random() * 350;
+            this.speed = (1.5 / Math.sqrt(this.distance)) * 1.5;
+            this.size = Math.random() * 2 + 0.5;
+            this.color = this.getColor();
+            this.opacity = Math.random() * 0.6 + 0.2;
+        }
+        getColor() {
+            const r = Math.random();
+            if (r > 0.9) return '#fff'; // Hot spots
+            if (r > 0.6) return '#FFD700'; // Gold
+            if (r > 0.3) return '#FF8C00'; // Dark Orange
+            return '#FF4500'; // Orange Red
+        }
+        update() {
+            this.angle -= this.speed; // Rotation
+        }
+        draw(lensingType) {
+            let x, y;
+            const cos = Math.cos(this.angle);
+            const sin = Math.sin(this.angle);
+            
+            // Doppler beaming: Brighter on the side moving toward the observer (left side)
+            const beaming = (cos + 1) / 2; 
+
+            if (lensingType === 'front') {
+                if (sin < 0) return; // Only front half
+                x = centerX + cos * this.distance + mouseX;
+                y = centerY + sin * this.distance * 0.15 + mouseY;
+            } else if (lensingType === 'top') {
+                if (sin >= 0) return; // Only back half
+                // Lensed over the top
+                const lensedDist = this.distance * (0.8 + Math.abs(sin) * 0.2);
+                x = centerX + cos * lensedDist + mouseX;
+                y = centerY - Math.abs(sin) * this.distance * 0.6 + mouseY;
+            } else if (lensingType === 'bottom') {
+                if (sin >= 0) return; // Only back half
+                // Lensed under the bottom
+                const lensedDist = this.distance * (0.8 + Math.abs(sin) * 0.2);
+                x = centerX + cos * lensedDist + mouseX;
+                y = centerY + Math.abs(sin) * this.distance * 0.6 + mouseY;
+            }
+
+            ctx.fillStyle = this.color;
+            ctx.globalAlpha = this.opacity * (0.4 + beaming * 0.6);
+            ctx.beginPath();
+            ctx.arc(x, y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
     }
+
+    function initStars() {
+        stars = [];
+        for (let i = 0; i < 300; i++) stars.push(new Star());
+    }
+
+    function initDisk() {
+        diskParticles = [];
+        for (let i = 0; i < 1500; i++) diskParticles.push(new DiskParticle());
+    }
+
+    function drawEventHorizon() {
+        const x = centerX + mouseX;
+        const y = centerY + mouseY;
+
+        // Subtle Photon Sphere Glow
+        const grad = ctx.createRadialGradient(x, y, 60, x, y, 140);
+        grad.addColorStop(0, 'rgba(255, 140, 0, 0.2)');
+        grad.addColorStop(0.6, 'rgba(255, 69, 0, 0.05)');
+        grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(x, y, 140, 0, Math.PI * 2);
+        ctx.fill();
+
+        // The Void (smaller to match image core)
+        ctx.fillStyle = '#000';
+        ctx.beginPath();
+        ctx.arc(x, y, 55, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    resize();
 
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
-        // Update and draw particles
-        for (let i = 0; i < particles.length; i++) {
-            particles[i].update();
-            particles[i].draw();
-            
-            // Connect nearby particles
-            for (let j = i + 1; j < particles.length; j++) {
-                const dx = particles[i].x - particles[j].x;
-                const dy = particles[i].y - particles[j].y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-                
-                if (distance < 150) {
-                    ctx.beginPath();
-                    ctx.strokeStyle = `rgba(0, 243, 255, ${0.1 * (1 - distance / 150)})`;
-                    ctx.lineWidth = 0.5;
-                    ctx.moveTo(particles[i].x, particles[i].y);
-                    ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.stroke();
-                }
-            }
-        }
+        // 1. Stars (Keeping for depth)
+        stars.forEach(s => { s.update(); s.draw(); });
+
+        // Removed procedural disk and event horizon to focus on the Gargantua image
+        
         requestAnimationFrame(animate);
     }
     animate();

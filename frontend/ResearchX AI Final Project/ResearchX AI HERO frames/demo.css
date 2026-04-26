@@ -196,40 +196,109 @@ body {
     height: 20px;
 }
 
-/* ── Background Engine ── */
+/* ── Background Engine (Interstellar Black Hole) ── */
 #ambient-bg {
     position: fixed;
     inset: 0;
     z-index: -1;
-    background: #000;
+    background: radial-gradient(circle at center, #050508 0%, #000 100%);
+    overflow: hidden;
 }
 
 #bgCanvas {
     width: 100%;
     height: 100%;
-    opacity: 0.4;
+    opacity: 0.4; /* Subtle stars over the image */
+    filter: brightness(1.2);
+    position: relative;
+    z-index: 2;
+}
+
+.gargantua-video-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(1) contrast(1.1);
+    z-index: 1;
+}
+
+@keyframes gargantuaCinematic {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+@keyframes gargantuaDrift {
+    0% { transform: scale(1.05) translate(0, 0); }
+    100% { transform: scale(1.15) translate(-2%, 1%); }
+}
+
+@keyframes gargantuaRotate {
+    0% { transform: rotate(0deg) scale(1.5); }
+    100% { transform: rotate(360deg) scale(1.5); }
+}
+
+/* Video Background Layering */
+.gargantua-video-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.3) 100%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Accretion Disk Shimmer Overlay - Removed redundant glow */
+
+@keyframes glowPulse {
+    0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.05); }
 }
 
 .holo-grid {
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(circle at center, transparent 0%, #000 90%),
-                      linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
-    background-size: 100% 100%, 60px 60px, 60px 60px;
+    background-image: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.8) 90%),
+    linear-gradient(rgba(0, 243, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 243, 255, 0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 80px 80px, 80px 80px;
+    pointer-events: none;
+    z-index: 3;
 }
 
 .nebula-layer {
     position: absolute;
     border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.15;
+    filter: blur(120px);
+    opacity: 0.25;
     pointer-events: none;
+    mix-blend-mode: screen;
+    animation: nebulaFloat 20s ease-in-out infinite alternate;
 }
 
-.n1 { width: 600px; height: 600px; background: var(--jarvis-cyan); top: -100px; left: -100px; }
-.n2 { width: 500px; height: 500px; background: var(--jarvis-purple); bottom: -100px; right: -100px; }
-.n3 { width: 400px; height: 400px; background: var(--jarvis-blue); top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.n1 { width: 800px; height: 800px; background: radial-gradient(circle, rgba(255, 140, 0, 0.4), transparent 70%); top: -200px; left: -200px; }
+.n2 { width: 700px; height: 700px; background: radial-gradient(circle, rgba(157, 0, 255, 0.2), transparent 70%); bottom: -200px; right: -200px; animation-delay: -5s; }
+.n3 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(255, 69, 0, 0.3), transparent 70%); top: 40%; left: 40%; animation-delay: -10s; }
+
+/* Cinematic Center Glow */
+.blackhole-env-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(255, 140, 0, 0.1) 0%, rgba(255, 69, 0, 0.05) 40%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes nebulaFloat {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(50px, 50px) scale(1.1); }
+}
 
 .scan-stripe {
     position: absolute;
@@ -237,8 +306,8 @@ body {
     left: 0;
     width: 100%;
     height: 50%;
-    background: linear-gradient(to bottom, transparent, rgba(0, 243, 255, 0.05) 50%, transparent);
-    animation: scanMove 8s linear infinite;
+    background: linear-gradient(to bottom, transparent, rgba(0, 243, 255, 0.03) 50%, transparent);
+    animation: scanMove 12s linear infinite;
     pointer-events: none;
 }
 
